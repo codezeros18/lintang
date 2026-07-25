@@ -1,0 +1,161 @@
+# SPRINTS_AND_TRACKING.md
+**Rencana eksekusi + tracking · Portfolio Lintang Balakosa Ardhana**
+Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt eksekusi: `EXECUTION_PROMPTS.md`.
+
+> **MVP = S1–S6** (situs live). **Log = S7** (fast-follow, setelah MVP live).
+> Default agen: **berhenti di akhir tiap sprint**, menunggu instruksi — jangan lari S1→S7 otomatis.
+> Integritas: jangan mengarang angka/klaim; yang belum pasti = token CONFIG + `// TODO(lintang)` (lihat BLUEPRINT §0).
+
+---
+
+## Ringkasan sprint
+
+| Sprint | Nama | Cakupan | Status |
+|---|---|---|---|
+| **S1** | Foundation & Setup | Scaffold Next.js, tooling, fonts, token CONFIG, deploy skeleton Vercel | ✅ |
+| **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | 🔲 |
+| **S3** | Hero + About + Skills | 3 section atas + hook strip | 🔲 |
+| **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | 🔲 |
+| **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | 🔲 |
+| **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🔲 |
+| **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🔲 |
+
+Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
+
+---
+
+## S1 — Foundation & Setup
+**Goal:** repo Next.js siap kerja + deploy skeleton live di Vercel (halaman kosong ber-metadata), tooling & fonts terpasang, token CONFIG ada.
+
+**Tasks:**
+- [x] `create-next-app` — App Router + **TypeScript strict** + Tailwind (`tsconfig` `strict:true`)
+- [x] Struktur folder sesuai BLUEPRINT §8 (buat folder kosong + `.gitkeep` bila perlu)
+- [x] `lib/fonts.ts`: Space Grotesk + Space Mono (google) + Satoshi(local)+DM Sans fallback — **build tak boleh blok bila Satoshi belum ada**
+- [x] `content/config.ts`: semua token CONFIG (§0.1) sebagai konstanta ber-`// TODO(lintang)`
+- [x] `app/globals.css`: CSS variables palet + type-scale (§3.2–3.3)
+- [x] Install: `framer-motion`, shadcn/ui init (secukupnya), `@vercel/analytics`
+- [x] `app/layout.tsx`: pasang font variables ke `<html>`, metadata dasar
+- [x] Commit + deploy skeleton ke Vercel (halaman placeholder minimal, bukan konten karangan) — ⚠️ deploy lewat **Vercel CLI**, bukan koneksi repo Git (belum ada remote GitHub; lihat PROGRESS_LOG)
+
+**Definition of Done:** `npm run build` sukses; situs skeleton ter-deploy di URL Vercel; font & CSS vars aktif; `content/config.ts` berisi token TODO; tidak ada konten karangan.
+**Files:** `app/layout.tsx`, `app/page.tsx`, `app/globals.css`, `lib/fonts.ts`, `content/config.ts`, `tailwind.config.ts`, `tsconfig.json`, `package.json`.
+
+---
+
+## S2 — Design System & Shared UI
+**Goal:** komponen dasar + motion primitive + SEO scaffold siap dipakai section.
+
+**Tasks:**
+- [ ] `components/ui/`: `Button`, `Card`, `Badge`, `SectionHeading` (pakai CSS vars; aksen coral hemat)
+- [ ] `components/motion/`: `Reveal`, `Stagger`, `CountUp` — hormati `useReducedMotion` (§3.4)
+- [ ] Container/layout util (max-width `--maxw`, padding section `py-20 md:py-28`)
+- [ ] `lib/seo.ts`: helper `metadata` per halaman (title/desc/OG) dari BLUEPRINT §7
+- [ ] `app/sitemap.ts`, `app/robots.ts` (rute dasar)
+- [ ] Favicon placeholder (ganti final di S6)
+- [ ] Uji `prefers-reduced-motion` (semua animasi jadi final-state)
+
+**Definition of Done:** komponen ter-render di halaman demo internal; motion menghormati reduced-motion; `lib/seo.ts` dipakai `layout`; sitemap/robots terbit; build sukses.
+**Files:** `components/ui/*`, `components/motion/*`, `lib/seo.ts`, `app/sitemap.ts`, `app/robots.ts`.
+
+---
+
+## S3 — Hero + About + Skills
+**Goal:** 3 section teratas jadi, lolos uji 8 detik.
+
+**Tasks:**
+- [ ] `components/sections/Hero.tsx`: role label + headline + sub-headline + **hook strip** (angka Space Mono) + tombol `Lihat proyek`/`Download CV` (naskah BLUEPRINT §4.1)
+- [ ] Hook strip pakai `ANKOP_MONTHS` bila ada; jika token kosong → tampilkan tanpa klaim waktu / sembunyikan angka kg **tanpa mengarang**
+- [ ] CountUp opsional pada angka (hormati reduced-motion)
+- [ ] `components/sections/About.tsx`: versi ±120 kata + kredensial BNSP + micro-copy anti-salah-baca (§4.3, §4.6)
+- [ ] `components/sections/Skills.tsx`: dari `content/skills.ts` (grup → "dipakai di ___"); React Native = **basic** (§4.4)
+- [ ] `content/skills.ts` diisi dari CV
+- [ ] Reveal-on-scroll ringan di tiap section
+
+**Definition of Done:** hero lolos 8-detik (Full-Stack + angka, data tidak di hero); About memuat BNSP + micro-copy; Skills jujur; responsive 360px→desktop; build sukses.
+**Files:** `components/sections/Hero.tsx`, `About.tsx`, `Skills.tsx`, `content/skills.ts`.
+
+---
+
+## S4 — Featured Projects + Case Study pages
+**Goal:** grid 4 hero + halaman case study (minimal `ankop-trace` lengkap).
+
+**Tasks:**
+- [ ] `content/projects.ts`: 4 hero + 2 sekunder sesuai skema BLUEPRINT §5 (data dari CV; `// TODO(lintang)` untuk yang belum pasti)
+- [ ] `components/sections/FeaturedProjects.tsx`: kartu (nama, tagline, tech chips, badge kejujuran, hover-lift) urut Ankop→Bisasinema→Tera→Analisis Hotel
+- [ ] `app/projects/[slug]/page.tsx`: SSG `generateStaticParams`; layout case study (problem→approach→ownVsTeam→results+konteks waktu→learned→proof→label)
+- [ ] **Analisis Hotel = 1 case study** (gabung dgn medali SurabayaDev; anti double-count)
+- [ ] Bukti etis sesuai `PROOF_*` — screenshot beranotasi / Loom / write-up; **jangan render demo palsu**; bila proof kosong tampilkan "bukti menyusul" bukan link mati
+- [ ] Section "Other projects" (Kuali, Bank Sampah) sebagai kartu kecil
+- [ ] `generateMetadata` per case study (§7)
+
+**Definition of Done:** 4 kartu tampil & tautkan ke case study; `ankop-trace` lengkap & jujur; semua angka berkonteks waktu; tak ada demo palsu; build + SSG sukses.
+**Files:** `content/projects.ts`, `components/sections/FeaturedProjects.tsx`, `app/projects/[slug]/page.tsx`.
+
+---
+
+## S5 — Experience/Achievements + Contact + CV
+**Goal:** kredibilitas + jalur konversi.
+
+**Tasks:**
+- [ ] `content/experience.ts`: timeline kerja (Bisasinema, Ankop, Bank Sampah, PT Anugrah Energi) + achievements (I/O 🥇, SurabayaDev 🥉, CIMB 🥈) + sertifikasi (BNSP, Digital Skola, Coursera) — dari CV
+- [ ] `components/sections/ExperienceAchievements.tsx`: timeline + medali + cert (jujur, tanpa buzzword)
+- [ ] `components/sections/Contact.tsx`: ajakan + email + `LINKEDIN_URL`(fixed) + GitHub + tombol **Download CV** (`CV_FILE`)
+- [ ] Taruh `CV_FILE` di `public/cv/` (bila belum ada → tombol disabled + `// TODO(lintang)`, jangan link mati)
+- [ ] Org roles = ringkas 1 baris (hindari skill-dump)
+
+**Definition of Done:** timeline & achievements akurat dari CV; Contact berfungsi; Download CV bekerja bila `CV_FILE` ada (else disabled rapi); build sukses.
+**Files:** `content/experience.ts`, `components/sections/ExperienceAchievements.tsx`, `Contact.tsx`, `public/cv/`.
+
+---
+
+## S6 — Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)**
+**Goal:** MVP live di custom domain, lolos target performa.
+
+**Tasks:**
+- [ ] `app/opengraph-image.tsx` (`next/og`): nama + role + hook strip + foto; teks besar (§7)
+- [ ] Favicon final + meta/title per halaman via `lib/seo.ts`
+- [ ] Optimisasi gambar (`next/image`, ukuran benar, `priority` hero), lazy untuk sisanya
+- [ ] Audit **Lighthouse mobile ≥90**, **LCP <2s**; perbaiki CLS/font-swap
+- [ ] Aksesibilitas **AA**: kontras, alt text, semantic HTML, focus ring, skip-link
+- [ ] `@vercel/analytics` aktif
+- [ ] Cek broken link (khusus **LinkedIn**); pastikan tak ada token CONFIG bocor ke UI
+- [ ] Custom domain (`DOMAIN`) + HTTPS di Vercel
+- [ ] **Tes di HP asli**
+
+**Definition of Done:** MVP LIVE di `DOMAIN`; Lighthouse mobile ≥90 & LCP <2s; a11y AA; OG ter-render saat di-share; Analytics aktif; tak ada link mati/token bocor.
+**Files:** `app/opengraph-image.tsx`, `lib/seo.ts`, `app/layout.tsx`, konfigurasi Vercel/domain.
+
+> 🎯 **Setelah S6 = MVP LIVE.** Distribusikan URL (LinkedIn/Glints/Kalibrr/Dealls/IG/CV) sambil lanjut S7.
+
+---
+
+## S7 — Log / Activity (MDX, fast-follow)
+**Goal:** section Log hidup dengan 3 seed post; tanpa backend berbayar.
+
+**Tasks:**
+- [ ] `lib/mdx.ts` + setup `next-mdx-remote`/Contentlayer (SSG)
+- [ ] `content/log/*.mdx` + frontmatter (BLUEPRINT §6)
+- [ ] `app/log/page.tsx` (list kartu: title·date·badge type·badge result·teaser; filter `type` opsional)
+- [ ] `app/log/[slug]/page.tsx` (SSG) + `generateMetadata`
+- [ ] `components/sections/LogTeaser.tsx` di homepage (link ke `/log`)
+- [ ] Seed: `io-festival.mdx` (menang, contoh terisi §6) + `surabayadev.mdx` + **1 post `kalah`/`ikut`** `// TODO(lintang)`
+- [ ] Tiap post: substansi + ide inti dikaburkan + CTA "hubungi untuk kolaborasi"
+
+**Definition of Done:** `/log` & detail ter-render (SSG); ≥3 seed (min. 1 `kalah`/`ikut`); tambah post cukup `git push`; tak ada backend berbayar; build sukses.
+**Files:** `lib/mdx.ts`, `content/log/*.mdx`, `app/log/page.tsx`, `app/log/[slug]/page.tsx`, `components/sections/LogTeaser.tsx`.
+
+---
+
+## Catatan lintas-sprint (WAJIB tiap sprint)
+1. **Centang task** `[x]` yang selesai + set **status ✅** di tabel ringkasan.
+2. **Tulis entri `PROGRESS_LOG.md`** (terbaru di atas): apa selesai, apa gagal/skip/blocker, jujur.
+3. **`git commit`** dengan pesan yang disarankan di `EXECUTION_PROMPTS.md`.
+4. **Jangan mengarang data.** Temui field kosong → pakai token CONFIG + `// TODO(lintang)`, catat di backlog di bawah.
+5. **Berhenti** di akhir sprint; tunggu instruksi sprint berikutnya.
+
+### Backlog / temuan (diisi selama eksekusi)
+- [ ] `// TODO(lintang)` — daftar token CONFIG yang masih menunggu (lihat PROGRESS_LOG Sprint 0)
+- [ ] **Repo GitHub belum ada** → Vercel belum tersambung ke Git, jadi belum ada auto-deploy tiap `git push`. Deploy sekarang manual via `npx vercel --prod`. (Blokir alur "push = redeploy" yang diandalkan S7.)
+- [ ] **`public/fonts/Satoshi-Variable.woff2` belum ada** → body font sementara memakai fallback DM Sans. Blok `localFont` di `lib/fonts.ts` sengaja dinonaktifkan agar build tidak gagal.
+- [ ] Deviasi stack vs BLUEPRINT §8 (Next.js 16 + Tailwind v4): tidak ada `tailwind.config.ts` (Tailwind v4 CSS-first — token ada di `app/globals.css`), dan config bernama `next.config.ts` bukan `.mjs`.
+- [ ] Dark mode belum ada (blok `.dark` bawaan shadcn dihapus) — sesuai §3.2 "dark = fast-follow".

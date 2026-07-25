@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =====================================================================
+   Design tokens — PORTFOLIO_BLUEPRINT.md §3.2 (palet) & §3.3 (type-scale)
+   Token shadcn/ui dipetakan ke palet ini supaya komponen shadcn ikut on-brand.
+   Dark mode = fast-follow (belum di-scope MVP), jadi belum ada blok `.dark`.
+   ===================================================================== */
+:root {
+  /* Palet inti */
+  --paper: #fbfaf7; /* background warm paper */
+  --ink: #14141a; /* teks utama */
+  --ink-muted: #55555f; /* teks sekunder */
+  --card: #ffffff; /* permukaan kartu */
+  --indigo: #3d5afe; /* aksen utama */
+  --coral: #ff6a3d; /* aksen kedua — HEMAT (CTA/hover kecil saja) */
+  --accent: var(--indigo);
+
+  --radius: 14px;
+  --shadow-soft:
+    0 1px 2px rgba(20, 20, 26, 0.04), 0 8px 24px rgba(20, 20, 26, 0.06);
+  --maxw: 1120px;
+
+  /* Type-scale (clamp) — §3.3 */
+  --step--1: clamp(0.83rem, 0.78rem + 0.2vw, 0.94rem);
+  --step-0: clamp(1rem, 0.95rem + 0.3vw, 1.13rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+  --step-2: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+  --step-3: clamp(2rem, 1.5rem + 2.5vw, 3.4rem);
+  --step-4: clamp(2.6rem, 1.8rem + 4vw, 4.6rem); /* hero display */
+
+  /* Pemetaan token shadcn/ui → palet BLUEPRINT */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card-foreground: var(--ink);
+  --popover: var(--card);
+  --popover-foreground: var(--ink);
+  --primary: var(--indigo);
+  --primary-foreground: #ffffff;
+  --secondary: #f2f0ea;
+  --secondary-foreground: var(--ink);
+  --muted: #f2f0ea;
+  --muted-foreground: var(--ink-muted);
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #e6e3dc; /* garis warm */
+  --input: #e6e3dc;
+  --ring: var(--indigo);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-indigo-brand: var(--indigo);
+  --color-coral: var(--coral);
+
+  /* Fonts — lihat lib/fonts.ts. `--font-body` baru terdefinisi setelah file
+     Satoshi ditambahkan; sampai itu terjadi, DM Sans yang menang. */
+  --font-sans: var(--font-body, var(--font-body-fallback));
+  --font-heading: var(--font-display);
+  --font-mono: var(--font-code);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  --container-content: var(--maxw);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-size: var(--step-0);
+    font-family: var(--font-body, var(--font-body-fallback)), system-ui,
+      sans-serif;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Angka hook / tech chips / kode */
+.mono,
+.stat-num {
+  font-family: var(--font-code), ui-monospace, monospace;
+}
+
+/* Aksesibilitas — §3.4: hormati prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
