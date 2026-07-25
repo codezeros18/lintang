@@ -57,7 +57,7 @@ export function Contact() {
             <span className="text-ink font-medium">Email: </span>
             <a
               href={`mailto:${CONTACT.email}`}
-              className="decoration-border hover:text-coral hover:decoration-coral underline underline-offset-4"
+              className="decoration-border hover:text-coral-ink hover:decoration-coral-ink underline underline-offset-4"
             >
               {CONTACT.email}
             </a>
@@ -68,7 +68,7 @@ export function Contact() {
               href={CONTACT.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="decoration-border hover:text-coral hover:decoration-coral underline underline-offset-4"
+              className="decoration-border hover:text-coral-ink hover:decoration-coral-ink underline underline-offset-4"
             >
               github.com/codezeros18
             </a>
@@ -80,7 +80,7 @@ export function Contact() {
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="decoration-border hover:text-coral hover:decoration-coral underline underline-offset-4"
+                className="decoration-border hover:text-coral-ink hover:decoration-coral-ink underline underline-offset-4"
               >
                 Profil LinkedIn
               </a>

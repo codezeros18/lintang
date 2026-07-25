@@ -13,7 +13,7 @@ import { Skills } from "@/components/sections/skills";
  */
 export default function Home() {
   return (
-    <main>
+    <main id="main">
       <Hero />
       <FeaturedProjects />
       <About />

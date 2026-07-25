@@ -77,7 +77,7 @@ function Proof({ project }: { project: Project }) {
       {proof.url ? (
         <a
           href={proof.url}
-          className="text-ink hover:text-coral hover:decoration-coral decoration-border mt-2 inline-block text-sm underline underline-offset-4"
+          className="text-ink hover:text-coral-ink hover:decoration-coral-ink decoration-border mt-2 inline-block text-sm underline underline-offset-4"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -97,7 +97,7 @@ export default async function ProjectPage({ params }: PageParams) {
   const name = displayName(project);
 
   return (
-    <main>
+    <main id="main">
       <Section className="pt-12 pb-20 md:pt-16 md:pb-28">
         <Link
           href="/#projects"

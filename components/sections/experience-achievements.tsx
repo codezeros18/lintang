@@ -61,7 +61,7 @@ export function ExperienceAchievements() {
                 {item.projectSlug ? (
                   <Link
                     href={`/projects/${item.projectSlug}`}
-                    className="text-ink hover:text-coral decoration-border hover:decoration-coral mt-2 inline-block text-sm underline underline-offset-4"
+                    className="text-ink hover:text-coral-ink decoration-border hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
                   >
                     Baca case study
                   </Link>
@@ -110,7 +110,7 @@ export function ExperienceAchievements() {
                       {item.projectSlug ? (
                         <Link
                           href={`/projects/${item.projectSlug}`}
-                          className="text-ink hover:text-coral decoration-border hover:decoration-coral mt-2 inline-block text-sm underline underline-offset-4"
+                          className="text-ink hover:text-coral-ink decoration-border hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
                         >
                           Lihat case study-nya
                         </Link>

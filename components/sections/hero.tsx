@@ -2,6 +2,7 @@ import { CountUp } from "@/components/motion/count-up";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { CONFIG, isSet } from "@/content/config";
+import { getHookStats } from "@/content/hook-stats";
 
 /**
  * Hero — naskah PORTFOLIO_BLUEPRINT.md §4.1, dipakai persis.
@@ -14,41 +15,9 @@ import { CONFIG, isSet } from "@/content/config";
  * terlihat setelah hidrasi dan target LCP <2s jadi berisiko.
  */
 
-type Stat = {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  label: string;
-};
-
-/**
- * Hook strip — 3 angka [FAKTA] dari CV (§0.2), masing-masing dengan aturan tampilnya.
- *
- * "5.000+ kg kopi dilacak" WAJIB tampil bersama konteks waktu `ANKOP_MONTHS` (§0.2).
- * Selama token itu kosong, angka kg TIDAK ditampilkan di hero dan slotnya diisi
- * "15+ supplier aktif" — angka CV lain yang aturannya "apa adanya".
- * TODO(lintang): isi `ANKOP_MONTHS` (dan `ANKOP_KG_CUMULATIVE`) agar angka kg bisa naik ke hero.
- */
-function getStats(): Stat[] {
-  const ankopMonths = CONFIG.ANKOP_MONTHS;
-
-  const coffeeStat: Stat = isSet(ankopMonths)
-    ? {
-        value: 5000,
-        suffix: "+ kg",
-        label: `kopi dilacak dalam ${ankopMonths} bulan pertama`,
-      }
-    : { value: 15, suffix: "+", label: "supplier aktif" };
-
-  return [
-    { value: 20, prefix: "Rp", suffix: "jt+", label: "transaksi (peluncuran awal)" },
-    coffeeStat,
-    { value: 6, label: "dashboard role-gated" },
-  ];
-}
-
 export function Hero() {
-  const stats = getStats();
+  // Angka hook berasal dari `content/hook-stats.ts` — sumber yang sama dengan OG image.
+  const stats = getHookStats();
 
   return (
     <section className="pt-16 pb-20 md:pt-24 md:pb-28">

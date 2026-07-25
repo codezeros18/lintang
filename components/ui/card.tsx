@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-[var(--radius)] border border-border bg-card text-ink",
+  "rounded-(--radius) border border-border bg-card text-ink",
   {
     variants: {
       elevation: {
         flat: "",
-        soft: "shadow-[var(--shadow-soft)]",
+        soft: "shadow-(--shadow-soft)",
       },
       padding: {
         none: "",

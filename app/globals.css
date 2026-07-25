@@ -17,6 +17,10 @@
   --card: #ffffff; /* permukaan kartu */
   --indigo: #3d5afe; /* aksen utama */
   --coral: #ff6a3d; /* aksen kedua — HEMAT (CTA/hover kecil saja) */
+  /* Coral versi gelap khusus TEKS: #FF6A3D hanya 2.73:1 di atas paper — gagal AA.
+     Yang ini 5.12:1 di atas paper & 5.34:1 di atas card. Coral asli tetap dipakai
+     untuk isian/aksen non-teks. */
+  --coral-ink: #b34a2b;
   --accent: var(--indigo);
 
   --radius: 14px;
@@ -75,6 +79,7 @@
   --color-ink-muted: var(--ink-muted);
   --color-indigo-brand: var(--indigo);
   --color-coral: var(--coral);
+  --color-coral-ink: var(--coral-ink);
 
   /* Fonts — lihat lib/fonts.ts. `--font-body` baru terdefinisi setelah file
      Satoshi ditambahkan; sampai itu terjadi, DM Sans yang menang. */

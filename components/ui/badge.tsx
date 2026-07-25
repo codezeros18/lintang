@@ -12,8 +12,9 @@ const badgeVariants = cva(
         neutral: "border-border bg-secondary text-ink-muted",
         accent:
           "border-transparent bg-[color-mix(in_oklab,var(--indigo),transparent_88%)] text-[color-mix(in_oklab,var(--indigo),black_18%)]",
+        // Teks memakai `--coral-ink` (bukan `--coral`) supaya kontrasnya lolos AA.
         coral:
-          "border-transparent bg-[color-mix(in_oklab,var(--coral),transparent_88%)] text-[color-mix(in_oklab,var(--coral),black_28%)]",
+          "text-coral-ink border-transparent bg-[color-mix(in_oklab,var(--coral),transparent_88%)]",
         outline: "border-border bg-transparent text-ink-muted",
       },
       /** Tech chip & angka memakai Space Mono (§3.1). */

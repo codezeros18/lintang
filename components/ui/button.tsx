@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 // bukan sebagai warna tombol utama. Aksi utama memakai indigo.
 const buttonVariants = cva(
   [
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-[var(--radius)]",
+    "inline-flex shrink-0 items-center justify-center gap-2 rounded-(--radius)",
     "font-medium whitespace-nowrap select-none",
     "transition-[background-color,border-color,color,box-shadow,transform] duration-200",
     "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
@@ -18,11 +18,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-primary text-primary-foreground shadow-[var(--shadow-soft)] hover:bg-[color-mix(in_oklab,var(--indigo),black_12%)] active:translate-y-px",
+          "bg-primary text-primary-foreground shadow-(--shadow-soft) hover:bg-[color-mix(in_oklab,var(--indigo),black_12%)] active:translate-y-px",
         secondary:
           "border border-border bg-card text-ink hover:bg-secondary active:translate-y-px",
         ghost: "text-ink-muted hover:bg-secondary hover:text-ink",
-        link: "h-auto rounded-none px-0 text-ink underline decoration-border underline-offset-4 hover:text-coral hover:decoration-coral",
+        link: "h-auto rounded-none px-0 text-ink underline decoration-border underline-offset-4 hover:text-coral-ink hover:decoration-coral-ink",
       },
       size: {
         sm: "h-9 px-3.5 text-sm",

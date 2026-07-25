@@ -27,6 +27,45 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-25 23:58] — Sprint S6 — Polish · a11y · perf · SEO/OG · Analytics · Prod deploy
+**Status:** 🟡 jalan — **situs LIVE**, tapi 3 task S6 tidak bisa saya selesaikan sendiri (Lighthouse, custom domain, tes HP). Status sprint sengaja **tidak** saya set ✅.
+**URL live:** **https://lintang-sigma.vercel.app** (HTTPS aktif, deployment `lintang-lzg1mc0dt-…`)
+**Selesai:**
+- `content/hook-stats.ts` — angka hook dipindah ke **satu sumber** yang dipakai Hero **dan** OG image, supaya angka di situs tidak mungkin berbeda dari angka di preview share.
+- `app/opengraph-image.tsx` (`next/og`, 1200×630) — nama, role label, headline, dan hook strip dengan teks besar. Sudah dilihat hasil render PNG-nya: on-brand (paper/ink/indigo) dan terbaca sebagai thumbnail kecil.
+- `app/apple-icon.tsx` (180×180) — monogram sama dengan `app/icon.svg`, karena iOS tidak memakai favicon SVG.
+- `@vercel/analytics` dipasang di `app/layout.tsx`. Terverifikasi di produksi: komponennya ada di chunk client dan `/_vercel/insights/script.js` → 200.
+- **Skip-link** "Lompat ke konten utama" sebagai elemen fokus pertama, `<main id="main">` di homepage & halaman case study.
+- **Audit kontras WCAG diukur, bukan dikira-kira** (script perhitungan rasio). Hasil: ink/paper 17.58 · ink-muted/paper 7.06 · ink-muted/card 7.37 · ink-muted/secondary 6.46 · putih/indigo 5.13 · indigo/paper 4.92.
+  🔧 **Satu kegagalan ditemukan & diperbaiki:** coral `#FF6A3D` sebagai teks hanya **2.73:1** di atas paper — gagal AA. Ditambahkan token `--coral-ink: #B34A2B` khusus teks (**5.12:1** di paper, **5.34:1** di card, **4.71:1** di atas tint badge coral). Coral asli tetap dipakai untuk isian non-teks. Semua `text-coral`/`decoration-coral` dialihkan.
+- Cek broken link: GitHub `codezeros18` → 200. LinkedIn memang tidak ditautkan sama sekali.
+- Cek kebocoran token di 5 halaman produksi: tidak ada `TODO(lintang)`, `PROOF_*`, `ANKOP_MONTHS`, `CV_FILE`, `PHOTO_FILE`, `LINKEDIN_URL`, maupun `undefined`.
+- `/ui-demo` → **404 di produksi** (halaman kerja internal tidak bocor).
+- `NEXT_PUBLIC_SITE_URL` diset di Vercel (production) ke URL `.vercel.app`, jadi canonical/`og:url`/`og:image`/`robots.txt`/`sitemap.xml` semuanya menunjuk URL yang **benar-benar resolve** — bukan `lintangbalakosa.dev` yang belum ada.
+- Verifikasi live: `/` `/projects/ankop-trace` `/robots.txt` `/sitemap.xml` `/opengraph-image` `/apple-icon` → semua **200**. `npm run build` ✅ · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- ⛔ **Lighthouse mobile TIDAK dijalankan.** Tidak ada browser yang bisa saya kendalikan di lingkungan ini, jadi **saya tidak punya skor apa pun untuk dilaporkan** — dan saya tidak akan mengarang angka. Target ≥90 & LCP <2s **belum terbukti**. Yang bisa saya ukur: HTML halaman utama ±103 KB (termasuk RSC payload), 11 chunk JS. **Aksi Lintang:** buka DevTools → Lighthouse → Mobile di URL live, lalu catat skornya di sini.
+- ⛔ **Custom domain belum dipasang** — `lintangbalakosa.dev` belum diregistrasi. Situs live di subdomain Vercel. Begitu domain aktif: tambahkan di dashboard Vercel, lalu **hapus** env `NEXT_PUBLIC_SITE_URL` supaya canonical kembali ke `CONFIG.DOMAIN`.
+- ⛔ **Tes di HP asli belum dilakukan** — hanya bisa Lintang. Termasuk verifikasi responsif 360px yang sejak S3 belum pernah diuji di viewport sungguhan.
+- ⛔ **Optimisasi gambar tidak dikerjakan karena tidak ada gambar sama sekali** di situs — belum ada foto profil maupun screenshot bukti. Begitu `PHOTO_FILE` ada, hero + OG perlu `next/image` dengan `priority`.
+- ⚠️ **Favicon "final" masih monogram huruf L**, bukan logo hasil desain. Fungsional dan on-brand, tapi kalau Lintang punya mark sendiri, ganti di `app/icon.svg` + `app/apple-icon.tsx`.
+- ⚠️ **A11y belum diuji dengan screen reader sungguhan.** Yang sudah: kontras terukur, HTML semantik (`<main>`, `<ol>`, `<dl>`, urutan heading h1→h2→h3), focus ring di semua elemen interaktif, skip-link, `aria-hidden` pada ornamen. Belum: uji NVDA/VoiceOver dan uji navigasi keyboard menyeluruh.
+- ⚠️ **`prefers-reduced-motion` masih belum diuji di browser** (menggantung sejak S2).
+- ⚠️ Deploy masih lewat **Vercel CLI manual**, bukan integrasi Git — repo GitHub belum ada. `git push` belum memicu redeploy.
+**Keputusan / catatan:**
+- Status S6 saya set **🟡 bukan ✅**. MVP-nya memang sudah live dan berfungsi, tapi tiga item Definition of Done (skor Lighthouse, custom domain, tes HP) belum terpenuhi — menandainya selesai berarti menyembunyikan itu.
+- 🔴 **Saran kuat: JANGAN sebarkan URL dulu.** Situs sekarang tidak punya bukti satu pun (5 token `PROOF_*` kosong), tidak punya link LinkedIn, tidak punya tombol CV, dan tidak punya foto. Recruiter yang membuka hari ini melihat klaim tanpa bukti — persis lawan dari prinsip §1 "bukti di atas klaim". Isi dulu `PROOF_*`, `LINKEDIN_URL`, `CV_FILE`, `PHOTO_FILE`, plus `ownVsTeam`/`learned`.
+- `--coral-ink` adalah token baru di luar §3.2. Alasannya murni aksesibilitas: palet asli tidak lolos AA untuk teks. Coral asli tidak diubah.
+**CONFIG/TODO yang masih menunggu Lintang:** *(13 token masih `null`)*
+- 🔴 Jalankan **Lighthouse mobile** di URL live + catat skornya.
+- 🔴 5 token `PROOF_*` · `LINKEDIN_URL` · `CV_FILE` · `PHOTO_FILE` · `ownVsTeam`/`learned` 4 hero.
+- 🔴 Registrasi `DOMAIN` + hubungkan di Vercel (lalu hapus env `NEXT_PUBLIC_SITE_URL`).
+- 🔴 Tes di HP asli (termasuk 360px).
+- ⛔ `ANKOP_MONTHS` · `ANKOP_KG_CUMULATIVE` · `CLIENT_NAME_PERMISSION` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK` · data CV yang hilang (S5).
+- ⛔ Repo GitHub (auto-deploy) · file `Satoshi-Variable.woff2`.
+**Commit:** `S6: polish, a11y, perf, SEO/OG, analytics, prod deploy (MVP live)`
+**Sprint berikutnya:** S7 — Log/Activity (MDX, fast-follow) — menunggu instruksi
+
 ### [2026-07-25 23:41] — Sprint S5 — Experience/Achievements + Contact + CV
 **Status:** ✅ selesai (dengan satu task sengaja tidak dikerjakan — lihat blocker)
 **Selesai:**

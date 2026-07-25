@@ -17,7 +17,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 | **S3** | Hero + About + Skills | 3 section atas + hook strip | ✅ |
 | **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | ✅ |
 | **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | ✅ |
-| **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🔲 |
+| **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🟡 |
 | **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🔲 |
 
 Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
@@ -112,20 +112,25 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** MVP live di custom domain, lolos target performa.
 
 **Tasks:**
-- [ ] `app/opengraph-image.tsx` (`next/og`): nama + role + hook strip + foto; teks besar (§7)
-- [ ] Favicon final + meta/title per halaman via `lib/seo.ts`
-- [ ] Optimisasi gambar (`next/image`, ukuran benar, `priority` hero), lazy untuk sisanya
-- [ ] Audit **Lighthouse mobile ≥90**, **LCP <2s**; perbaiki CLS/font-swap
-- [ ] Aksesibilitas **AA**: kontras, alt text, semantic HTML, focus ring, skip-link
-- [ ] `@vercel/analytics` aktif
-- [ ] Cek broken link (khusus **LinkedIn**); pastikan tak ada token CONFIG bocor ke UI
-- [ ] Custom domain (`DOMAIN`) + HTTPS di Vercel
-- [ ] **Tes di HP asli**
+- [x] `app/opengraph-image.tsx` (`next/og`): nama + role + hook strip, teks besar (§7) — ⚠️ **tanpa foto** (`PHOTO_FILE` kosong)
+- [x] Favicon + meta/title per halaman via `lib/seo.ts` — `app/icon.svg` + `app/apple-icon.tsx` (monogram; bukan logo hasil desain)
+- [ ] Optimisasi gambar — ⛔ **tidak ada gambar sama sekali di situs** (belum ada foto/screenshot). Belum ada yang bisa dioptimalkan.
+- [ ] Audit **Lighthouse mobile ≥90**, **LCP <2s** — ⛔ **BELUM DIJALANKAN**: tidak ada browser di lingkungan ini. **Harus dijalankan Lintang.**
+- [x] Aksesibilitas **AA**: kontras (diukur, 1 kegagalan diperbaiki), semantic HTML, focus ring, skip-link — ⚠️ belum ada uji screen reader
+- [x] `@vercel/analytics` aktif (terpasang di bundle; `/_vercel/insights/script.js` → 200)
+- [x] Cek broken link (GitHub → 200; **LinkedIn memang tidak ditautkan**); tidak ada token CONFIG bocor ke UI (dicek di 5 halaman)
+- [ ] Custom domain (`DOMAIN`) + HTTPS — ⛔ **domain belum diregistrasi.** Sementara live di `lintang-sigma.vercel.app` (HTTPS aktif); `NEXT_PUBLIC_SITE_URL` sudah diset supaya canonical/sitemap/OG menunjuk URL yang benar-benar resolve.
+- [ ] **Tes di HP asli** — ⛔ hanya bisa dilakukan Lintang.
 
 **Definition of Done:** MVP LIVE di `DOMAIN`; Lighthouse mobile ≥90 & LCP <2s; a11y AA; OG ter-render saat di-share; Analytics aktif; tak ada link mati/token bocor.
 **Files:** `app/opengraph-image.tsx`, `lib/seo.ts`, `app/layout.tsx`, konfigurasi Vercel/domain.
 
 > 🎯 **Setelah S6 = MVP LIVE.** Distribusikan URL (LinkedIn/Glints/Kalibrr/Dealls/IG/CV) sambil lanjut S7.
+>
+> ⚠️ **Status nyata: situs LIVE di https://lintang-sigma.vercel.app, tapi S6 belum bisa ditutup ✅.**
+> Tiga hal tersisa hanya bisa dikerjakan Lintang: (1) audit Lighthouse mobile, (2) registrasi
+> custom domain, (3) tes di HP asli. **Jangan sebarkan URL** sebelum bukti (`PROOF_*`),
+> `LINKEDIN_URL`, dan `CV_FILE` terisi — lihat PROGRESS_LOG S6.
 
 ---
 
