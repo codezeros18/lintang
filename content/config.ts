@@ -70,14 +70,18 @@ export type Config = {
 export const CONFIG: Config = {
   // ✅ Dikonfirmasi Lintang 2026-07-26 + cocok dengan header CV (linkedin.com/in/lintangbalakosa).
   LINKEDIN_URL: "https://www.linkedin.com/in/lintangbalakosa/",
-  ANKOP_MONTHS: null, // TODO(lintang): berapa bulan sejak Ankop live?
-  ANKOP_KG_CUMULATIVE: null, // TODO(lintang): 5.000+ kg itu kumulatif sejak live atau bukan?
+  // ✅ Dikonfirmasi Lintang 2026-07-26: 2 bulan sejak Ankop Trace live (Jun 2026 → Jul 2026),
+  // dan ia menyetujui kalimat "5.000+ kg ceri kopi dilacak dalam 2 bulan pertama sejak live"
+  // — jadi angkanya memang akumulasi sepanjang rentang itu.
+  ANKOP_MONTHS: 2,
+  ANKOP_KG_CUMULATIVE: true,
   PROOF_ANKOP: null, // TODO(lintang): jenis bukti Ankop + izin sebut nama klien
   PROOF_BISASINEMA: null, // TODO(lintang): jenis bukti Bisasinema + URL live bila ada
   PROOF_TERA: null, // TODO(lintang): bukti Tera — jangan klaim demo bila belum ada
   PROOF_HOTEL: null, // TODO(lintang): link Looker view-only / notebook GitHub
   PROOF_BANKSAMPAH: null, // TODO(lintang): screenshot dashboard CEO
-  CLIENT_NAME_PERMISSION: null, // TODO(lintang): boleh sebut nama Bisasinema/Ankop?
+  // ✅ Dikonfirmasi Lintang 2026-07-26: nama klien boleh disebut.
+  CLIENT_NAME_PERMISSION: true,
   CV_FILE: "Lintang-Balakosa-Ardhana-CV.pdf", // ✅ ada di public/cv/
   PHOTO_FILE: null, // TODO(lintang): taruh foto di public/images/ lalu isi nama filenya
   DOMAIN: "lintangbalakosa.dev", // 🟡 default saran BLUEPRINT §0.1 — TODO(lintang): konfirmasi/registrasi

@@ -65,6 +65,12 @@
 - 🟡 `DOMAIN` · skor Lighthouse · tes HP asli · repo GitHub · file Satoshi
 **Commit:** `data: isi profil dari CV asli + LinkedIn (LINKEDIN_URL, CV_FILE, pengalaman, pendidikan, organisasi, sertifikasi)`
 
+**Susulan (jawaban Lintang, 2026-07-26):**
+- ✅ **`ANKOP_MONTHS: 2`** + **`ANKOP_KG_CUMULATIVE: true`** — Lintang menyetujui kalimat "5.000+ kg ceri kopi dilacak dalam 2 bulan pertama sejak live". **Angka kg akhirnya muncul** di hero, OG image, dan case study Ankop; slot "15+ supplier aktif" di hook strip digantikannya (angka itu tetap ada di daftar hasil case study).
+- ✅ **`CLIENT_NAME_PERMISSION: true`** — nama klien boleh disebut. Sekarang eksplisit, bukan default diam.
+- ⚠️ **Nomor HP di CV: diterbitkan apa adanya atas keputusan Lintang.** Risikonya sudah disampaikan (terekspos ke scraper/spam). Nomor tetap **tidak** ditampilkan di halaman web — hanya ada di dalam PDF.
+- **Sisa token kosong: 6** → 5× `PROOF_*` + `PHOTO_FILE` (plus `IO_FESTIVAL_DATE`/`IO_FESTIVAL_STACK` untuk Log, serta `ownVsTeam`/`learned` yang bukan token).
+
 ### [2026-07-26 00:14] — Sprint S7 — Log / Activity (MDX, fast-follow)
 **Status:** 🟡 jalan — infrastruktur Log **selesai & jalan**, tapi seed post kurang satu dan tidak bisa saya isi sendiri.
 **Selesai:**
