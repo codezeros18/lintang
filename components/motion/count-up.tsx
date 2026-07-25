@@ -1,13 +1,9 @@
 "use client";
 
 import { animate, useInView, useReducedMotion } from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
-
-// `useLayoutEffect` tidak boleh jalan saat render di server.
-const useIsomorphicLayoutEffect =
-  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export type CountUpProps = {
   /** Nilai akhir — WAJIB angka sebenarnya, bukan angka hiasan. */
@@ -46,13 +42,18 @@ export function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const isInView = useInView(ref, { once: true, margin: "-10%" });
+  // Nilai awal SELALU nilai akhir yang benar.
+  //
+  // Versi sebelumnya menurunkannya ke `from` di layout effect agar animasinya
+  // tidak berkedip. Akibatnya fatal: kalau animasi tidak pernah jalan (observer
+  // tidak memicu, JS gagal, tab background), angka **berhenti di 0** — situs
+  // menampilkan "Rp0M+" alih-alih "Rp20M+". Terbukti di uji headless R1.
+  //
+  // Sekarang penurunan ke `from` hanya terjadi di dalam animasi itu sendiri,
+  // jadi setiap mode gagal berakhir pada angka yang BENAR. Konsekuensinya ada
+  // kedip ~1 frame saat animasi mulai — harga yang jauh lebih murah daripada
+  // menampilkan angka palsu.
   const [value, setValue] = useState(to);
-
-  // Turunkan ke nilai awal sebelum paint pertama di client supaya tidak berkedip.
-  useIsomorphicLayoutEffect(() => {
-    if (shouldReduceMotion) return;
-    setValue(from);
-  }, [from, shouldReduceMotion]);
 
   useEffect(() => {
     if (shouldReduceMotion || !isInView) return;

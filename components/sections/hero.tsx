@@ -20,7 +20,8 @@ export function Hero() {
   const stats = getHookStats();
 
   return (
-    <section className="pt-16 pb-20 md:pt-24 md:pb-28">
+    // `id="top"` dipakai item nav "Home" + scroll-spy (R1).
+    <section id="top" className="pt-16 pb-20 md:pt-24 md:pb-28">
       <Container>
         <p className="mono text-ink-muted text-xs tracking-[0.14em] uppercase sm:text-sm">
           Full-Stack Engineer · Informatics, UMN

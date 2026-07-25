@@ -52,9 +52,11 @@ dijabarkan jadi nilai konkret versi Lintang.
 
 | Aspek | Nilai terkunci | Dari mana |
 |---|---|---|
-| Lebar (≥1024px) | **`--sidebar-w: 240px`** | Kelipatan skala 4px §3.3; `240 + 1120 = 1360px` masih muat di laptop 1440px dengan gutter |
-| Lebar (≥1280px) | tetap **240px** | Sengaja tidak melebar — ruang ekstra diberikan ke konten, bukan ke nav |
+| Lebar (≥768px) | **`--sidebar-w: 240px`** | Kelipatan skala 4px §3.3; `240 + 1120 = 1360px` masih muat di laptop 1440px dengan gutter |
+| Lebar di layar lebih besar | tetap **240px** | Sengaja tidak melebar — ruang ekstra diberikan ke konten, bukan ke nav |
 | Titik collapse | **<768px → drawer** | Ditetapkan `SPRINTS_PHASE2_REDESIGN.md` R1 |
+| Lebar drawer | **`min(280px, 85vw)`** | Sedikit lebih lebar dari sidebar agar nyaman disentuh; `85vw` menjaga sisa layar tetap terlihat di 360px |
+| Tinggi top bar mobile | **`--topbar-h: 56px`** | Kelipatan 4px; cukup untuk target sentuh 40px + padding |
 | Latar | **`var(--paper)` `#FBFAF7`** — sama dengan halaman | §3.2. Sidebar dipisahkan garis, bukan blok warna; nav tidak boleh menyaingi konten |
 | Pemisah | garis kanan **1px `var(--border)` `#E6E3DC`** | §3.2 |
 | Padding | **`p-6` (24px)**, gap antar item **`gap-2` (8px)** | Skala 4px §3.3 |
@@ -177,8 +179,9 @@ Ini tidak memblokir R1–R6.
 |---|---|---|
 | `--sidebar-w` | `240px` | Layout shell butuh satu sumber lebar; kelipatan 4px |
 | `--nav-item-h` | `36px` | Target sentuh nyaman, tetap kelipatan 4px |
+| `--topbar-h` | `56px` | Tinggi top bar mobile (ditambahkan saat R1) |
 
-Keduanya **ukuran, bukan warna atau font** — jadi tidak menambah permukaan risiko clone.
+Ketiganya **ukuran, bukan warna atau font** — jadi tidak menambah permukaan risiko clone.
 
 ---
 
@@ -247,3 +250,4 @@ Jawab sebelum menutup sprint mana pun:
 | Tanggal | Perubahan |
 |---|---|
 | 2026-07-26 | Dokumen dibuat & dikunci di R0. Tokens dikonfirmasi tanpa perubahan palet/font; ditambah `--sidebar-w` & `--nav-item-h` (dipasang R1). |
+| 2026-07-26 (R1) | **Koreksi breakpoint:** baris sidebar semula menulis "≥1024px", padahal `SPRINTS_PHASE2_REDESIGN.md` R1 menetapkan collapse **<768px**. Diselaraskan jadi persisten ≥768px — sprint doc yang menang. Ditambah nilai lebar drawer & `--topbar-h`. |

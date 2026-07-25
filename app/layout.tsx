@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 
+import { AppShell } from "@/components/layout/app-shell";
 import { fontVariables } from "@/lib/fonts";
 import { buildMetadata } from "@/lib/seo";
 
@@ -34,9 +35,9 @@ export default function RootLayout({
           href="#main"
           className="bg-card text-ink focus-visible:ring-ring sr-only rounded-(--radius) px-4 py-2 shadow-(--shadow-soft) focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:ring-2"
         >
-          Lompat ke konten utama
+          Skip to main content
         </a>
-        {children}
+        <AppShell>{children}</AppShell>
         <Analytics />
       </body>
     </html>

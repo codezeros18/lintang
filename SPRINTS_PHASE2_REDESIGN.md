@@ -33,7 +33,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 | Sprint | Nama | Cakupan | Status |
 |---|---|---|---|
 | **R0** | Design-language lock (inspired, not copied) | Bedah pola bryllim/leerob → terjemah ke design tokens Lintang; git+domain decision | ✅ |
-| **R1** | Layout shell — sidebar + container + rhythm | Sidebar nav, container lega, spacing scale, sticky/scroll-spy | 🔲 |
+| **R1** | Layout shell — sidebar + container + rhythm | Sidebar nav, container lega, spacing scale, sticky/scroll-spy | ✅ |
 | **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | 🔲 |
 | **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | 🔲 |
 | **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | 🔲 |
@@ -72,12 +72,12 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** kerangka layout baru (sidebar persisten + area konten ber-container) menggantikan layout one-page polos, TANPA menyalin bryllim.
 
 **Tasks:**
-- [ ] `components/layout/Sidebar.tsx`: nav kiri persisten (desktop) → **collapse jadi top-bar/hamburger di <768px**. Item: Home, Projects, About, Blog, Collabs, Contact. Monogram "LBA" sendiri.
-- [ ] `components/layout/AppShell.tsx`: grid `[sidebar | content]`; content pakai `Container` (`--maxw`) + ritme section `py-20 md:py-28`.
-- [ ] **Scroll-spy** ringan (highlight section aktif) — IntersectionObserver, bukan lib berat.
-- [ ] Perbaiki anchor warisan: `#projects`, `#contact` kini punya tujuan pasti (backlog fase 1).
-- [ ] Mobile: sidebar → drawer; pastikan focus-trap + `Esc` close (a11y).
-- [ ] Hormati `prefers-reduced-motion` untuk transisi drawer.
+- [x] `components/layout/sidebar.tsx`: nav kiri persisten (≥768px) → top-bar + drawer di <768px. Item lengkap; **Blog & Collabs dirender non-link bertanda "soon"** karena rutenya baru dibangun di R4/R5 (larangan link mati §9). Monogram "LBA" teks sendiri.
+- [x] `components/layout/app-shell.tsx`: grid `[var(--sidebar-w) | 1fr]` + `min-w-0` pada kolom konten; ritme & `--maxw` tetap dipegang `Section`/`Container` tiap halaman.
+- [x] **Scroll-spy** `components/layout/use-active-section.ts` — IntersectionObserver murni (`rootMargin` pita tengah), nol dependency baru. ⚠️ highlight-nya belum diuji di sesi browser (lihat PROGRESS_LOG).
+- [x] Anchor warisan: `#projects` & `#contact` sudah punya tujuan sejak S4/S5 (diverifikasi); ditambah `id="top"` di hero untuk item "Home".
+- [x] Drawer mobile + focus-trap manual (tanpa lib) + `Esc` close + kunci scroll body + fokus dikembalikan ke pemicu. ⚠️ belum diuji interaktif di browser.
+- [x] Transisi drawer memakai CSS (bukan Framer Motion), jadi aturan global `@media (prefers-reduced-motion: reduce)` otomatis menonaktifkannya — sekaligus menjaga shell tetap ringan.
 
 **Definition of Done:** sidebar tampil & responsif 360px→desktop; scroll-spy jalan; tak ada nilai visual yang menyerupai bryllim (cek terhadap `DESIGN_LANGUAGE.md`); build sukses.
 **Files:** `components/layout/Sidebar.tsx`, `AppShell.tsx`, `app/layout.tsx` (bungkus AppShell).

@@ -27,6 +27,42 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 05:40] — Fase 2 · Sprint R1 — Layout shell (sidebar + container + rhythm)
+**Status:** ✅ selesai
+**Selesai:**
+- `components/layout/sidebar.tsx` — nav persisten ≥768px (sticky, `h-dvh`, latar `--paper` + garis kanan `--border`) dan **top bar + drawer** di bawahnya. Monogram **"LBA"** teks Space Grotesk indigo; hamburger digambar dari 3 batang CSS (bukan aset impor).
+- **Blog & Collabs dirender sebagai teks non-link bertanda "soon"**, bukan tautan. Rutenya baru dibangun di R4/R5 — menautkannya sekarang berarti 2 link mati, yang dilarang BLUEPRINT §9. Item tetap ada di nav supaya IA fase 2 sudah terbaca.
+- `components/layout/app-shell.tsx` — grid `[var(--sidebar-w) | 1fr]` dengan **`min-w-0`** di kolom konten (tanpa itu konten lebar memaksa kolom melebar → scroll horizontal). Ritme `py-20 md:py-28` dan `--maxw` sengaja **tetap** dipegang `Section`/`Container` per halaman, bukan shell, supaya halaman artikel R3 nanti tidak perlu melawan shell.
+- `components/layout/use-active-section.ts` — scroll-spy IntersectionObserver murni, `rootMargin: -45% 0px -45% 0px` (pita tipis di tengah layar). **Nol dependency baru.**
+- Anchor warisan: `#projects` & `#contact` **sudah** punya tujuan sejak S4/S5 (diverifikasi lewat grep, bukan asumsi); ditambah `id="top"` di hero untuk item "Home".
+- Drawer: focus-trap manual, `Esc` menutup, scroll body dikunci, fokus dikembalikan ke tombol pemicu, `role="dialog"` + `aria-modal`. Transisi memakai **CSS**, bukan Framer Motion — jadi aturan global `prefers-reduced-motion` otomatis mematikannya dan shell tidak menambah beban JS di atas lipatan.
+- `app/layout.tsx` membungkus konten dengan `AppShell`. Skip-link **diterjemahkan** ("Lompat ke konten utama" → "Skip to main content") — terlewat di pass i18n karena `sr-only`, padahal terbaca screen reader.
+- Token `--sidebar-w: 240px`, `--nav-item-h: 36px`, `--topbar-h: 56px` dipasang di `globals.css`. `npm run build` ✅ · `npm run lint` ✅.
+**🔴 Bug integritas yang ditemukan saat verifikasi R1 (di luar scope, tetap diperbaiki):**
+- Screenshot headless menunjukkan hook strip menampilkan **"Rp0M+ / 0+ kg / 0"** — bukan angka sebenarnya. Diuji ulang dengan budget 15 detik: **tetap 0**, bukan sekadar tertangkap di tengah animasi.
+- Penyebabnya `CountUp` sejak S3: sebuah layout effect menurunkan nilai ke `from` (0) sebelum paint agar animasi tidak berkedip. Kalau animasinya kemudian tidak pernah jalan (observer tak memicu, JS gagal, tab background), angka **berhenti di 0** — situs menampilkan angka palsu.
+- Diperbaiki: nilai awal sekarang **selalu nilai akhir yang benar**, dan penurunan ke `from` hanya terjadi di dalam animasi itu sendiri. Setiap mode gagal kini berakhir pada angka yang BENAR; harganya kedip ~1 frame saat animasi mulai. Terverifikasi lewat screenshot ulang: `Rp20M+ · 5,000+ kg · 6`.
+- Saya memilih memperbaikinya meski ini scope R2, karena aturan inti proyek adalah tidak pernah menampilkan angka yang salah — membiarkannya demi kerapian sprint akan salah.
+**Verifikasi yang benar-benar dijalankan (Chrome headless):**
+- ✅ Desktop 1280px: sidebar, monogram, penanda aktif indigo pada "Home", badge "soon" — semua tampil benar.
+- ✅ **360px sungguhan**: top bar + hamburger tampil, teks membungkus rapi, **tidak ada overflow horizontal**.
+- ⚠️ Catatan tooling: `--window-size=360` **tidak** menghasilkan viewport 360px — Chrome headless meng-clamp ke ≥400px, jadi screenshot pertama tampak "terpotong" dan sempat saya kira bug layout. Dibuktikan dengan halaman probe media-query, lalu diuji ulang lewat iframe selebar 360px. **Bukan bug, artefak alat.**
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **Scroll-spy, drawer, focus-trap, dan Esc BELUM diuji interaktif.** Screenshot statis tidak bisa mengklik atau menggulir, dan percobaan memuat `/#about` di headless menghasilkan viewport kosong (kemungkinan kuirk fragment + virtual-time; bukan indikasi regresi, tapi **juga bukan bukti bahwa fiturnya jalan**). Semua ini baru terverifikasi di tingkat kode. **Tolong cek manual:** klik hamburger, tekan Esc, Tab keliling drawer, dan gulir beranda untuk melihat highlight nav berpindah.
+- ⚠️ **Repo GitHub masih belum ada** — `SPRINTS_PHASE2_REDESIGN.md` §0 menetapkannya sebagai prasyarat **sebelum R1**. R1 tetap dikerjakan sesuai instruksi, tapi utangnya belum lunas dan makin dekat ke R4 (blog) yang benar-benar mengandalkannya.
+- ⚠️ Belum di-deploy (R1 tidak memintanya); situs live masih versi sebelum shell.
+- ⚠️ Sidebar belum tampil di halaman `/log` dan `/projects/[slug]`? **Tampil** — `AppShell` dipasang di root layout, jadi seluruh rute ikut. Yang belum diuji hanya highlight nav di rute tersebut (seharusnya tidak ada yang tersorot, sesuai desain).
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — dijalankan terhadap diff R1:**
+- ✅ Nol hex mentah di `components/layout/*` — semua warna lewat token (`bg-paper`, `text-indigo-brand`, `border-border`, `bg-secondary`; overlay memakai `color-mix` dari `--ink`).
+- ✅ Satu-satunya `font-family` adalah `var(--font-display)` = Space Grotesk.
+- ✅ Nol aset impor: monogram = teks "LBA", hamburger = 3 batang CSS.
+- ✅ Label nav generik (Home/Projects/About/Blog/Collabs/Contact) — berasal dari sprint doc, bukan dari copy referensi.
+- ✅ **Situs referensi tidak dibuka sama sekali selama R1.**
+- 🟡 **Jujur soal godaan (diminta eksplisit oleh instruksi):** ada satu titik saya ingin membuka bryllim untuk "melihat lebar sidebar dan bentuk penanda aktifnya". Tidak saya lakukan — lebar 240px diturunkan dari aritmetika `--maxw` + skala 4px, dan penanda aktif dipilih garis indigo 2px karena §3.2 menetapkan indigo sebagai aksen utama. Keduanya keputusan dari tokens sendiri, bukan hasil mengintip.
+- 🔧 **Koreksi dokumen R0:** `DESIGN_LANGUAGE.md` semula menulis sidebar persisten "≥1024px", padahal sprint doc R1 menetapkan collapse **<768px**. Diselaraskan jadi ≥768px (sprint doc yang menang), plus dicatat lebar drawer `min(280px,85vw)` dan `--topbar-h`.
+**Commit:** `R1: layout shell (sidebar + container + rhythm)`
+**Sprint berikutnya:** R2 — Hero + navigasi baru (menunggu instruksi)
+
 ### [2026-07-26 02:05] — Fase 2 · Sprint R0 — Design-language lock (inspired, NOT copied)
 **Status:** ✅ selesai (fase keputusan + dokumen; **nol perubahan UI**, sesuai instruksi)
 **Selesai:**
