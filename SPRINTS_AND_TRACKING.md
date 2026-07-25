@@ -15,7 +15,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 | **S1** | Foundation & Setup | Scaffold Next.js, tooling, fonts, token CONFIG, deploy skeleton Vercel | ✅ |
 | **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | ✅ |
 | **S3** | Hero + About + Skills | 3 section atas + hook strip | ✅ |
-| **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | 🔲 |
+| **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | ✅ |
 | **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | 🔲 |
 | **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🔲 |
 | **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🔲 |
@@ -80,13 +80,13 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** grid 4 hero + halaman case study (minimal `ankop-trace` lengkap).
 
 **Tasks:**
-- [ ] `content/projects.ts`: 4 hero + 2 sekunder sesuai skema BLUEPRINT §5 (data dari CV; `// TODO(lintang)` untuk yang belum pasti)
-- [ ] `components/sections/FeaturedProjects.tsx`: kartu (nama, tagline, tech chips, badge kejujuran, hover-lift) urut Ankop→Bisasinema→Tera→Analisis Hotel
-- [ ] `app/projects/[slug]/page.tsx`: SSG `generateStaticParams`; layout case study (problem→approach→ownVsTeam→results+konteks waktu→learned→proof→label)
-- [ ] **Analisis Hotel = 1 case study** (gabung dgn medali SurabayaDev; anti double-count)
-- [ ] Bukti etis sesuai `PROOF_*` — screenshot beranotasi / Loom / write-up; **jangan render demo palsu**; bila proof kosong tampilkan "bukti menyusul" bukan link mati
-- [ ] Section "Other projects" (Kuali, Bank Sampah) sebagai kartu kecil
-- [ ] `generateMetadata` per case study (§7)
+- [x] `content/projects.ts`: 4 hero + 2 sekunder sesuai skema BLUEPRINT §5 (data dari CV; `// TODO(lintang)` untuk yang belum pasti)
+- [x] `components/sections/featured-projects.tsx`: kartu (nama, tagline, tech chips, badge kejujuran, hover-lift) urut Ankop→Bisasinema→Tera→Analisis Hotel
+- [x] `app/projects/[slug]/page.tsx`: SSG `generateStaticParams` (4 halaman ter-prerender); layout case study (problem→approach→ownVsTeam→results→learned→proof→label)
+- [x] **Analisis Hotel = 1 case study** (medali SurabayaDev jadi badge di kartu & halamannya, bukan entri terpisah)
+- [x] Bukti etis sesuai `PROOF_*` — semua token masih kosong, jadi semua case study menampilkan **"Bukti menyusul" + rencana buktinya**; tidak ada demo palsu maupun link mati
+- [x] Section "Other projects" (Kuali, Bank Sampah) sebagai kartu kecil — tanpa halaman case study (slug-nya 404, sudah diverifikasi)
+- [x] `generateMetadata` per case study (§7)
 
 **Definition of Done:** 4 kartu tampil & tautkan ke case study; `ankop-trace` lengkap & jujur; semua angka berkonteks waktu; tak ada demo palsu; build + SSG sukses.
 **Files:** `content/projects.ts`, `components/sections/FeaturedProjects.tsx`, `app/projects/[slug]/page.tsx`.
@@ -167,3 +167,6 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] **`#contact` juga belum ada** (S5). Hero memakainya sebagai CTA kedua selama `CV_FILE` kosong.
 - [ ] About tetap menyebut "5.000+ kg" tanpa konteks bulan karena itu naskah §4.3 apa adanya, sementara hero menyembunyikannya. Konsisten setelah `ANKOP_MONTHS` diisi — **keputusan Lintang** apakah kalimat About mau diubah sementara.
 - [ ] Responsive 360px→desktop belum diuji di viewport sungguhan (hanya lewat kelas breakpoint + build).
+- [ ] **Case study belum "lengkap"**: blok *Kerja sendiri vs tim* dan *Satu pelajaran* disembunyikan di keempat proyek karena `ownVsTeam` & `learned` belum diisi Lintang. Ini bagian paling meyakinkan buat recruiter — prioritas tertinggi setelah token bukti.
+- [ ] **`CLIENT_NAME_PERMISSION` masih `null`** → nama "Ankop Trace" & "Bisasinema" **ditampilkan**. Set ke `false` bila belum boleh disebut; nama anonim (`anonymousName`) sudah disiapkan dan otomatis dipakai.
+- [ ] Untuk S5: medali SurabayaDev sudah tampil di kartu/halaman Analisis Hotel. Di section Achievements, tulis sebagai rujukan ke case study itu — jangan diceritakan ulang seolah pekerjaan terpisah.

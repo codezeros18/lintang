@@ -27,6 +27,42 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-25 23:26] — Sprint S4 — Featured Projects + Case Study pages
+**Status:** ✅ selesai
+**Selesai:**
+- `content/projects.ts` — 4 hero (Ankop Trace, Bisasinema, Tera, Analisis Pembatalan Hotel) + 2 sekunder (Kuali, Bank Sampah Digital) sesuai skema §5.1, isinya dari §5.2. Ditambah helper `displayName()`, `resolveProof()`, `honestyTone()`.
+- `components/sections/featured-projects.tsx` — grid 4 kartu urut Ankop → Bisasinema → Tera → Analisis Hotel, tiap kartu: badge kejujuran, tagline, tech chip (Space Mono), role + durasi, hover-lift, dan *stretched link* (seluruh kartu bisa diklik tapi hanya judul yang jadi teks tautan supaya screen reader tetap masuk akal). Di bawahnya "Other projects" berisi Kuali & Bank Sampah sebagai kartu kecil.
+- Section ini dipasang **tepat setelah Hero, sebelum About** sesuai urutan "bukti dulu" §2.
+- `app/projects/[slug]/page.tsx` — SSG lewat `generateStaticParams` (**4 halaman ter-prerender**, terlihat di output build), `dynamicParams = false` supaya slug asing 404, `generateMetadata` per halaman. Urutan blok: Problem → Keputusan & alasannya → (Kerja sendiri vs tim) → Hasil → (Satu pelajaran) → Bukti → Status proyek.
+- **Analisis Hotel = SATU case study.** Medali SurabayaDev jadi badge di kartu & halamannya, bukan entri proyek terpisah.
+- `app/sitemap.ts` kini memuat 4 URL case study (rutenya sudah benar-benar ada).
+- Verifikasi di server produksi: `/` 200 · `/projects/ankop-trace` 200 · `/projects/tera` 200 · **`/projects/kuali` 404** (sekunder memang tidak punya case study). Label kejujuran benar: produksi ×2, **produksi (production-ready)** untuk Tera, kompetisi, hackathon, bootcamp.
+- **Cek kebocoran token:** tidak ada string `TODO(lintang)`, `PROOF_*`, `ANKOP_MONTHS`, maupun teks `null` yang tampil di HTML kelima halaman. `npm run build` ✅ · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- 🔴 **Tidak ada satu pun bukti yang bisa ditampilkan.** Kelima token `PROOF_*` masih `null`, jadi keempat case study menampilkan blok **"Bukti menyusul"** + rencana buktinya (mis. Ankop: "screenshot beranotasi + walkthrough Loom, butuh izin klien"). Tidak ada demo palsu, tidak ada link mati. Tapi jujur saja: **case study tanpa bukti adalah kelemahan terbesar situs ini sekarang.**
+- 🔴 **Blok "Kerja sendiri vs tim" dan "Satu pelajaran" hilang di keempat proyek** karena `ownVsTeam` & `learned` belum diisi. Keduanya justru bagian yang paling membedakan dari fresh-grad lain (§1: "judgment di atas fresh-grad"). Jadi `ankop-trace` **jujur dan berfungsi, tapi belum "lengkap"** seperti target DoD sprint.
+- 🔴 **Angka "5.000+ kg" tetap tidak ditampilkan** — juga di case study Ankop, konsisten dengan keputusan S3. Aturan §0.2 mengikatnya ke `ANKOP_MONTHS` yang masih kosong. Hasil Ankop yang tampil: 15+ supplier aktif · ~80% acceptance rate (live) · puluhan juta rupiah pembayaran terdigitalisasi. Angka kg **otomatis muncul** begitu token diisi.
+- ⚠️ **Durasi Tera tidak ditampilkan** (`durationNote: null`) karena §5.2 sendiri menandainya TODO. Halaman Tera hanya menampilkan role. Sempat saya isi dengan string `"// TODO(lintang): …"` — itu akan bocor ke UI, jadi diubah jadi `null` dan bloknya disembunyikan.
+- ⚠️ Role Tera saya isi **"Full-Stack Engineer"**; §5.2 tidak menyebut role spesifik untuk Tera, hanya bertanya "solo project? durasi?". Kalau role sebenarnya berbeda, ini perlu dikoreksi Lintang.
+- ⚠️ Kuali & Bank Sampah `results: []` — CV/BLUEPRINT §5.3 tidak menyebut hasil terukur, jadi tidak saya karang. Kartunya hanya menampilkan tagline + tech.
+- Kuali tidak punya token bukti sendiri di §0.1, jadi field `proof` dibuat opsional dan Kuali tidak mengklaim bukti apa pun.
+- Tidak ada deploy di sprint ini (S4 tidak memintanya).
+**Keputusan / catatan:**
+- 🟠 **`CLIENT_NAME_PERMISSION` masih `null` — saya memilih MENAMPILKAN nama klien** ("Ankop Trace", "Bisasinema"). Alasannya: nama-nama itu adalah riwayat kerja di CV Lintang sendiri, dan menyebut tempat kerja adalah hal lazim. Tapi ini **keputusan saya, bukan izin dari klien.** Nama anonim sudah disiapkan (`anonymousName`: "Produsen kopi specialty", "Brand film & edukasi") dan **otomatis dipakai begitu token diset `false`** — cukup satu baris. **Lintang: mohon pastikan ini sebelum situs disebarkan.**
+- Tera dilabeli **"produksi (production-ready)"** sesuai §5.2, karena belum ada konfirmasi tenant berbayar. Konservatif dengan sengaja.
+- Deviasi kecil dari skema §5.1, semuanya demi aturan §9 (token tidak boleh bocor ke UI): `ownVsTeam`, `learned`, dan `durationNote` bertipe `string | null` supaya bloknya bisa disembunyikan; `proof` dijadikan opsional dan diikat ke token lewat `configKey`; ditambah field `tech[]` (untuk chip) dan `award` (medali).
+- Deskripsi `approach` ditulis dengan **alasan keputusan**, bukan daftar teknologi — sesuai instruksi "approach + KENAPA". Isinya parafrase dari §5.2, tanpa menambah klaim teknis baru.
+- Hanya 4 hero yang punya halaman case study; sekunder sengaja tidak (`/projects/kuali` → 404).
+**CONFIG/TODO yang masih menunggu Lintang:** *(13 token masih `null`)*
+- 🔴 **Prioritas tertinggi sekarang:** `PROOF_ANKOP` · `PROOF_BISASINEMA` · `PROOF_TERA` · `PROOF_HOTEL` · `PROOF_BANKSAMPAH` — tanpa ini semua case study berakhir "bukti menyusul".
+- 🔴 **`ownVsTeam` + `learned` untuk 4 hero** (bukan token, tapi blokir kelengkapan case study).
+- 🔴 `CLIENT_NAME_PERMISSION` — lihat keputusan di atas.
+- ⛔ `ANKOP_MONTHS` + `ANKOP_KG_CUMULATIVE` · `CV_FILE` · `PHOTO_FILE` · `LINKEDIN_URL` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK`
+- ⛔ Durasi & status solo/tim proyek Tera; konfirmasi role Tera.
+- 🟡 `DOMAIN` masih default. Non-token: repo GitHub, file Satoshi.
+**Commit:** `S4: featured projects + case study pages`
+**Sprint berikutnya:** S5 — Experience/Achievements + Contact + CV (menunggu instruksi)
+
 ### [2026-07-25 23:07] — Sprint S3 — Hero + About + Skills
 **Status:** ✅ selesai
 **Selesai:**
