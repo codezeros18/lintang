@@ -27,6 +27,31 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 06:05] — Fase 2 · Sprint R2 — Hero + storytelling entry
+**Status:** ✅ selesai
+**Selesai:**
+- **Pintu cerita ditambahkan** — satu kalimat yang mengubah hero dari banner jadi undangan membaca: *"Every project here has a story — from the problem to the proof."* diikuti tautan **"Start with Ankop Trace →"**.
+- Tautannya menunjuk `/projects/ankop-trace` — halaman yang **benar-benar ada** dan sudah ter-SSG sejak S4, bukan janji kosong. Panah `→` ditaruh **di dalam** tautan (`&nbsp;` + `aria-hidden`) supaya tidak pernah terpisah ke baris lain; sempat terpisah di render pertama dan langsung diperbaiki.
+- Hero diselaraskan ke shell R1: padding atas `pt-12` di mobile (top bar sticky sudah memakan ruang) → `md:pt-20` di desktop (sidebar menggantikan top bar, hero boleh lebih lega).
+- Naskah §4.1 **tidak diubah sama sekali** — role label, headline, sub-headline, dan hook strip tetap apa adanya. Yang bertambah hanya satu kalimat yang memang diminta R2.
+- `npm run build` ✅ · `npm run lint` ✅.
+**Verifikasi yang benar-benar dijalankan:**
+- ✅ **Hero bebas motion, diukur bukan diklaim:** posisi byte di HTML produksi menunjukkan `opacity:0` pertama ada di indeks 15574, sedangkan hook strip berakhir di 13373 — artinya seluruh konten atas-lipatan bersih dari `opacity:0`, dan Reveal hanya hidup di bawahnya. Ini menjawab langsung larangan R2.
+- ✅ Desktop 1280px: hero + sidebar tampil utuh, hook strip menunjukkan angka benar (`Rp20M+ · 5,000+ kg · 6`).
+- ✅ 360px sungguhan (lewat iframe, karena Chrome headless meng-clamp `--window-size` ke ≥400px): kalimat pintu cerita membungkus rapi, panah menempel pada "Trace", tidak ada overflow horizontal.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **LCP tidak diukur.** R2 mensyaratkan "LCP tak turun", tapi tidak ada Lighthouse di lingkungan ini. Yang bisa saya buktikan: hero tetap server-rendered, tidak ada client component baru (tautan pintu cerita dirender di server), dan tidak ada `opacity:0` di atas lipatan. **Angka LCP sesungguhnya tetap harus diukur Lintang** — sudah jadi gate R6.
+- ⚠️ Bagian "navigasi baru" pada judul R2 sudah terpenuhi di R1 (sidebar + scroll-spy); R2 tidak menambah mekanisme navigasi baru selain tautan pintu cerita.
+- ⚠️ **Repo GitHub masih belum ada** — utang prasyarat yang sama sejak R0/R1, dan R4 (blog) semakin dekat.
+- ⚠️ Belum di-deploy (R2 tidak memintanya).
+- ⚠️ Interaksi drawer & scroll-spy dari R1 tetap belum diuji di sesi browser sungguhan.
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — terhadap diff R2:**
+- ✅ Nol hex mentah, nol `font-family` baru, nol aset — perubahannya murni satu paragraf teks + penyesuaian padding.
+- ✅ Kalimat pintu cerita ditulis sendiri dari materi Lintang ("problem → proof" adalah rangka case study fase 1), **bukan** parafrase copy referensi.
+- ✅ Situs referensi tidak dibuka selama R2.
+**Commit:** `R2: hero + storytelling entry`
+**Sprint berikutnya:** R3 — Case study naratif (menunggu instruksi)
+
 ### [2026-07-26 05:40] — Fase 2 · Sprint R1 — Layout shell (sidebar + container + rhythm)
 **Status:** ✅ selesai
 **Selesai:**

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { CountUp } from "@/components/motion/count-up";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -21,7 +23,10 @@ export function Hero() {
 
   return (
     // `id="top"` dipakai item nav "Home" + scroll-spy (R1).
-    <section id="top" className="pt-16 pb-20 md:pt-24 md:pb-28">
+    // Padding atas lebih kecil di mobile karena top bar sticky (`--topbar-h`)
+    // sudah memakan ruang; di ≥768px sidebar menggantikannya sehingga hero
+    // boleh bernapas lebih lega.
+    <section id="top" className="pt-12 pb-20 md:pt-20 md:pb-28">
       <Container>
         <p className="mono text-ink-muted text-xs tracking-[0.14em] uppercase sm:text-sm">
           Full-Stack Engineer · Informatics, UMN
@@ -36,6 +41,25 @@ export function Hero() {
           An informatics student at UMN who has already shipped production
           systems — live payments, offline-first, multi-tenant — that move real
           money and real goods.
+        </p>
+
+        {/*
+          "Pintu cerita" (R2) — satu kalimat yang mengubah hero dari banner jadi
+          undangan membaca, plus satu tautan konkret ke case study utama.
+          Tautannya ke halaman yang BENAR-BENAR ada (`/projects/ankop-trace`),
+          bukan janji kosong.
+        */}
+        <p className="mt-8 max-w-2xl text-(length:--step-0) leading-relaxed">
+          Every project here has a story — from the problem to the proof.{" "}
+          <Link
+            href="/projects/ankop-trace"
+            className="text-ink decoration-border hover:text-coral-ink hover:decoration-coral-ink font-medium underline underline-offset-4"
+          >
+            Start with Ankop Trace
+            {/* Panah ikut di dalam tautan supaya tidak pernah terpisah ke baris
+                lain; `aria-hidden` agar screen reader tidak membacanya. */}
+            <span aria-hidden="true">&nbsp;→</span>
+          </Link>
         </p>
 
         <dl className="border-border mt-10 grid gap-6 border-t pt-8 sm:grid-cols-3 sm:gap-8">

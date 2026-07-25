@@ -34,7 +34,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 |---|---|---|---|
 | **R0** | Design-language lock (inspired, not copied) | Bedah pola bryllim/leerob → terjemah ke design tokens Lintang; git+domain decision | ✅ |
 | **R1** | Layout shell — sidebar + container + rhythm | Sidebar nav, container lega, spacing scale, sticky/scroll-spy | ✅ |
-| **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | 🔲 |
+| **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | ✅ |
 | **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | 🔲 |
 | **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | 🔲 |
 | **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | 🔲 |
@@ -88,10 +88,10 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** hero yang mengundang orang "membaca cerita", bukan sekadar banner — feel leerob, isi & identitas Lintang.
 
 **Tasks:**
-- [ ] Refactor `components/sections/hero.tsx` ke shell baru: role label (Full-Stack Engineer), headline §4.1, sub-headline, hook strip (Space Mono).
-- [ ] **Hero tetap tanpa Framer Motion berat** (jaga LCP <2s — backlog fase 1 sudah memperingatkan `opacity:0` merusak LCP). Reveal hanya di bawah lipatan.
-- [ ] Tambah 1 kalimat "pintu cerita" → mengajak ke case study naratif (mis. "Setiap proyek di sini punya cerita — dari masalah sampai bukti.").
-- [ ] Hook strip: pakai `ANKOP_MONTHS` bila terisi; bila kosong tetap sembunyikan kg (aturan fase 1), jangan mengarang.
+- [x] `components/sections/hero.tsx` diselaraskan ke shell R1: padding atas disesuaikan top bar mobile vs sidebar desktop; role label, headline §4.1, sub-headline, hook strip (Space Mono) tetap apa adanya.
+- [x] **Hero tanpa Framer Motion** — dibuktikan dengan mengukur posisi byte di HTML produksi: `opacity:0` pertama muncul SETELAH hook strip, jadi seluruh atas-lipatan bersih.
+- [x] Pintu cerita: "Every project here has a story — from the problem to the proof." + tautan **"Start with Ankop Trace →"** ke `/projects/ankop-trace` (halaman yang benar-benar ada).
+- [x] Hook strip: `ANKOP_MONTHS` sudah terisi (2), jadi kg tampil dengan konteks waktu. Logika penyembunyian tetap ada bila token dikosongkan lagi.
 
 **Definition of Done:** hero lolos uji 8 detik + mengundang baca; LCP tak turun; identitas visual = tokens Lintang; build sukses.
 **Files:** `components/sections/Hero.tsx`.
