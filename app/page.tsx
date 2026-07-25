@@ -1,18 +1,20 @@
-// Skeleton S1 — sengaja minimal.
-// Tidak ada konten karangan di sini: hanya nama + role label (BLUEPRINT §4.1) dan
-// penanda bahwa situs masih dibangun. Section asli menyusul di S3–S5.
+import { About } from "@/components/sections/about";
+import { Hero } from "@/components/sections/hero";
+import { Skills } from "@/components/sections/skills";
+
+/**
+ * Halaman one-page — urutan BLUEPRINT §2:
+ * Hero → Featured Projects → About → Skills → Experience → (Log teaser) → Contact.
+ *
+ * Featured Projects (S4), Experience & Contact (S5), Log teaser (S7) menyusul.
+ * Section Projects dipasang tepat setelah Hero saat S4, sesuai aturan "bukti dulu".
+ */
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-content flex-1 flex-col justify-center px-6 py-24">
-      <p className="mono text-sm tracking-wide text-ink-muted uppercase">
-        Full-Stack Engineer · Informatika UMN
-      </p>
-      <h1 className="mt-4 text-(length:--step-3) leading-tight font-semibold">
-        Lintang Balakosa Ardhana
-      </h1>
-      <p className="mt-6 max-w-prose text-ink-muted">
-        Situs sedang dibangun. Konten portfolio menyusul.
-      </p>
+    <main>
+      <Hero />
+      <About />
+      <Skills />
     </main>
   );
 }

@@ -101,7 +101,7 @@ export default function UiDemoPage() {
             <CountUp
               to={80}
               suffix="%"
-              className="text-(length:--step-3) text-[var(--indigo)]"
+              className="text-indigo-brand text-(length:--step-3)"
             />
           </div>
         </Reveal>

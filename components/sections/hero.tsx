@@ -1,0 +1,119 @@
+import { CountUp } from "@/components/motion/count-up";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { CONFIG, isSet } from "@/content/config";
+
+/**
+ * Hero — naskah PORTFOLIO_BLUEPRINT.md §4.1, dipakai persis.
+ *
+ * Identitas hero = **Full-Stack Engineer**. Tidak ada kata "hybrid" dan tidak ada
+ * "Data Scientist" di sini (§1) — kredensial data muncul di About.
+ *
+ * Catatan performa (temuan S2): section ini SENGAJA tidak dibungkus `Reveal`/`Stagger`.
+ * Framer Motion merender `opacity:0` di HTML server, jadi konten di atas lipatan baru
+ * terlihat setelah hidrasi dan target LCP <2s jadi berisiko.
+ */
+
+type Stat = {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+};
+
+/**
+ * Hook strip — 3 angka [FAKTA] dari CV (§0.2), masing-masing dengan aturan tampilnya.
+ *
+ * "5.000+ kg kopi dilacak" WAJIB tampil bersama konteks waktu `ANKOP_MONTHS` (§0.2).
+ * Selama token itu kosong, angka kg TIDAK ditampilkan di hero dan slotnya diisi
+ * "15+ supplier aktif" — angka CV lain yang aturannya "apa adanya".
+ * TODO(lintang): isi `ANKOP_MONTHS` (dan `ANKOP_KG_CUMULATIVE`) agar angka kg bisa naik ke hero.
+ */
+function getStats(): Stat[] {
+  const ankopMonths = CONFIG.ANKOP_MONTHS;
+
+  const coffeeStat: Stat = isSet(ankopMonths)
+    ? {
+        value: 5000,
+        suffix: "+ kg",
+        label: `kopi dilacak dalam ${ankopMonths} bulan pertama`,
+      }
+    : { value: 15, suffix: "+", label: "supplier aktif" };
+
+  return [
+    { value: 20, prefix: "Rp", suffix: "jt+", label: "transaksi (peluncuran awal)" },
+    coffeeStat,
+    { value: 6, label: "dashboard role-gated" },
+  ];
+}
+
+export function Hero() {
+  const stats = getStats();
+
+  return (
+    <section className="pt-16 pb-20 md:pt-24 md:pb-28">
+      <Container>
+        <p className="mono text-ink-muted text-xs tracking-[0.14em] uppercase sm:text-sm">
+          Full-Stack Engineer · Informatika UMN
+        </p>
+
+        <h1 className="mt-5 max-w-4xl text-(length:--step-4) leading-[1.05] font-semibold text-balance">
+          Saya membangun sistem yang dipakai bisnis nyata — dan membuktikan
+          dampaknya lewat data.
+        </h1>
+
+        <p className="text-ink-muted mt-6 max-w-2xl text-(length:--step-1) leading-relaxed">
+          Mahasiswa Informatika UMN yang sudah nge-ship sistem produksi — payment
+          live, offline-first, multi-tenant — yang memindahkan uang dan barang
+          nyata.
+        </p>
+
+        <dl className="border-border mt-10 grid gap-6 border-t pt-8 sm:grid-cols-3 sm:gap-8">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <dt className="sr-only">{stat.label}</dt>
+              <dd>
+                <CountUp
+                  to={stat.value}
+                  prefix={stat.prefix}
+                  suffix={stat.suffix}
+                  className="block text-(length:--step-2) leading-none font-bold"
+                />
+                <span className="text-ink-muted mt-2 block text-sm">
+                  {stat.label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-10 flex flex-wrap items-center gap-3">
+          <Button href="#projects" size="lg">
+            Lihat proyek
+          </Button>
+
+          {/*
+            Tombol kedua: Download CV bila filenya sudah ada. Selama `CV_FILE` kosong,
+            tombol Download CV TIDAK dirender sebagai link mati — slotnya diisi CTA
+            "Hubungi" yang memang disediakan §4.1 sebagai opsi.
+            TODO(lintang): taruh PDF di `public/cv/` lalu isi `CONFIG.CV_FILE`.
+          */}
+          {isSet(CONFIG.CV_FILE) ? (
+            <Button
+              href={`/cv/${CONFIG.CV_FILE}`}
+              variant="secondary"
+              size="lg"
+              download
+            >
+              Download CV
+            </Button>
+          ) : (
+            <Button href="#contact" variant="secondary" size="lg">
+              Hubungi
+            </Button>
+          )}
+        </div>
+      </Container>
+    </section>
+  );
+}

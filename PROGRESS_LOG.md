@@ -27,6 +27,39 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-25 23:07] — Sprint S3 — Hero + About + Skills
+**Status:** ✅ selesai
+**Selesai:**
+- `components/sections/hero.tsx` — naskah §4.1 dipakai **persis**: role label "Full-Stack Engineer · Informatika UMN", headline utama ("Saya membangun sistem yang dipakai bisnis nyata — dan membuktikan dampaknya lewat data."), sub-headline, hook strip, tombol. Identitas hero murni **Full-Stack Engineer** — tidak ada kata "hybrid" maupun "Data Scientist" (§1); dicek di HTML hasil render.
+- Hook strip 3 angka pakai `CountUp` (Space Mono lewat class `.stat-num`), dibungkus `<dl>/<dt>/<dd>` supaya terbaca screen reader.
+- `components/sections/about.tsx` — naskah ±120 kata §4.3 persis (3 paragraf), **Associate Data Scientist (BNSP)** ditebalkan, ditutup micro-copy anti-salah-baca §4.6 dalam blok beraksen indigo.
+- `content/skills.ts` + `components/sections/skills.tsx` — 6 grup §4.4 apa adanya, tiap kartu menutup dengan **"Dipakai di: …"**. React Native diberi badge coral bertuliskan `React Native · basic`, plus baris "Kejujuran level: React Native = basic".
+- `app/page.tsx` menyusun Hero → About → Skills (Featured Projects akan disisipkan tepat setelah Hero di S4, sesuai urutan "bukti dulu" §2).
+- Reveal-on-scroll ringan dipakai di About & Skills (`Reveal`, `Stagger`); `npm run build` ✅ · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- 🔴 **Angka "5.000+ kg" TIDAK ditampilkan di hero.** Aturan §0.2 mengikat angka itu ke konteks waktu `ANKOP_MONTHS`, dan tokennya masih `null`. Dari dua opsi yang diberikan (tampil tanpa klaim waktu **atau** disembunyikan), saya pilih **disembunyikan** karena §9 mensyaratkan semua angka tampil berkonteks waktu. Slotnya diisi **"15+ supplier aktif"** — angka CV lain yang aturan tampilnya "apa adanya", jadi hook strip tetap 3 angka dan tidak ada yang dikarang. **Begitu `ANKOP_MONTHS` diisi, angka kg otomatis naik menggantikan slot itu** (logikanya sudah ada di `getStats()`).
+- ⚠️ **Inkonsistensi yang saya sadari:** paragraf About tetap menyebut "melacak 5.000+ kg" tanpa konteks bulan, karena itu naskah §4.3 apa adanya dan mengubahnya berarti menulis ulang teks yang sudah disetujui. Jadi angka kg disembunyikan di hero tapi ada di About. **Keputusan Lintang:** isi `ANKOP_MONTHS` (menyelesaikan keduanya) atau minta saya menyunting kalimat About sementara.
+- ⚠️ **Tombol "Download CV" tidak dirender** karena `CV_FILE` masih `null` — link mati dilarang (§9). Slot kedua diisi CTA **"Hubungi"** yang memang disediakan §4.1 sebagai opsi, jadi jalur konversi tetap ada dan tidak ada tombol disabled yang membingungkan. Otomatis berubah jadi Download CV begitu `CV_FILE` diisi.
+- ⚠️ **Anchor `#projects` dan `#contact` belum punya tujuan** — sectionnya baru dibuat di S4 & S5. Sampai itu, klik tombol hero tidak memindahkan halaman.
+- ⚠️ **Foto profil belum ada** (`PHOTO_FILE` masih `null`), jadi hero murni tipografi tanpa visual. Bukan masalah desain, tapi hero berfoto biasanya lebih kuat untuk recruiter — menunggu Lintang.
+- ⚠️ **Responsive 360px→desktop belum diuji di viewport sungguhan.** Yang ada: kelas breakpoint (`sm:grid-cols-3`, `flex-wrap`, `max-w-*`, type-scale clamp) + build sukses. Belum ada browser untuk diukur — masuk daftar uji S6 bareng Lighthouse.
+- Tidak ada deploy di sprint ini (S3 tidak memintanya).
+**Keputusan / catatan:**
+- **Hero sengaja TIDAK dibungkus `Reveal`/`Stagger`** (tindak lanjut temuan S2): Framer Motion merender `opacity:0` di HTML server, jadi membungkus hero berarti menunda LCP sampai hidrasi. Dicek ulang di HTML produksi — satu-satunya `opacity:0` ada di About & Skills yang berada di bawah lipatan.
+- `CountUp` di hero aman untuk LCP: nilai akhir sudah ada di HTML server, animasi hanya berjalan setelah hidrasi dan tidak jalan sama sekali saat reduced-motion.
+- Judul section About & Skills adalah copy UI (bukan klaim berangka) yang saya turunkan dari prinsip §4.2/§4.4. Kalau nada bahasanya kurang pas, gampang diganti.
+- Draf awal Skills sempat menambahkan tafsir sendiri soal arti "basic" pada React Native ("cukup untuk demo, belum untuk produksi"). **Dihapus** — BLUEPRINT hanya menulis "basic", jadi tidak boleh saya bumbui.
+- Varian headline engineer-forward (§4.1) tidak dipakai; yang dipakai headline utama. Tinggal tukar satu baris kalau Lintang lebih suka varian itu.
+**CONFIG/TODO yang masih menunggu Lintang:** *(13 token masih `null`)*
+- ⛔ **`ANKOP_MONTHS`** — sekarang berdampak langsung & terlihat: angka kg absen dari hero sampai ini diisi. (`ANKOP_KG_CUMULATIVE` menyusul untuk kalimat hasil di S4.)
+- ⛔ **`CV_FILE`** — tombol Download CV belum ada di hero maupun (nanti) Contact.
+- ⛔ **`PHOTO_FILE`** — hero tanpa foto; juga dibutuhkan OG image S6.
+- ⛔ `LINKEDIN_URL` · `PROOF_ANKOP` · `PROOF_BISASINEMA` · `PROOF_TERA` · `PROOF_HOTEL` · `PROOF_BANKSAMPAH` · `CLIENT_NAME_PERMISSION` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK`
+- 🟡 `DOMAIN` — masih default, belum diregistrasi.
+- ⛔ Non-token: repo GitHub (auto-deploy), file `Satoshi-Variable.woff2`.
+**Commit:** `S3: hero + about + skills`
+**Sprint berikutnya:** S4 — Featured Projects + Case Study pages (menunggu instruksi)
+
 ### [2026-07-25 22:52] — Sprint S2 — Design System & Shared UI
 **Status:** ✅ selesai
 **Selesai:**

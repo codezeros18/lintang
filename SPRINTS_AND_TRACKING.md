@@ -14,7 +14,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 |---|---|---|---|
 | **S1** | Foundation & Setup | Scaffold Next.js, tooling, fonts, token CONFIG, deploy skeleton Vercel | ✅ |
 | **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | ✅ |
-| **S3** | Hero + About + Skills | 3 section atas + hook strip | 🔲 |
+| **S3** | Hero + About + Skills | 3 section atas + hook strip | ✅ |
 | **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | 🔲 |
 | **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | 🔲 |
 | **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🔲 |
@@ -63,13 +63,13 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** 3 section teratas jadi, lolos uji 8 detik.
 
 **Tasks:**
-- [ ] `components/sections/Hero.tsx`: role label + headline + sub-headline + **hook strip** (angka Space Mono) + tombol `Lihat proyek`/`Download CV` (naskah BLUEPRINT §4.1)
-- [ ] Hook strip pakai `ANKOP_MONTHS` bila ada; jika token kosong → tampilkan tanpa klaim waktu / sembunyikan angka kg **tanpa mengarang**
-- [ ] CountUp opsional pada angka (hormati reduced-motion)
-- [ ] `components/sections/About.tsx`: versi ±120 kata + kredensial BNSP + micro-copy anti-salah-baca (§4.3, §4.6)
-- [ ] `components/sections/Skills.tsx`: dari `content/skills.ts` (grup → "dipakai di ___"); React Native = **basic** (§4.4)
-- [ ] `content/skills.ts` diisi dari CV
-- [ ] Reveal-on-scroll ringan di tiap section
+- [x] `components/sections/hero.tsx`: role label + headline + sub-headline + **hook strip** (angka Space Mono) + tombol `Lihat proyek` + CTA kedua (naskah BLUEPRINT §4.1)
+- [x] Hook strip pakai `ANKOP_MONTHS` bila ada; token kosong → **angka kg disembunyikan** dari hero, slot diisi "15+ supplier aktif" (angka CV lain, aturan "apa adanya"). Tanpa mengarang.
+- [x] CountUp opsional pada angka (hormati reduced-motion; nilai akhir tampil saat SSR/tanpa JS)
+- [x] `components/sections/about.tsx`: versi ±120 kata + kredensial BNSP + micro-copy anti-salah-baca (§4.3, §4.6)
+- [x] `components/sections/skills.tsx`: dari `content/skills.ts` (grup → "dipakai di ___"); React Native = **basic** (§4.4)
+- [x] `content/skills.ts` diisi dari CV
+- [x] Reveal-on-scroll ringan di About & Skills — **hero sengaja tanpa motion** (lihat catatan LCP di backlog)
 
 **Definition of Done:** hero lolos 8-detik (Full-Stack + angka, data tidak di hero); About memuat BNSP + micro-copy; Skills jujur; responsive 360px→desktop; build sukses.
 **Files:** `components/sections/Hero.tsx`, `About.tsx`, `Skills.tsx`, `content/skills.ts`.
@@ -163,3 +163,7 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] `NEXT_PUBLIC_SITE_URL` belum diset di Vercel → `robots.txt`/canonical masih menunjuk `lintangbalakosa.dev` yang **belum resolve**. Set env ke URL `*.vercel.app` sampai domain aktif (S6).
 - [ ] `app/ui-demo` = halaman kerja internal (404 di produksi). Hapus atau biarkan dev-only sebelum launch.
 - [ ] Uji `prefers-reduced-motion` di browser sungguhan (devtools → Rendering → Emulate CSS media) saat S6.
+- [ ] **Anchor `#projects` di hero belum punya tujuan** — section Featured Projects baru dibuat di S4. Sampai itu, tombol "Lihat proyek" tidak memindahkan halaman.
+- [ ] **`#contact` juga belum ada** (S5). Hero memakainya sebagai CTA kedua selama `CV_FILE` kosong.
+- [ ] About tetap menyebut "5.000+ kg" tanpa konteks bulan karena itu naskah §4.3 apa adanya, sementara hero menyembunyikannya. Konsisten setelah `ANKOP_MONTHS` diisi — **keputusan Lintang** apakah kalimat About mau diubah sementara.
+- [ ] Responsive 360px→desktop belum diuji di viewport sungguhan (hanya lewat kelas breakpoint + build).
