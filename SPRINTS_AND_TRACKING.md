@@ -18,7 +18,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 | **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | ✅ |
 | **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | ✅ |
 | **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🟡 |
-| **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🔲 |
+| **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🟡 |
 
 Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 
@@ -138,13 +138,13 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** section Log hidup dengan 3 seed post; tanpa backend berbayar.
 
 **Tasks:**
-- [ ] `lib/mdx.ts` + setup `next-mdx-remote`/Contentlayer (SSG)
-- [ ] `content/log/*.mdx` + frontmatter (BLUEPRINT §6)
-- [ ] `app/log/page.tsx` (list kartu: title·date·badge type·badge result·teaser; filter `type` opsional)
-- [ ] `app/log/[slug]/page.tsx` (SSG) + `generateMetadata`
-- [ ] `components/sections/LogTeaser.tsx` di homepage (link ke `/log`)
-- [ ] Seed: `io-festival.mdx` (menang, contoh terisi §6) + `surabayadev.mdx` + **1 post `kalah`/`ikut`** `// TODO(lintang)`
-- [ ] Tiap post: substansi + ide inti dikaburkan + CTA "hubungi untuk kolaborasi"
+- [x] `lib/mdx.ts` + setup `next-mdx-remote` v6 (SSG, git-based, tanpa backend/DB berbayar)
+- [x] `content/log/*.mdx` + frontmatter (BLUEPRINT §6)
+- [x] `app/log/page.tsx` (list kartu: title·date·badge type·badge result) — filter `type` **tidak** dipasang (opsional di §6)
+- [x] `app/log/[slug]/page.tsx` (SSG, 2 halaman ter-prerender) + `generateMetadata`
+- [x] `components/sections/log-teaser.tsx` di homepage (link ke `/log`)
+- [ ] Seed 3 post — ⛔ **baru 2 yang terbit**: `io-festival.mdx` + `surabayadev.mdx`. **Post `kalah`/`ikut` TIDAK dibuat** karena butuh acara nyata di luar CV; tersedia sebagai template `content/log/_template-kalah-atau-ikut.mdx` (tidak diterbitkan).
+- [x] Tiap post: substansi + ide inti dikaburkan + CTA "hubungi untuk kolaborasi" — ⚠️ `lesson` `surabayadev` masih kosong (bloknya disembunyikan)
 
 **Definition of Done:** `/log` & detail ter-render (SSG); ≥3 seed (min. 1 `kalah`/`ikut`); tambah post cukup `git push`; tak ada backend berbayar; build sukses.
 **Files:** `lib/mdx.ts`, `content/log/*.mdx`, `app/log/page.tsx`, `app/log/[slug]/page.tsx`, `components/sections/LogTeaser.tsx`.

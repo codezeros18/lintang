@@ -3,13 +3,12 @@ import { Contact } from "@/components/sections/contact";
 import { ExperienceAchievements } from "@/components/sections/experience-achievements";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
 import { Hero } from "@/components/sections/hero";
+import { LogTeaser } from "@/components/sections/log-teaser";
 import { Skills } from "@/components/sections/skills";
 
 /**
  * Halaman one-page — urutan BLUEPRINT §2:
- * Hero → Featured Projects → About → Skills → Experience → (Log teaser) → Contact.
- *
- * Log teaser (S7) menyusul, disisipkan sebelum Contact.
+ * Hero → Featured Projects → About → Skills → Experience → Log teaser → Contact.
  */
 export default function Home() {
   return (
@@ -19,6 +18,7 @@ export default function Home() {
       <About />
       <Skills />
       <ExperienceAchievements />
+      <LogTeaser />
       <Contact />
     </main>
   );

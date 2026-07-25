@@ -27,6 +27,38 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 00:14] — Sprint S7 — Log / Activity (MDX, fast-follow)
+**Status:** 🟡 jalan — infrastruktur Log **selesai & jalan**, tapi seed post kurang satu dan tidak bisa saya isi sendiri.
+**Selesai:**
+- `lib/mdx.ts` — baca `content/log/*.mdx` dengan `gray-matter` saat build (SSG). **Git-based, tanpa backend/DB berbayar**: tambah post = tulis `.mdx` + `git push`. File berawalan `_` diperlakukan draft/template dan tidak diterbitkan.
+- Frontmatter §6 lengkap (`title`, `date`, `type`, `role`, `stack`, `result`, `lesson`, `teaser`, `cta`) dengan normalisasi bertipe; tanggal & pelajaran kosong tidak merusak build, elemennya cuma disembunyikan.
+- `app/log/page.tsx` — kartu ringan: badge `type` · badge `result` · tanggal · judul · role · pelajaran.
+- `app/log/[slug]/page.tsx` — SSG (`generateStaticParams` + `dynamicParams=false`) + `generateMetadata`; render MDX lewat `next-mdx-remote/rsc` dengan pemetaan komponen di `components/mdx-components.tsx`.
+- `components/sections/log-teaser.tsx` — 3 post terbaru di beranda, disisipkan sebelum Contact (urutan §2). Kalau belum ada post, section-nya tidak dirender sama sekali.
+- `app/sitemap.ts` — `/log` dan tiap post ditambahkan, tapi **hanya bila ada post terbit**.
+- Seed `io-festival.mdx` memakai contoh §6 apa adanya, termasuk pelajarannya ("Menang bukan karena fitur terbanyak, tapi karena masalahnya paling jelas didefinisikan"), teaser, dan CTA kolaborasi.
+- Seed `surabayadev.mdx` disusun dari fakta CV/BLUEPRINT (peran, alur kerja EDA→driver→dashboard, stack Python/Looker/Colab/Figma, Juara 3 Nasional, penilaian juri) + tautan ke case study Analisis Pembatalan Hotel.
+- Verifikasi: `/log` 200 · `/log/io-festival` 200 · `/log/surabayadev` 200 · `/log/_template-kalah-atau-ikut` **404** (template tidak bocor). Tidak ada YAML/frontmatter/`TODO(lintang)` yang bocor ke HTML. `npm run build` ✅ (16 halaman) · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- ⛔ **Post `kalah`/`ikut` TIDAK dibuat — ini kegagalan memenuhi DoD sprint.** §6 mewajibkan minimal 1 post berhasil-atau-tidak yang diframing sebagai pelajaran, dan BLUEPRINT sendiri menandainya `// TODO(lintang)`: acaranya harus nyata dan di luar CV. Mengarang sebuah kekalahan sama merusaknya dengan mengarang prestasi, jadi tidak saya lakukan. Gantinya: `content/log/_template-kalah-atau-ikut.mdx` — tinggal disalin tanpa awalan `_`, isi 5 blok, selesai. **Justru post inilah yang bikin Log terbaca jujur; tanpanya Log cuma etalase kemenangan.**
+- ⛔ **`lesson` di `surabayadev.mdx` sengaja dikosongkan.** Menulis "1 pelajaran" atas nama Lintang dari kompetisi yang saya tidak ikuti = mengarang refleksi pribadi. Bloknya disembunyikan sampai diisi.
+- ⚠️ **Kedua post belum punya tanggal.** `io-festival` menunggu `IO_FESTIVAL_DATE`; `surabayadev` cuma punya keterangan tahun "2025" di CV (sudah ada di judul), dan tanggal persisnya tidak saya tebak. Sempat saya isi `2025-01-01` sebagai penanda urutan — **dibatalkan**, karena itu akan menaruh tanggal palsu di atribut `<time datetime>`. Akibatnya urutan post sementara berdasarkan judul, bukan waktu.
+- ⚠️ **`stack` `io-festival` kosong** (`IO_FESTIVAL_STACK` belum diisi), jadi chip stack tidak muncul di post itu.
+- ⚠️ **Filter `type` tidak dipasang.** §6 menyebutnya opsional; dengan 2 post, filter cuma menambah komponen client tanpa manfaat. Gampang ditambahkan setelah jumlah post bertambah.
+- ⚠️ **Belum di-deploy.** S7 tidak meminta deploy, jadi situs live masih versi S6 (tanpa `/log`). Satu perintah `npx vercel --prod` kalau mau dinaikkan.
+- ⚠️ **`git push` masih belum memicu redeploy** — repo GitHub belum ada. Ini menyentuh langsung janji §6 "tambah post = file .mdx + git push → Vercel auto-redeploy". Alurnya sekarang: tulis `.mdx` → commit → **deploy manual**.
+**Keputusan / catatan:**
+- Dipilih `next-mdx-remote` v6 (bukan `@next/mdx` maupun Contentlayer): satu dependency, frontmatter jalan tanpa rantai plugin remark, dan konten tetap di `content/log/` alih-alih dipaksa jadi rute file. Contentlayer sendiri sudah lama tidak dirawat aktif.
+- Badge `result`: `menang` = indigo, `ikut` = netral, `kalah` = outline. Kekalahan tidak diberi warna "peringatan" — §6 memang meminta framing pelajaran, bukan daftar kekalahan.
+- Ritme posting tidak dijanjikan di UI mana pun (§6: "jangan janji mingguan").
+**CONFIG/TODO yang masih menunggu Lintang:**
+- 🔴 **1 post `kalah`/`ikut` dari acara nyata** — pakai template yang sudah disiapkan.
+- 🔴 `lesson` untuk `surabayadev.mdx`.
+- ⛔ `IO_FESTIVAL_DATE` + `IO_FESTIVAL_STACK` · tanggal SurabayaDev.
+- 🔴 Sisa dari sprint sebelumnya (belum berubah): 5 token `PROOF_*` · `LINKEDIN_URL` · `CV_FILE` · `PHOTO_FILE` · `ownVsTeam`/`learned` 4 hero · `ANKOP_MONTHS` · `ANKOP_KG_CUMULATIVE` · `CLIENT_NAME_PERMISSION` · data CV yang hilang (S5) · skor Lighthouse · custom domain · tes HP asli · repo GitHub.
+**Commit:** `S7: log/activity (mdx)`
+**Sprint berikutnya:** — (S1–S7 sudah dilalui; sisanya menunggu data dari Lintang)
+
 ### [2026-07-25 23:58] — Sprint S6 — Polish · a11y · perf · SEO/OG · Analytics · Prod deploy
 **Status:** 🟡 jalan — **situs LIVE**, tapi 3 task S6 tidak bisa saya selesaikan sendiri (Lighthouse, custom domain, tes HP). Status sprint sengaja **tidak** saya set ✅.
 **URL live:** **https://lintang-sigma.vercel.app** (HTTPS aktif, deployment `lintang-lzg1mc0dt-…`)
