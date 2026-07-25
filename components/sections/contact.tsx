@@ -20,8 +20,8 @@ export function Contact() {
       <Reveal>
         <SectionHeading
           eyebrow="Contact"
-          title="Terbuka untuk peran full-stack — dan proyek yang butuh sisi data."
-          description="Paling cepat lewat email."
+          title="Open to full-stack roles — and projects that need the data side."
+          description="Email is the fastest way to reach me."
         />
       </Reveal>
 
@@ -42,7 +42,7 @@ export function Contact() {
             </Button>
           ) : (
             <Button variant="secondary" size="lg" disabled>
-              Download CV — segera
+              Download CV — coming soon
             </Button>
           )}
 
@@ -91,7 +91,7 @@ export function Contact() {
                 rel="noopener noreferrer"
                 className="decoration-border hover:text-coral-ink hover:decoration-coral-ink underline underline-offset-4"
               >
-                Profil LinkedIn
+                LinkedIn profile
               </a>
             </li>
           ) : null}

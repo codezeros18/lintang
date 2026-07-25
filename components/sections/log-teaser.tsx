@@ -23,11 +23,11 @@ export async function LogTeaser() {
       <Reveal>
         <SectionHeading
           eyebrow="Log"
-          title="Yang sedang dikerjakan."
-          description="Catatan lomba, event, dan proyek — termasuk yang hasilnya belum sesuai harapan."
+          title="What I&rsquo;m working on."
+          description="Notes from competitions, events, and projects — including the ones that did not go my way."
           action={
             <Button href="/log" variant="secondary" size="sm">
-              Lihat semua
+              See all
             </Button>
           }
         />

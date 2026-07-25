@@ -23,8 +23,8 @@ export const SITE = {
   role: "Full-Stack Engineer",
   title: "Lintang Balakosa Ardhana — Full-Stack Engineer",
   description:
-    "Full-stack engineer (Next.js, NestJS, FastAPI) yang membangun sistem produksi nyata — offline-first, multi-tenant, payment live — dan membuktikan dampaknya lewat data. Mahasiswa Informatika UMN, Indonesia.",
-  locale: "id_ID",
+    "Full-stack engineer (Next.js, NestJS, FastAPI) building real production systems — offline-first, multi-tenant, live payments — and proving their impact with data. Informatics student at UMN, Indonesia.",
+  locale: "en_US",
   keywords: [
     "full-stack engineer",
     "Next.js",

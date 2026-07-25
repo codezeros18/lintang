@@ -63,7 +63,7 @@ function Proof({ project }: { project: Project }) {
   if (proof.status === "pending") {
     return (
       <Card padding="sm" elevation="flat" className="bg-secondary/50">
-        <p className="font-medium">Bukti menyusul.</p>
+        <p className="font-medium">Evidence coming soon.</p>
         <p className="text-ink-muted mt-2 text-sm leading-relaxed">
           {proof.note}
         </p>
@@ -81,7 +81,7 @@ function Proof({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Lihat bukti
+          View evidence
         </a>
       ) : null}
     </Card>
@@ -103,7 +103,7 @@ export default async function ProjectPage({ params }: PageParams) {
           href="/#projects"
           className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
         >
-          ← Semua proyek
+          ← All projects
         </Link>
 
         <div className="mt-8 flex flex-wrap items-center gap-2">
@@ -136,7 +136,7 @@ export default async function ProjectPage({ params }: PageParams) {
             <p className="leading-relaxed">{project.problem}</p>
           </Block>
 
-          <Block title="Keputusan & alasannya">
+          <Block title="Decisions & why">
             <ul className="space-y-4">
               {project.approach.map((item) => (
                 <li key={item} className="flex gap-3 leading-relaxed">
@@ -153,13 +153,13 @@ export default async function ProjectPage({ params }: PageParams) {
           {/* Blok jujur "sendiri vs tim" hanya muncul setelah Lintang mengisinya.
               Selama null, blok ini disembunyikan — tidak ada tebakan porsi kerja. */}
           {project.ownVsTeam ? (
-            <Block title="Kerja sendiri vs tim">
+            <Block title="Solo vs team">
               <p className="leading-relaxed">{project.ownVsTeam}</p>
             </Block>
           ) : null}
 
           {project.results.length > 0 ? (
-            <Block title="Hasil">
+            <Block title="Results">
               <ul className="space-y-3">
                 {project.results.map((result) => (
                   <li key={result} className="flex gap-3 leading-relaxed">
@@ -175,18 +175,18 @@ export default async function ProjectPage({ params }: PageParams) {
           ) : null}
 
           {project.learned ? (
-            <Block title="Satu pelajaran">
+            <Block title="One lesson">
               <p className="leading-relaxed">{project.learned}</p>
             </Block>
           ) : null}
 
-          <Block title="Bukti">
+          <Block title="Evidence">
             <Proof project={project} />
           </Block>
 
-          <Block title="Status proyek">
+          <Block title="Project status">
             <p className="leading-relaxed">
-              Proyek ini dilabeli{" "}
+              This project is labeled{" "}
               <strong className="font-semibold">{project.honesty}</strong>.
             </p>
           </Block>

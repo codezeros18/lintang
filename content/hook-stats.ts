@@ -6,10 +6,11 @@ import { CONFIG, isSet } from "@/content/config";
  * Satu sumber untuk Hero DAN OG image, supaya angka di situs dan angka di preview
  * share tidak mungkin berbeda.
  *
- * "5.000+ kg kopi dilacak" WAJIB tampil bersama konteks waktu `ANKOP_MONTHS` (§0.2).
- * Selama token itu kosong, angka kg TIDAK ditampilkan; slotnya diisi "15+ supplier
- * aktif" — angka CV lain yang aturan tampilnya "apa adanya".
- * TODO(lintang): isi `ANKOP_MONTHS` (+ `ANKOP_KG_CUMULATIVE`) agar angka kg naik ke hero & OG.
+ * Format angka mengikuti CV versi Inggris: `Rp20M+`, `5,000+ kg`.
+ *
+ * "5,000+ kg" WAJIB tampil bersama konteks waktu `ANKOP_MONTHS` (§0.2). Kalau token
+ * itu dikosongkan, angka kg TIDAK ditampilkan dan slotnya diisi "15+ active suppliers"
+ * — angka CV lain yang aturan tampilnya "apa adanya".
  */
 
 export type HookStat = {
@@ -28,13 +29,13 @@ export function getHookStats(): HookStat[] {
     ? {
         value: 5000,
         suffix: "+ kg",
-        label: `kopi dilacak dalam ${ankopMonths} bulan pertama`,
-        display: "5.000+ kg",
+        label: `of coffee tracked in the first ${ankopMonths} months`,
+        display: "5,000+ kg",
       }
     : {
         value: 15,
         suffix: "+",
-        label: "supplier aktif",
+        label: "active suppliers",
         display: "15+",
       };
 
@@ -42,11 +43,11 @@ export function getHookStats(): HookStat[] {
     {
       value: 20,
       prefix: "Rp",
-      suffix: "jt+",
-      label: "transaksi (peluncuran awal)",
-      display: "Rp20jt+",
+      suffix: "M+",
+      label: "in transactions (early launch)",
+      display: "Rp20M+",
     },
     coffeeStat,
-    { value: 6, label: "dashboard role-gated", display: "6" },
+    { value: 6, label: "role-gated dashboards", display: "6" },
   ];
 }

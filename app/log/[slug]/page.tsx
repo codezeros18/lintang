@@ -47,7 +47,7 @@ export default async function LogPostPage({ params }: PageParams) {
           href="/log"
           className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
         >
-          ← Semua log
+          ← All log posts
         </Link>
 
         <article className="mt-8 max-w-3xl">
@@ -94,7 +94,7 @@ export default async function LogPostPage({ params }: PageParams) {
               className="border-l-indigo-brand mt-10 rounded-l-none border-l-[3px]"
             >
               <p className="mono text-ink-muted text-xs tracking-[0.14em] uppercase">
-                1 pelajaran
+                One lesson
               </p>
               <p className="mt-3 leading-relaxed">{post.lesson}</p>
             </Card>
@@ -106,7 +106,7 @@ export default async function LogPostPage({ params }: PageParams) {
                 {post.cta}
               </p>
               <div className="mt-5">
-                <Button href="/#contact">Hubungi saya</Button>
+                <Button href="/#contact">Get in touch</Button>
               </div>
             </div>
           ) : null}

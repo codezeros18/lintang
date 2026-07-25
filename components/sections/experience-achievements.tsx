@@ -44,7 +44,7 @@ export function ExperienceAchievements() {
       <Reveal>
         <SectionHeading
           eyebrow="Experience & achievements"
-          title="Jejak kerja, kompetisi, dan kredensial."
+          title="Work, competitions, and credentials."
         />
       </Reveal>
 
@@ -52,7 +52,7 @@ export function ExperienceAchievements() {
         {/* ——— Kolom kiri: timeline kerja + pendidikan + organisasi ——— */}
         <div className="space-y-10">
           <div>
-            <GroupHeading>Pengalaman</GroupHeading>
+            <GroupHeading>Experience</GroupHeading>
 
             <ol className="border-border mt-5 space-y-8 border-l pl-6">
               {sortedWork.map((item) => (
@@ -79,7 +79,7 @@ export function ExperienceAchievements() {
                       href={`/projects/${item.projectSlug}`}
                       className="text-ink hover:text-coral-ink decoration-border hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
                     >
-                      Baca case study
+                      Read the case study
                     </Link>
                   ) : null}
                 </li>
@@ -88,7 +88,7 @@ export function ExperienceAchievements() {
           </div>
 
           <div>
-            <GroupHeading>Pendidikan</GroupHeading>
+            <GroupHeading>Education</GroupHeading>
             <ul className="mt-5 space-y-4">
               {sortedEducation.map((item) => (
                 <li key={item.school}>
@@ -104,7 +104,7 @@ export function ExperienceAchievements() {
 
           {sortedOrgs.length > 0 ? (
             <div>
-              <GroupHeading>Organisasi</GroupHeading>
+              <GroupHeading>Organizations</GroupHeading>
               <ul className="mt-5 space-y-4">
                 {sortedOrgs.map((item) => (
                   <li key={`${item.org}-${item.role}`}>
@@ -128,7 +128,7 @@ export function ExperienceAchievements() {
         {/* ——— Kolom kanan: medali & sertifikasi ——— */}
         <div className="space-y-10">
           <div>
-            <GroupHeading>Prestasi</GroupHeading>
+            <GroupHeading>Achievements</GroupHeading>
 
             <Stagger className="mt-5 space-y-3">
               {sortedAchievements.map((item) => (
@@ -151,7 +151,7 @@ export function ExperienceAchievements() {
                           href={`/projects/${item.projectSlug}`}
                           className="text-ink hover:text-coral-ink decoration-border hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
                         >
-                          Lihat case study-nya
+                          See the case study
                         </Link>
                       ) : null}
                     </div>
@@ -162,7 +162,7 @@ export function ExperienceAchievements() {
           </div>
 
           <div>
-            <GroupHeading>Sertifikasi</GroupHeading>
+            <GroupHeading>Certifications</GroupHeading>
             <ul className="mt-5 space-y-3">
               {sortedCerts.map((cert) => (
                 <li key={cert.name}>

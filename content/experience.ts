@@ -63,20 +63,20 @@ export const education: EducationItem[] = [
   {
     school: "Universitas Multimedia Nusantara",
     program: "B.Sc. Informatics",
-    period: "Agu 2024–sekarang",
-    note: "IPK 3.48",
+    period: "Aug 2024–present",
+    note: "GPA 3.48",
     order: 1,
   },
   {
     school: "Digital Skola",
     program: "Data Science Bootcamp",
-    period: "Jun 2025–Okt 2025",
+    period: "Jun 2025–Oct 2025",
     note: "Excellent Graduate",
     order: 2,
   },
   {
     school: "SMKN 4 Kota Tangerang",
-    program: "Rekayasa Perangkat Lunak",
+    program: "Software Engineering",
     period: "Jun 2021–Jul 2024",
     order: 3,
   },
@@ -86,20 +86,20 @@ export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Kopi Nusantara (Ankop)",
     role: "Full-Stack Software Engineer",
-    period: "Jun 2026–sekarang",
+    period: "Jun 2026–present",
     location: "Bandung",
     summary:
-      "Membangun Ankop Trace, sistem operasional kopi offline-first yang memindahkan produsen kopi specialty sepenuhnya lepas dari kertas — dari intake ceri sampai pembayaran supplier dan laporan pemilik.",
+      "Built Ankop Trace, an offline-first coffee operations system that took a specialty coffee producer fully off paper — from cherry intake through supplier payments and owner reporting.",
     projectSlug: "ankop-trace",
     order: 1,
   },
   {
     org: "Bisasinema",
     role: "Tech Lead & Assistant Product Manager",
-    period: "Mar 2026–sekarang",
+    period: "Mar 2026–present",
     location: "Tangerang",
     summary:
-      "Memimpin pembangunan platform produk pertama Bisasinema: kelas ala Coursera, tiket digital dengan pembayaran live, dashboard monitoring internal, dan technical SEO.",
+      "Led the build of Bisasinema's first product platform: Coursera-style classes, digital ticketing with live payments, an internal monitoring dashboard, and technical SEO.",
     projectSlug: "bisasinema",
     order: 2,
   },
@@ -109,16 +109,16 @@ export const workItems: WorkItem[] = [
     period: "Jan 2026–Mar 2026",
     location: "Serang · virtual internship",
     summary:
-      "Membangun dashboard monitoring untuk CEO dan menyiapkan datanya — dari eksplorasi, cleaning, penanganan anomali, sampai feature engineering.",
+      "Built CEO-facing monitoring dashboards and prepared the data behind them — exploration, cleaning, anomaly handling, and feature engineering.",
     order: 3,
   },
   {
     org: "PT Anugrah Energi Indonesia",
     role: "Frontend Developer",
-    period: "Jun 2023–Okt 2023",
-    location: "Tangerang · magang SMK",
+    period: "Jun 2023–Oct 2023",
+    location: "Tangerang · vocational internship",
     summary:
-      "Magang SMK: membangun antarmuka web yang responsif dan scalable dengan React dan Tailwind CSS di lingkungan produksi.",
+      "Vocational-school internship: built responsive, scalable web interfaces with React and Tailwind CSS in a production environment.",
     order: 4,
   },
 ];
@@ -126,30 +126,30 @@ export const workItems: WorkItem[] = [
 export const achievements: Achievement[] = [
   {
     medal: "🥇",
-    title: "Juara 1 Nasional — I/O Festival",
-    scope: "Kompetisi nasional",
+    title: "1st Place, National — I/O Festival",
+    scope: "National competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
-    detail: "Membangun platform B2B untuk ekonomi sirkular.",
+    detail: "Built a B2B platform for the circular economy.",
     order: 1,
   },
   {
     medal: "🥉",
-    title: "Juara 3 Nasional — SurabayaDev Developer Battle 2025",
-    scope: "Kompetisi analisis data nasional",
+    title: "3rd Place, National — SurabayaDev Developer Battle 2025",
+    scope: "National data analysis competition",
     year: "2025",
     detail:
-      "Kompetisi analisis data nasional dengan fokus pola booking dan pembatalan hotel.",
+      "A national data analysis competition focused on hotel booking and cancellation patterns.",
     // Pekerjaannya sudah diceritakan penuh sebagai case study.
-    projectSlug: "analisis-pembatalan-hotel",
+    projectSlug: "hotel-cancellation-analysis",
     order: 2,
   },
   {
     medal: "🥈",
-    title: "Juara 2 Internal — CIMB Niaga Pitching Day (UMN)",
-    scope: "Kompetisi internal",
+    title: "2nd Place, Internal — CIMB Niaga Pitching Day (UMN)",
+    scope: "Internal competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
     detail:
-      "Membangun aplikasi mobile pembukaan rekening digital yang berfungsi, memakai React Native dan Expo Go.",
+      "Built a functional mobile app for digital account opening using React Native and Expo Go.",
     order: 3,
   },
 ];
@@ -196,33 +196,33 @@ export const certifications: Certification[] = [
 export const organizationRoles: OrganizationRole[] = [
   {
     org: "UMN ECO",
-    role: "Koordinator Divisi Website",
-    period: "Jan 2026–sekarang",
-    summary: "Memimpin pengembangan dan perawatan website organisasi.",
+    role: "Coordinator, Website Division",
+    period: "Jan 2026–present",
+    summary: "Led development and maintenance of the organization's website.",
     order: 1,
   },
   {
     org: "Duta Anti Narkoba UMN",
-    role: "Koordinator Divisi Website",
-    period: "Des 2024–Nov 2025",
+    role: "Coordinator, Website Division",
+    period: "Dec 2024–Nov 2025",
     summary:
-      "Mengelola pengiriman website end-to-end, termasuk jadwal acara dan fitur ticketing.",
+      "Managed end-to-end website delivery, including event schedules and ticketing features.",
     order: 2,
   },
   {
     org: "STARLIGHT",
-    role: "Anggota Divisi Website",
-    period: "Okt 2024–Nov 2025",
+    role: "Website Division Member",
+    period: "Oct 2024–Nov 2025",
     summary:
-      "Membangun halaman divisi yang interaktif dengan fokus usability dan desain responsif.",
+      "Built interactive division pages with a focus on usability and responsive design.",
     order: 3,
   },
   {
     org: "AI Community",
     role: "Volunteer",
-    period: "Mar 2025–Mei 2025",
+    period: "Mar 2025–May 2025",
     summary:
-      "Membawakan demonstrasi dan sesi praktik AI di acara Open House untuk siswa dan orang tua.",
+      "Delivered AI demonstrations and hands-on sessions at Open House events for students and parents.",
     order: 4,
   },
 ];

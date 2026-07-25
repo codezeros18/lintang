@@ -23,7 +23,7 @@ export type CountUpProps = {
 };
 
 const defaultFormat = (value: number) =>
-  Math.round(value).toLocaleString("id-ID");
+  Math.round(value).toLocaleString("en-US");
 
 /**
  * CountUp — animasi angka hook (BLUEPRINT §3.4, opsional).

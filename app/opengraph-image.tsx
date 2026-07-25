@@ -14,7 +14,7 @@ import { getHookStats } from "@/content/hook-stats";
  */
 
 export const alt =
-  "Lintang Balakosa Ardhana — Full-Stack Engineer. Membangun sistem produksi nyata dan membuktikan dampaknya lewat data.";
+  "Lintang Balakosa Ardhana — Full-Stack Engineer. Building real production systems and proving their impact with data.";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -64,7 +64,7 @@ export default function OpengraphImage() {
                 display: "flex",
               }}
             />
-            Full-Stack Engineer · Informatika UMN
+            Full-Stack Engineer · Informatics, UMN
           </div>
 
           <div
@@ -89,8 +89,8 @@ export default function OpengraphImage() {
               maxWidth: 900,
             }}
           >
-            Membangun sistem yang dipakai bisnis nyata — dan membuktikan
-            dampaknya lewat data.
+            I build systems real businesses run on — and prove their impact with
+            data.
           </div>
         </div>
 

@@ -17,8 +17,8 @@ export function Skills() {
       <Reveal>
         <SectionHeading
           eyebrow="Skills"
-          title="Kemampuan yang bisa saya tunjuk buktinya."
-          description="Tiap grup terhubung ke proyek tempat kemampuan itu benar-benar dipakai."
+          title="Skills I can point to evidence for."
+          description="Every group links back to the project where it was actually used."
         />
       </Reveal>
 
@@ -42,7 +42,7 @@ export function Skills() {
               </ul>
 
               <p className="text-ink-muted mt-auto pt-5 text-sm leading-relaxed">
-                <span className="text-ink font-medium">Dipakai di: </span>
+                <span className="text-ink font-medium">Used in: </span>
                 {group.provenBy}
               </p>
             </Card>
@@ -54,7 +54,7 @@ export function Skills() {
         {/* §4.4 — "Kejujuran level: React Native = basic (eksplisit)". Ditulis apa
             adanya, tanpa tambahan tafsir soal sejauh mana kemampuannya. */}
         <p className="text-ink-muted mt-8 max-w-2xl text-sm leading-relaxed">
-          Kejujuran level:{" "}
+          Honest about level:{" "}
           <strong className="text-ink font-medium">React Native = basic</strong>.
         </p>
       </Reveal>

@@ -66,8 +66,8 @@ export function FeaturedProjects() {
       <Reveal>
         <SectionHeading
           eyebrow="Featured projects"
-          title="Sistem yang benar-benar dipakai — dan apa yang berubah karenanya."
-          description="Empat proyek dengan keputusan teknis dan hasilnya. Klik salah satu untuk membaca problem, keputusan, dan hasilnya secara lengkap."
+          title="Systems people actually use — and what changed because of them."
+          description="Four projects with the technical decisions behind them and what they produced. Open one to read the problem, the decisions, and the results in full."
         />
       </Reveal>
 

@@ -24,7 +24,7 @@ export const skillGroups: SkillGroup[] = [
     title: "Languages",
     items: [
       { name: "Python" },
-      { name: "SQL (MySQL/PostgreSQL)" },
+      { name: "SQL (MySQL, PostgreSQL)" },
       { name: "JavaScript" },
       { name: "TypeScript" },
     ],
@@ -39,7 +39,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "React Native", level: "basic" },
     ],
     provenBy:
-      "Bisasinema, Tera & Ankop; React Native (basic) → aplikasi pembukaan rekening digital, Juara 2 Internal CIMB Niaga",
+      "Bisasinema, Tera & Ankop; React Native (basic) → digital account-opening app, 2nd Place Internal, CIMB Niaga",
   },
   {
     title: "Backend & API",
@@ -49,9 +49,9 @@ export const skillGroups: SkillGroup[] = [
       { name: "Node.js" },
       { name: "Express.js" },
       { name: "REST" },
-      { name: "Integrasi LLM (OpenAI/Anthropic)" },
+      { name: "LLM/AI API integration (OpenAI, Anthropic)" },
     ],
-    provenBy: "NestJS di Ankop · FastAPI di Tera · LLM di Kuali",
+    provenBy: "NestJS at Ankop · FastAPI at Tera · LLM at Kuali",
   },
   {
     title: "Data & ML",
@@ -69,10 +69,10 @@ export const skillGroups: SkillGroup[] = [
       { name: "Folium" },
       { name: "Looker Studio" },
     ],
-    provenBy: "Analisis Hotel & Bank Sampah Digital",
+    provenBy: "Hotel Cancellation Analysis & Bank Sampah Digital",
   },
   {
-    title: "Database & Arsitektur",
+    title: "Database & Architecture",
     items: [
       { name: "PostgreSQL" },
       { name: "MySQL" },
@@ -80,10 +80,10 @@ export const skillGroups: SkillGroup[] = [
       { name: "Supabase" },
       { name: "Multi-tenant (RLS)" },
     ],
-    provenBy: "RLS 6-role di Tera · Prisma + MySQL di Ankop",
+    provenBy: "6-role RLS at Tera · Prisma + MySQL at Ankop",
   },
   {
-    title: "DevOps & Integrasi",
+    title: "DevOps & Integrations",
     items: [
       { name: "Docker" },
       { name: "Vercel" },
@@ -92,6 +92,6 @@ export const skillGroups: SkillGroup[] = [
       { name: "Midtrans" },
       { name: "Technical SEO" },
     ],
-    provenBy: "Docker/Railway di Ankop · Midtrans & SEO di Bisasinema",
+    provenBy: "Docker/Railway at Ankop · Midtrans & SEO at Bisasinema",
   },
 ];

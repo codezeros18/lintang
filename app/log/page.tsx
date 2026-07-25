@@ -12,7 +12,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Log",
   description:
-    "Catatan lomba, event, dan proyek yang sedang dikerjakan Lintang Balakosa Ardhana — termasuk yang belum berhasil.",
+    "Notes on competitions, events, and projects by Lintang Balakosa Ardhana — including the ones that did not work out.",
   path: "/log",
 });
 
@@ -31,22 +31,22 @@ export default async function LogPage() {
           href="/"
           className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
         >
-          ← Kembali ke beranda
+          ← Back to home
         </Link>
 
         <div className="mt-8">
           <Reveal>
             <SectionHeading
               eyebrow="Log"
-              title="Apa yang sedang saya kerjakan."
-              description="Lomba, event, dan proyek — ditulis apa adanya, termasuk yang hasilnya belum sesuai harapan."
+              title="What I&rsquo;m working on."
+              description="Competitions, events, and projects — written plainly, including the ones that did not go my way."
               as="h1"
             />
           </Reveal>
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-ink-muted mt-10">Belum ada post.</p>
+          <p className="text-ink-muted mt-10">No posts yet.</p>
         ) : (
           <Stagger className="mt-10 grid gap-4">
             {posts.map((post) => {

@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${fontVariables} h-full antialiased`}>
+    <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <head>
         {/*
           Framer Motion merender state awal (opacity 0) di HTML server. Tanpa JS,

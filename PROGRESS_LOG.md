@@ -27,6 +27,29 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 01:20] — Di luar sprint — Situs dialihkan ke bahasa Inggris
+**Status:** ✅ selesai
+**Pemicu:** Permintaan Lintang — portfolio ditujukan untuk audiens internasional.
+**Selesai:**
+- **Semua copy yang dilihat pengunjung kini bahasa Inggris**: Hero, About (versi ±120 kata), Skills, Featured Projects, keempat case study, Experience/Education/Organizations/Achievements/Certifications, Contact, Log (list + detail + teaser), OG image, dan metadata.
+- `<html lang="id">` → **`lang="en"`**; `og:locale` `id_ID` → **`en_US`**; format tanggal Log `id-ID` → `en-US`; `CountUp` memakai pemisah ribuan `en-US`.
+- **Format angka disamakan dengan CV versi Inggris:** `Rp20jt+` → **`Rp20M+`**, `5.000+ kg` → **`5,000+ kg`**. Ini bukan perubahan nilai — hanya notasi, dan justru menghilangkan risiko titik/koma desimal salah baca oleh pembaca internasional.
+- **Nilai enum ikut diterjemahkan** karena tampil apa adanya sebagai badge: label kejujuran `produksi`→`production`, `produksi (production-ready)`→`production-ready`, `kompetisi`→`competition`; tipe Log `lomba|event|proyek`→`competition|event|project`; hasil Log `menang|kalah|ikut`→`won|lost|participated`. Frontmatter MDX ikut disesuaikan.
+- **Slug case study hotel diubah** `analisis-pembatalan-hotel` → **`hotel-cancellation-analysis`** (URL juga dibaca audiens). Sitemap ikut menyesuaikan otomatis.
+- Nama anonim untuk mode `CLIENT_NAME_PERMISSION=false` ikut diterjemahkan ("A specialty coffee producer", "A film & education brand") supaya tetap konsisten kalau tokennya diubah.
+- `npm run build` ✅ (16 halaman) · `npm run lint` ✅ · dicek di HTML produksi: `lang="en"`, `og:locale=en_US`, nol sisa kata Indonesia di teks yang tampil.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **URL lama `/projects/analisis-pembatalan-hotel` sekarang 404.** Tidak ada redirect yang dipasang. Aman karena URL itu belum pernah disebarkan, tapi kalau ternyata sudah pernah dibagikan ke seseorang, bilang — saya tambahkan redirect permanen di `next.config.ts`.
+- ⚠️ **Komentar kode, `PORTFOLIO_BLUEPRINT.md`, `SPRINTS_AND_TRACKING.md`, dan PROGRESS_LOG ini tetap bahasa Indonesia.** Semuanya dokumen kerja internal yang tidak dilihat pengunjung; menerjemahkannya cuma menambah churn tanpa manfaat untuk audiens. Kalau nanti repo GitHub-nya mau ikut dipamerkan ke recruiter internasional, ini bisa ditinjau ulang.
+- ⚠️ `app/ui-demo` masih berbahasa Indonesia — halaman kerja internal yang 404 di produksi, jadi tidak terlihat pengunjung.
+- ⚠️ **Situs tidak jadi bilingual.** Permintaannya "ubah full ke English", jadi versi Indonesia tidak dipertahankan dan tidak ada language switcher.
+- ⚠️ Nama file CV tetap `Lintang-Balakosa-Ardhana-CV.pdf`, dan **isi PDF-nya memang sudah berbahasa Inggris** — jadi tidak ada ketidakcocokan bahasa antara situs dan CV.
+**Keputusan / catatan:**
+- Terjemahan dibuat sebagai **penulisan ulang idiomatis, bukan terjemahan harfiah** — misalnya headline §4.1 jadi "I build systems real businesses run on — and prove their impact with data." Semua fakta, angka, nama, dan tanggal identik dengan versi Indonesia.
+- Aturan integritas tidak berubah: angka 5,000+ kg tetap terikat `ANKOP_MONTHS`, bukti tetap "Evidence coming soon" selama `PROOF_*` kosong, blok `learned`/`ownVsTeam` tetap tersembunyi.
+- BLUEPRINT tetap jadi sumber kebenaran meski berbahasa Indonesia — copy Inggris adalah turunannya, bukan penggantinya.
+**Commit:** `i18n: switch all visitor-facing copy to English`
+
 ### [2026-07-26 00:38] — Di luar sprint — Pengisian data dari CV asli + LinkedIn
 **Status:** ✅ selesai
 **Pemicu:** Lintang mengirim URL LinkedIn dan menaruh `LINTANGBALAKOSAARDHANACV.pdf` di root. CV **dibaca langsung** — banyak data yang sebelumnya "tidak ada sumbernya" ternyata ada di sana.
