@@ -27,6 +27,39 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-25 22:52] — Sprint S2 — Design System & Shared UI
+**Status:** ✅ selesai
+**Selesai:**
+- `components/ui/button.tsx` — **ditulis ulang**, menggantikan Button bawaan shadcn. Varian `primary` (indigo) · `secondary` (outline warm) · `ghost` · `link`; ukuran `sm/md/lg`; **coral hanya di varian `link`** (hover), sesuai aturan "coral hemat" §3.2. Merender `<button>`, `next/link` (href diawali `/`), atau `<a>` (anchor/eksternal). Tanpa hook → tetap server component.
+- `components/ui/card.tsx` (+ `CardTitle`, `CardDescription`), `badge.tsx` (tone `neutral/accent/coral/outline` + opsi `mono` untuk tech chip), `section-heading.tsx` (eyebrow mono uppercase + judul + deskripsi + slot `action`, level heading bisa diatur demi urutan a11y).
+- `components/ui/container.tsx` — `Container` (max-width `--maxw`, padding aman di 360px) + `Section` (`py-20 md:py-28` + anchor `id`).
+- `components/motion/` — `Reveal`, `Stagger` + `StaggerItem` + `HoverLift`, `CountUp`. Semua memakai `useReducedMotion`: saat reduce, komponen merender `<div>` biasa **tanpa transform/opacity** (final state), bukan animasi yang dipercepat.
+- `CountUp` dirancang jujur: render server/tanpa-JS langsung menampilkan **nilai akhir**, animasi hanya jalan sekali saat masuk viewport, dan `useLayoutEffect` isomorfik dipakai supaya tidak berkedip.
+- `lib/seo.ts` — `SITE` (§7), `SITE_URL`, dan `buildMetadata({title, description, path, noIndex})` menghasilkan title/desc/canonical/OG/Twitter. `openGraph.images` sengaja dikosongkan supaya diisi otomatis oleh `app/opengraph-image.tsx` di S6 (tidak ada URL gambar karangan).
+- `app/layout.tsx` sekarang memakai `buildMetadata()`.
+- `app/sitemap.ts` (**hanya `/`** — rute yang benar-benar ada) + `app/robots.ts` (allow all + host + sitemap).
+- Favicon placeholder `app/icon.svg` (monogram "L", indigo di atas paper). **`app/favicon.ico` bawaan dihapus** karena isinya logo Next.js, bukan merek Lintang.
+- `app/ui-demo/page.tsx` — halaman verifikasi komponen, **404 di produksi** (`notFound()` saat `NODE_ENV=production`), `noIndex` di metadata. Isinya contoh netral, bukan klaim tentang Lintang.
+- Verifikasi produksi via `next start`: `/` → 200, `/ui-demo` → **404**, `robots.txt` & `sitemap.xml` terbit benar, `<link rel="icon" ... type="image/svg+xml">` terpasang. `npm run build` ✅ · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **`prefers-reduced-motion` BELUM diuji di browser sungguhan.** Tidak ada browser yang bisa saya kendalikan di lingkungan ini. Yang sudah dipastikan: (a) tiap komponen motion punya cabang `if (shouldReduceMotion) return <div>…` yang deterministik, jadi tidak ada transform/opacity sama sekali; (b) blok `@media (prefers-reduced-motion: reduce)` ada di `globals.css`. **Perlu Lintang / S6:** emulasikan di DevTools → Rendering → "Emulate CSS media feature prefers-reduced-motion".
+- 🔴 **Temuan penting untuk S3:** HTML server dari Framer Motion berisi `opacity:0; transform:translateY(16px)` (terkonfirmasi di output `/ui-demo`). Artinya apa pun yang dibungkus `Reveal`/`Stagger` **tidak terlihat sampai hidrasi** → kalau hero dibungkus, target **LCP <2s** berisiko gagal. Mitigasi yang sudah dipasang: `<noscript>` di `app/layout.tsx` memaksa `[data-reveal]` jadi `opacity:1` untuk pengunjung tanpa JS. Aturan yang saya pegang di S3: **hero tidak dibungkus komponen motion**; Reveal hanya untuk section di bawah lipatan.
+- ⚠️ `robots.txt`/canonical saat ini menunjuk `https://lintangbalakosa.dev` yang **belum diregistrasi**. `lib/seo.ts` sudah menyediakan override `NEXT_PUBLIC_SITE_URL`, tapi env-nya belum diset di Vercel — jadi kalau di-redeploy sekarang, sitemap menunjuk domain yang belum resolve. Diselesaikan di S6 (atau set env sekarang bila mau).
+- Tidak ada deploy ulang di sprint ini (S2 tidak memintanya); situs live masih berisi skeleton S1.
+- `@base-ui/react` kini tidak terpakai (bekas Button shadcn). Dibiarkan terpasang karena komponen shadcn lain mungkin membutuhkannya; kalau sampai S6 tetap tak terpakai, bisa di-uninstall.
+**Keputusan / catatan:**
+- **Kenapa Button shadcn diganti:** varian bawaan (`base-nova`) berukuran aplikasi padat (tinggi default 32px) dan bergantung pada primitive `@base-ui/react`, sementara yang dibutuhkan portfolio adalah CTA besar yang bisa jadi link. Konvensi shadcn (`cva` + `cn` + `components.json`) tetap dipertahankan, jadi `npx shadcn add` untuk komponen lain masih jalan normal.
+- Efek hover-lift **tidak** ditaruh di `Card` melainkan di `HoverLift`, supaya seluruh keputusan animasi (termasuk reduced-motion) terpusat di `components/motion/`.
+- `Section` dan `SectionHeading` dipisah supaya section bisa memakai heading level berbeda tanpa merusak urutan h1→h2→h3.
+- Sitemap sengaja **tidak** mendaftarkan `/projects/*` atau `/log` sebelum halamannya ada — sitemap berisi 404 merugikan SEO. Ditambah di S4 & S7.
+- `keywords` §7 dipasang di metadata apa adanya (11 kata kunci, tanpa stuffing).
+**CONFIG/TODO yang masih menunggu Lintang:** *(tidak berubah — 13 token masih `null`, `DOMAIN` masih default)*
+- ⛔ `LINKEDIN_URL` · `ANKOP_MONTHS` · `ANKOP_KG_CUMULATIVE` · `PROOF_ANKOP` · `PROOF_BISASINEMA` · `PROOF_TERA` · `PROOF_HOTEL` · `PROOF_BANKSAMPAH` · `CLIENT_NAME_PERMISSION` · `CV_FILE` · `PHOTO_FILE` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK`
+- 🟡 `DOMAIN` — belum diregistrasi; berdampak langsung ke canonical & sitemap (lihat blocker di atas).
+- ⛔ Non-token: repo GitHub (auto-deploy), file `Satoshi-Variable.woff2`.
+**Commit:** `S2: design system, shared UI, motion primitives, SEO scaffold`
+**Sprint berikutnya:** S3 — Hero + About + Skills (menunggu instruksi)
+
 ### [2026-07-25 22:39] — Sprint S1 — Foundation & Setup
 **Status:** ✅ selesai
 **Selesai:**

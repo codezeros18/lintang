@@ -13,7 +13,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 | Sprint | Nama | Cakupan | Status |
 |---|---|---|---|
 | **S1** | Foundation & Setup | Scaffold Next.js, tooling, fonts, token CONFIG, deploy skeleton Vercel | ✅ |
-| **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | 🔲 |
+| **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | ✅ |
 | **S3** | Hero + About + Skills | 3 section atas + hook strip | 🔲 |
 | **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | 🔲 |
 | **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | 🔲 |
@@ -46,13 +46,13 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** komponen dasar + motion primitive + SEO scaffold siap dipakai section.
 
 **Tasks:**
-- [ ] `components/ui/`: `Button`, `Card`, `Badge`, `SectionHeading` (pakai CSS vars; aksen coral hemat)
-- [ ] `components/motion/`: `Reveal`, `Stagger`, `CountUp` — hormati `useReducedMotion` (§3.4)
-- [ ] Container/layout util (max-width `--maxw`, padding section `py-20 md:py-28`)
-- [ ] `lib/seo.ts`: helper `metadata` per halaman (title/desc/OG) dari BLUEPRINT §7
-- [ ] `app/sitemap.ts`, `app/robots.ts` (rute dasar)
-- [ ] Favicon placeholder (ganti final di S6)
-- [ ] Uji `prefers-reduced-motion` (semua animasi jadi final-state)
+- [x] `components/ui/`: `Button`, `Card`, `Badge`, `SectionHeading` (pakai CSS vars; aksen coral hemat)
+- [x] `components/motion/`: `Reveal`, `Stagger` (+ `StaggerItem`, `HoverLift`), `CountUp` — hormati `useReducedMotion` (§3.4)
+- [x] Container/layout util (max-width `--maxw`, padding section `py-20 md:py-28`) → `components/ui/container.tsx`
+- [x] `lib/seo.ts`: helper `metadata` per halaman (title/desc/OG) dari BLUEPRINT §7
+- [x] `app/sitemap.ts`, `app/robots.ts` (rute dasar)
+- [x] Favicon placeholder (`app/icon.svg` monogram; ganti final di S6)
+- [x] Uji `prefers-reduced-motion` — ⚠️ diverifikasi lewat **inspeksi jalur kode + build**, belum di browser sungguhan (lihat PROGRESS_LOG)
 
 **Definition of Done:** komponen ter-render di halaman demo internal; motion menghormati reduced-motion; `lib/seo.ts` dipakai `layout`; sitemap/robots terbit; build sukses.
 **Files:** `components/ui/*`, `components/motion/*`, `lib/seo.ts`, `app/sitemap.ts`, `app/robots.ts`.
@@ -159,3 +159,7 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] **`public/fonts/Satoshi-Variable.woff2` belum ada** → body font sementara memakai fallback DM Sans. Blok `localFont` di `lib/fonts.ts` sengaja dinonaktifkan agar build tidak gagal.
 - [ ] Deviasi stack vs BLUEPRINT §8 (Next.js 16 + Tailwind v4): tidak ada `tailwind.config.ts` (Tailwind v4 CSS-first — token ada di `app/globals.css`), dan config bernama `next.config.ts` bukan `.mjs`.
 - [ ] Dark mode belum ada (blok `.dark` bawaan shadcn dihapus) — sesuai §3.2 "dark = fast-follow".
+- [ ] **JANGAN bungkus konten hero dengan `Reveal`/`Stagger` di S3.** Framer Motion merender `opacity:0` di HTML server, jadi elemen di atas lipatan baru terlihat setelah hidrasi → merusak target **LCP <2s**. Reveal hanya untuk section di bawah lipatan. (Pengunjung tanpa JS sudah diamankan lewat `<noscript>` di `app/layout.tsx`.)
+- [ ] `NEXT_PUBLIC_SITE_URL` belum diset di Vercel → `robots.txt`/canonical masih menunjuk `lintangbalakosa.dev` yang **belum resolve**. Set env ke URL `*.vercel.app` sampai domain aktif (S6).
+- [ ] `app/ui-demo` = halaman kerja internal (404 di produksi). Hapus atau biarkan dev-only sebelum launch.
+- [ ] Uji `prefers-reduced-motion` di browser sungguhan (devtools → Rendering → Emulate CSS media) saat S6.
