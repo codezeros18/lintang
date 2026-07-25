@@ -1,4 +1,6 @@
 import { About } from "@/components/sections/about";
+import { Contact } from "@/components/sections/contact";
+import { ExperienceAchievements } from "@/components/sections/experience-achievements";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
 import { Hero } from "@/components/sections/hero";
 import { Skills } from "@/components/sections/skills";
@@ -7,8 +9,7 @@ import { Skills } from "@/components/sections/skills";
  * Halaman one-page — urutan BLUEPRINT §2:
  * Hero → Featured Projects → About → Skills → Experience → (Log teaser) → Contact.
  *
- * Featured Projects (S4), Experience & Contact (S5), Log teaser (S7) menyusul.
- * Section Projects dipasang tepat setelah Hero saat S4, sesuai aturan "bukti dulu".
+ * Log teaser (S7) menyusul, disisipkan sebelum Contact.
  */
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
       <FeaturedProjects />
       <About />
       <Skills />
+      <ExperienceAchievements />
+      <Contact />
     </main>
   );
 }

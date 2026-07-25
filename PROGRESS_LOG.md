@@ -27,6 +27,38 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-25 23:41] — Sprint S5 — Experience/Achievements + Contact + CV
+**Status:** ✅ selesai (dengan satu task sengaja tidak dikerjakan — lihat blocker)
+**Selesai:**
+- `content/experience.ts` — timeline kerja (Ankop Trace, Bisasinema, Bank Sampah Digital, PT Anugrah Energi), 3 prestasi (I/O 🥇, SurabayaDev 🥉, CIMB Niaga 🥈), dan sertifikasi (BNSP, Digital Skola). Tipe `WorkItem`/`Achievement`/`Certification` memakai `string | null` untuk periode/tahun/penerbit supaya yang belum pasti bisa disembunyikan.
+- `components/sections/experience-achievements.tsx` — timeline bertitik indigo di kiri (2 kolom di layar besar), kartu medali, daftar sertifikasi. Tiap entri ringkas 1–2 baris, tanpa buzzword dan tanpa skill-dump.
+- **Anti double-count dijaga:** kartu medali SurabayaDev hanya memuat judul + link "Lihat case study-nya" ke `/projects/analisis-pembatalan-hotel`. Pekerjaannya tidak diceritakan ulang. Entri kerja Ankop & Bisasinema juga menaut ke case study masing-masing.
+- `components/sections/contact.tsx` — naskah §4.5 ("Terbuka untuk peran full-stack (dan proyek yang butuh sisi data). Paling cepat lewat email."), tombol email besar, daftar email + GitHub.
+- `app/page.tsx` lengkap: Hero → Featured Projects → About → Skills → Experience → Contact (urutan §2). Anchor `#projects` dan `#contact` yang dipakai hero **sekarang sudah punya tujuan**.
+- Verifikasi di server produksi: semua entri tampil benar; **tidak ada** `href="/cv/null"`, `href="null"`, teks `null`, atau `TODO(lintang)` yang bocor ke HTML. `npm run build` ✅ · `npm run lint` ✅.
+**Gagal / skip / blocker (jujur):**
+- ⛔ **Org roles TIDAK dikerjakan.** BLUEPRINT tidak memuat satu pun data organisasi, dan file CV tidak ada di repo — jadi tidak ada yang bisa ditulis tanpa mengarang. Struktur `organizationRoles` sudah disiapkan dan blok "Organisasi" muncul otomatis begitu diisi. Ini satu-satunya task S5 yang tidak selesai.
+- ⛔ **Sertifikat Coursera dilewati.** Nama kursus dan penerbitnya tidak ada di BLUEPRINT maupun di repo. Menuliskan "Coursera" tanpa nama sertifikat sama saja klaim kosong, jadi barisnya tidak dirender.
+- ⚠️ **Data CV yang saya tidak punya** (semuanya dibiarkan `null` dan tidak ditampilkan): periode magang PT Anugrah Energi · periode Bank Sampah Digital · tahun I/O Festival · tahun CIMB Niaga. Yang tampil hanya periode Ankop (Jun 2026) & Bisasinema (Mar 2026) serta tahun SurabayaDev (2025) — ketiganya memang ada di BLUEPRINT.
+- ⚠️ **Role PT Anugrah Energi saya tulis "Frontend Developer (magang)"** — turunan dari §4.3 ("magang frontend di lingkungan produksi sejak 2023"), sedangkan nama perusahaannya sendiri hanya muncul di `EXECUTION_PROMPTS.md`, bukan di BLUEPRINT. **Judul role persisnya perlu dikonfirmasi Lintang.**
+- ⚠️ **LinkedIn tidak ditautkan sama sekali.** `LINKEDIN_URL` masih `null`, dan BLUEPRINT §0.1 memperingatkan hyperlink di CV lama mengarah ke `/tinachi1`. Menautkan tebakan berisiko mengarahkan recruiter ke profil orang lain — jadi barisnya disembunyikan sampai URL-nya dipastikan. Ini **kehilangan satu kanal konversi**.
+- ⚠️ **Tombol Download CV disabled** ("Download CV — segera") karena `public/cv/` masih kosong. Sesuai instruksi S5 (disabled rapi, bukan link mati). Catatan: di hero (S3) saya justru mengganti slotnya dengan CTA "Hubungi" — jadi tombol disabled hanya ada satu, di Contact.
+- Tidak ada deploy di sprint ini (S5 tidak memintanya).
+**Keputusan / catatan:**
+- Timeline diurutkan dari yang terbaru (Ankop → Bisasinema → Bank Sampah → PT Anugrah Energi) lewat field `order` eksplisit, karena sebagian periodenya `null` sehingga tidak bisa diurutkan otomatis.
+- Nama penerbit "Digital Skola" untuk Data Science Bootcamp diambil dari `EXECUTION_PROMPTS.md` (dokumen proyek), bukan dari BLUEPRINT. Dicatat di komentar file supaya jelas sumbernya.
+- Sertifikasi dirender sebagai daftar ringkas dengan badge penerbit, bukan kartu besar — kredensial mendukung, bukan bintang utama (§1).
+- Email dijadikan tombol primer karena §4.5 menyebut "paling cepat lewat email".
+**CONFIG/TODO yang masih menunggu Lintang:** *(13 token masih `null`)*
+- 🔴 `LINKEDIN_URL` — sekarang berdampak terlihat: **tidak ada link LinkedIn di situs sama sekali.**
+- 🔴 `CV_FILE` — tombol Download CV disabled.
+- 🔴 5 token `PROOF_*` + `ownVsTeam`/`learned` (dari S4) — masih blocker terbesar.
+- 🔴 Data CV yang hilang: role/periode PT Anugrah Energi · periode Bank Sampah · tahun I/O Festival & CIMB · sertifikat Coursera · org roles.
+- ⛔ `ANKOP_MONTHS` · `ANKOP_KG_CUMULATIVE` · `PHOTO_FILE` · `CLIENT_NAME_PERMISSION` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK`
+- 🟡 `DOMAIN` masih default. Non-token: repo GitHub, file Satoshi.
+**Commit:** `S5: experience/achievements + contact + CV`
+**Sprint berikutnya:** S6 — Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** (menunggu instruksi)
+
 ### [2026-07-25 23:26] — Sprint S4 — Featured Projects + Case Study pages
 **Status:** ✅ selesai
 **Selesai:**

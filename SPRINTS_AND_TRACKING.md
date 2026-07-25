@@ -16,7 +16,7 @@ Sumber kebenaran: `PORTFOLIO_BLUEPRINT.md`. Log jalan: `PROGRESS_LOG.md`. Prompt
 | **S2** | Design System & Shared UI | CSS vars, komponen ui/, layout, motion primitive, SEO scaffold | ✅ |
 | **S3** | Hero + About + Skills | 3 section atas + hook strip | ✅ |
 | **S4** | Featured Projects + Case Study pages | Grid + `/projects/[slug]` (min. ankop-trace) | ✅ |
-| **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | 🔲 |
+| **S5** | Experience/Achievements + Contact + CV | Timeline, medali, sertifikasi, kontak, Download CV | ✅ |
 | **S6** | Polish · a11y · perf · SEO/OG · Analytics · **Prod deploy (MVP LIVE)** | Lighthouse ≥90, OG, domain, Analytics | 🔲 |
 | **S7** | Log/Activity (MDX, fast-follow) | `/log`, MDX, 3 seed post | 🔲 |
 
@@ -97,11 +97,11 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 **Goal:** kredibilitas + jalur konversi.
 
 **Tasks:**
-- [ ] `content/experience.ts`: timeline kerja (Bisasinema, Ankop, Bank Sampah, PT Anugrah Energi) + achievements (I/O 🥇, SurabayaDev 🥉, CIMB 🥈) + sertifikasi (BNSP, Digital Skola, Coursera) — dari CV
-- [ ] `components/sections/ExperienceAchievements.tsx`: timeline + medali + cert (jujur, tanpa buzzword)
-- [ ] `components/sections/Contact.tsx`: ajakan + email + `LINKEDIN_URL`(fixed) + GitHub + tombol **Download CV** (`CV_FILE`)
-- [ ] Taruh `CV_FILE` di `public/cv/` (bila belum ada → tombol disabled + `// TODO(lintang)`, jangan link mati)
-- [ ] Org roles = ringkas 1 baris (hindari skill-dump)
+- [x] `content/experience.ts`: timeline kerja (Ankop, Bisasinema, Bank Sampah, PT Anugrah Energi) + achievements (I/O 🥇, SurabayaDev 🥉, CIMB 🥈) + sertifikasi (BNSP, Digital Skola) — ⚠️ **Coursera dilewati**: nama sertifikatnya tidak ada di BLUEPRINT maupun repo (lihat PROGRESS_LOG)
+- [x] `components/sections/experience-achievements.tsx`: timeline + medali + cert (jujur, tanpa buzzword). Medali SurabayaDev menunjuk ke case study, tidak diceritakan ulang.
+- [x] `components/sections/contact.tsx`: ajakan §4.5 + email + GitHub + tombol Download CV — ⚠️ **LinkedIn tidak ditautkan** selama `LINKEDIN_URL` kosong
+- [x] `CV_FILE` belum ada → tombol **disabled** ("Download CV — segera") + `// TODO(lintang)`; tidak ada link mati
+- [ ] Org roles = ringkas 1 baris — ⛔ **tidak dikerjakan: nol data organisasi di BLUEPRINT.** Struktur `organizationRoles` sudah siap dan section-nya muncul otomatis begitu diisi.
 
 **Definition of Done:** timeline & achievements akurat dari CV; Contact berfungsi; Download CV bekerja bila `CV_FILE` ada (else disabled rapi); build sukses.
 **Files:** `content/experience.ts`, `components/sections/ExperienceAchievements.tsx`, `Contact.tsx`, `public/cv/`.
@@ -169,4 +169,5 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] Responsive 360px→desktop belum diuji di viewport sungguhan (hanya lewat kelas breakpoint + build).
 - [ ] **Case study belum "lengkap"**: blok *Kerja sendiri vs tim* dan *Satu pelajaran* disembunyikan di keempat proyek karena `ownVsTeam` & `learned` belum diisi Lintang. Ini bagian paling meyakinkan buat recruiter — prioritas tertinggi setelah token bukti.
 - [ ] **`CLIENT_NAME_PERMISSION` masih `null`** → nama "Ankop Trace" & "Bisasinema" **ditampilkan**. Set ke `false` bila belum boleh disebut; nama anonim (`anonymousName`) sudah disiapkan dan otomatis dipakai.
-- [ ] Untuk S5: medali SurabayaDev sudah tampil di kartu/halaman Analisis Hotel. Di section Achievements, tulis sebagai rujukan ke case study itu — jangan diceritakan ulang seolah pekerjaan terpisah.
+- [x] Untuk S5: medali SurabayaDev sudah tampil di kartu/halaman Analisis Hotel. Di section Achievements, tulis sebagai rujukan ke case study itu — jangan diceritakan ulang seolah pekerjaan terpisah. → **selesai**, kartunya hanya memuat judul + link "Lihat case study-nya".
+- [ ] **Data S5 yang hilang dan tidak bisa dikarang:** role & periode persis PT Anugrah Energi · periode Bank Sampah Digital · tahun I/O Festival & CIMB Niaga · nama sertifikat Coursera · seluruh org roles. Kirim CV-nya (atau datanya) dan semua ini bisa diisi dalam hitungan menit.
