@@ -27,6 +27,29 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 02:05] — Fase 2 · Sprint R0 — Design-language lock (inspired, NOT copied)
+**Status:** ✅ selesai (fase keputusan + dokumen; **nol perubahan UI**, sesuai instruksi)
+**Selesai:**
+- **`docs/DESIGN_LANGUAGE.md` dibuat.** Tabel "Peta terjemahan" disalin **persis** dari `SPRINTS_PHASE2_REDESIGN.md` R0, lalu tiap baris dijabarkan jadi angka konkret yang seluruhnya diturunkan dari BLUEPRINT §3 + `app/globals.css` yang sudah jalan sejak S2.
+- **Sidebar dikunci:** `--sidebar-w: 240px` (tetap 240px di ≥1280px — ruang ekstra diberikan ke konten), collapse <768px, latar **`--paper` sama dengan halaman** + garis kanan 1px `--border`, padding 24px, item Space Grotesk `--step--1`, normal `--ink-muted` / hover `--secondary` / aktif `--indigo` + penanda kiri 2px, monogram **"LBA"**, radius `--radius-sm` ≈8.4px, ring fokus indigo 2px+2px.
+- **Container & ritme dikunci:** `--maxw 1120px`, `px-5 → sm:px-6`, `py-20 md:py-28`, skala 4px, `--radius 14px`, `--shadow-soft`, prosa `max-w-3xl`. Semua ini sudah dipakai produksi **sejak S2** — mendahului fase 2, jadi jelas bukan hasil menyalin.
+- **IA tiga kail diterjemahkan:** `/blog` (cross-post LinkedIn) · `/collabs` (lomba nyata CV) · **"Open to collaborate & help"** — bukan "Consulting" berbayar, sesuai peringatan R5 soal overclaim fresh-grad.
+- **Bagian ANTI-CLONE CHECK** berisi 7 larangan keras, daftar yang boleh diadopsi, **checklist 6 poin per sprint**, dan uji akhir R6 ("kemiripan struktur = wajar; kemiripan rasa = gagal").
+- **Tokens final dikonfirmasi:** palet & keluarga font **tidak berubah** dari §3. Hanya 2 token baru — `--sidebar-w` dan `--nav-item-h` — keduanya **ukuran, bukan warna/font**, jadi tidak menambah permukaan risiko clone. Dicatat juga bahwa `--coral-ink` (S6) adalah turunan aksesibilitas, bukan warna baru.
+- **Audit repo sebelum push:** nol file sensitif ter-track (`.env*`, `.vercel`, kunci, token) — `.gitignore` sudah menutup semuanya. 10 commit, 63 file ter-track, siap di-push begitu remote ada.
+**Keputusan (dijawab Lintang hari ini):**
+- 🟢 **Repo GitHub: YA, dan PUBLIK.** Cara: **Lintang membuat repo kosong sendiri di github.com lalu mengirim URL-nya**; agen menyambungkan remote + push. Dipilih karena paling aman — agen tidak pernah memegang kredensial GitHub. (`gh` CLI tidak terpasang di mesin ini, jadi agen memang tidak bisa membuat repo sendiri.)
+- 🟢 **`DOMAIN`: `lintangbalakosa.dev`** — sudah jadi nilai `CONFIG.DOMAIN` sejak S1, jadi tidak ada perubahan kode. Registrasi jalan paralel dan **tidak memblokir R1–R5**.
+- `git init` **tidak perlu dijalankan** — repo lokal sudah ada sejak S1.
+**Gagal / skip / blocker (jujur):**
+- ⛔ **Repo GitHub belum ada, jadi Vercel belum tersambung Git.** Ini **prasyarat R1** menurut `SPRINTS_PHASE2_REDESIGN.md` §0. Kirim URL repo dan sambungannya beres dalam satu langkah. Sampai itu, deploy masih manual (`npx vercel --prod`) dan janji R4 "tambah post = git push" belum berlaku.
+- ⚠️ **Situs referensi sengaja TIDAK dibuka/di-fetch/di-inspect** saat menyusun dokumen ini. Alasannya ditulis eksplisit di §0 dokumen: begitu nilai asli referensi masuk ke konteks kerja, godaan memakainya jadi besar dan clone terjadi tanpa niat.
+  **Konsekuensi yang harus diterima:** dokumen ini **tidak memuat daftar hex/font milik bryllim "yang dilarang"** — daftar semacam itu justru mengharuskan agen mencari dan menyimpannya lebih dulu. Larangan karena itu dirumuskan sebagai **larangan proses** ("jangan ambil dari sana"), bukan daftar nilai terlarang. Kalau Lintang lebih suka daftar eksplisit, itu keputusan sadar yang harus diminta terpisah.
+- ⚠️ Warisan fase 1 yang **belum** tersentuh dan tetap jadi gate: Lighthouse mobile (sebelum R5), tes HP asli & registrasi domain (sebelum launch ulang), serta `PROOF_*` ×5, `ownVsTeam`, `learned`, `PHOTO_FILE` (sebelum sebar URL). R0 memang tidak memperbaiki ini — hanya memaksa keputusannya dicatat.
+- ⚠️ Font Satoshi masih belum ada → body tetap DM Sans. Tidak memblokir R1–R6.
+**Commit:** `R0: design-language lock (inspired-not-copied) + infra decision`
+**Sprint berikutnya:** R1 — Layout shell (sidebar + container + rhythm) — **menunggu instruksi**, dan idealnya menunggu repo GitHub tersambung dulu.
+
 ### [2026-07-26 01:20] — Di luar sprint — Situs dialihkan ke bahasa Inggris
 **Status:** ✅ selesai
 **Pemicu:** Permintaan Lintang — portfolio ditujukan untuk audiens internasional.
