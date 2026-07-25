@@ -21,7 +21,7 @@ export function About() {
           <p>
             Saya Lintang Balakosa Ardhana, full-stack engineer dan mahasiswa
             Informatika UMN. Jalannya dimulai dari SMK RPL dan magang frontend di
-            lingkungan produksi sejak 2023, lalu diperdalam lewat Data Science
+            lingkungan produksi pada 2023, lalu diperdalam lewat Data Science
             Bootcamp (Excellent Graduate) dan sertifikasi{" "}
             <strong className="font-semibold">
               Associate Data Scientist (BNSP)

@@ -62,20 +62,24 @@ export function Hero() {
           </Button>
 
           {/*
-            Tombol kedua: Download CV bila filenya sudah ada. Selama `CV_FILE` kosong,
-            tombol Download CV TIDAK dirender sebagai link mati — slotnya diisi CTA
-            "Hubungi" yang memang disediakan §4.1 sebagai opsi.
-            TODO(lintang): taruh PDF di `public/cv/` lalu isi `CONFIG.CV_FILE`.
+            Tombol kedua: Download CV. Fallback dipertahankan — kalau `CV_FILE`
+            dikosongkan, slotnya diisi CTA "Hubungi" (§4.1 menyediakannya sebagai
+            opsi) alih-alih tombol mati.
           */}
           {isSet(CONFIG.CV_FILE) ? (
-            <Button
-              href={`/cv/${CONFIG.CV_FILE}`}
-              variant="secondary"
-              size="lg"
-              download
-            >
-              Download CV
-            </Button>
+            <>
+              <Button
+                href={`/cv/${CONFIG.CV_FILE}`}
+                variant="secondary"
+                size="lg"
+                download
+              >
+                Download CV
+              </Button>
+              <Button href="#contact" variant="ghost" size="lg">
+                Hubungi
+              </Button>
+            </>
           ) : (
             <Button href="#contact" variant="secondary" size="lg">
               Hubungi

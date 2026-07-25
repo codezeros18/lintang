@@ -27,6 +27,44 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 00:38] — Di luar sprint — Pengisian data dari CV asli + LinkedIn
+**Status:** ✅ selesai
+**Pemicu:** Lintang mengirim URL LinkedIn dan menaruh `LINTANGBALAKOSAARDHANACV.pdf` di root. CV **dibaca langsung** — banyak data yang sebelumnya "tidak ada sumbernya" ternyata ada di sana.
+**Selesai:**
+- **`LINKEDIN_URL` terisi** → `https://www.linkedin.com/in/lintangbalakosa/` (cocok dengan header CV). Link LinkedIn kini muncul di Contact, plus tombol khusus.
+- **`CV_FILE` terisi** → PDF dipindah ke `public/cv/Lintang-Balakosa-Ardhana-CV.pdf` (nama dirapikan agar layak diunduh recruiter). **Tombol Download CV aktif di hero DAN Contact**; terverifikasi 200 `application/pdf`.
+- **Timeline kerja dikoreksi & dilengkapi dari CV:** nama klien Ankop yang sebenarnya (**PT Anugrah Kopi Nusantara**), lokasi tiap tempat kerja, dan **semua periode yang sebelumnya hilang** — Bank Sampah Digital **Jan 2026–Mar 2026** (role sebenarnya: **Data Scientist Intern**, bukan tebakan "Data Analyst") dan PT Anugrah Energi Indonesia **Jun 2023–Okt 2023** (**Frontend Developer**, magang SMK — judul role yang di S5 saya tandai perlu konfirmasi, ternyata tepat).
+- **Blok Pendidikan baru:** UMN B.Sc. Informatics (IPK 3.48, Agu 2024–sekarang) · Digital Skola Data Science Bootcamp (Excellent Graduate, Jun 2025–Okt 2025) · SMKN 4 Kota Tangerang RPL (Jun 2021–Jul 2024).
+- **Blok Organisasi akhirnya terisi** (S5 sebelumnya gagal total karena nol data): UMN ECO (Koordinator Divisi Website) · Duta Anti Narkoba UMN (Koordinator Divisi Website) · STARLIGHT (Anggota Divisi Website) · AI Community (Volunteer). Masing-masing 1 baris, sesuai larangan skill-dump.
+- **Sertifikasi 2 → 6**, lengkap dengan tanggal: BNSP (Jan 2026), Digital Skola (Nov 2025), dan **4 sertifikat Coursera** yang di S5 terpaksa dilewati — EDA for ML (IBM, Jan 2026), Supervised ML: Regression (IBM, Jan 2026), Data Science Capstone: Predicting Bicycle Rental (University of London, Jan 2025), Python for Data Science AI & Development (IBM, Jan 2025).
+- **Prestasi dapat konteks:** I/O Festival ("platform B2B untuk ekonomi sirkular"), SurabayaDev kini bernama lengkap **Developer Battle 2025**, CIMB Niaga kini **Pitching Day (UMN)** dengan detail aplikasi pembukaan rekening digital (React Native + Expo Go).
+- 🔧 **KOREKSI FAKTA PENTING:** database Ankop adalah **MySQL**, bukan PostgreSQL seperti yang saya tulis di S4. Tech chip Ankop diperbaiki (+ Next.js, sesuai CV). **Kesalahan ini sudah tayang sejak S4** — kalau CV tidak dibaca, tech stack di portfolio akan berbeda dari CV yang sama-sama dilihat recruiter.
+- **Case study diperkaya dari CV:** Ankop dapat modul *Workforce Scheduling & Anti-Fraud Attendance* (audit trail penuh) dan hasil "log pergerakan berat otomatis menggantikan Excel manual"; Bisasinema dapat detail Filmmaking Lab (kursus offline 1 minggu) + tiket digital Masterclass; Tera dapat *self-serve signup* + penyediaan tenant otomatis dan penyebutan 6 peran secara eksplisit.
+- **`ownVsTeam` Kuali TERISI** — CV menyatakan eksplisit "Led a hackathon team". Stack Kuali dikoreksi jadi Next.js + Supabase + LLM. Bank Sampah dapat role & periode asli.
+- Skills ditambah dari CV: **Matplotlib, Seaborn, Folium**; bukti React Native basic disambungkan ke aplikasi CIMB Niaga.
+- `npm run build` ✅ · `npm run lint` ✅ · semua data terverifikasi tampil di HTML produksi.
+**Gagal / skip / blocker (jujur):**
+- 🔴 **CV yang kini bisa diunduh publik memuat nomor HP Lintang (+62 812 8481 8862).** Ini konsekuensi nyata dari menerbitkan CV apa adanya — nomor itu akan terekspos ke siapa pun, termasuk scraper. **Perlu keputusan Lintang:** terbitkan apa adanya, atau saya siapkan versi tanpa nomor HP untuk web.
+- ⚠️ **`ANKOP_MONTHS` masih kosong** → angka **"5.000+ kg" tetap tidak tampil** di hero, OG image, dan case study Ankop. CV menyebut angkanya tanpa rentang waktu; menyimpulkan "2 bulan" dari tanggal mulai role adalah tebakan, jadi tidak saya lakukan.
+- ⚠️ **`ownVsTeam` Ankop, Bisasinema, Tera, dan Analisis Hotel masih kosong.** Sempat saya isi "proyek mandiri" untuk Tera karena CV menaruhnya di bagian PROJECTS tanpa menyebut tim — **saya batalkan**: "tidak disebut" bukan berarti "sendirian".
+- ⚠️ **`learned` (1 pelajaran) semua proyek masih kosong** — refleksi pribadi tidak ada di CV dan tidak boleh saya karang.
+- ⚠️ **Kelima token `PROOF_*` masih kosong** → semua case study tetap "Bukti menyusul". Ini sekarang **satu-satunya blocker terbesar** yang tersisa.
+- ⚠️ **`PHOTO_FILE` masih kosong** → hero tanpa foto, OG image murni tipografi.
+- ⚠️ Tahun I/O Festival & CIMB Niaga tidak tercantum di CV, jadi tidak ditampilkan.
+- ⚠️ LinkedIn membalas HTTP **999** untuk permintaan otomatis — itu perilaku anti-bot standar LinkedIn, bukan link mati. Tetap perlu klik-tes manual sekali oleh Lintang.
+- ⚠️ Belum di-deploy; situs live masih versi S6.
+**Keputusan / catatan:**
+- **Nomor HP TIDAK ditaruh di halaman web** meski ada di CV. BLUEPRINT §4.5 hanya menyebut email/LinkedIn/GitHub/CV, dan menampilkan nomor pribadi di halaman publik mengundang spam.
+- **Nama klien tetap ditampilkan** (`CLIENT_NAME_PERMISSION` masih `null`). Penguat: CV yang Lintang serahkan sendiri menyebut PT Anugrah Kopi Nusantara dan Bisasinema secara terbuka. Nama anonim tetap siap dipakai bila tokennya diset `false`.
+- Hero kini punya 3 tombol: **Lihat proyek** (primary) · **Download CV** (secondary) · **Hubungi** (ghost). Fallback lama dipertahankan — kalau `CV_FILE` dikosongkan lagi, slotnya kembali jadi "Hubungi", bukan tombol mati.
+- Nama file CV diubah jadi `Lintang-Balakosa-Ardhana-CV.pdf` supaya rapi saat diunduh recruiter (nama asli `LINTANGBALAKOSAARDHANACV.pdf` sulit dibaca).
+**CONFIG/TODO yang masih menunggu Lintang:** *(dari 13 → **9** token kosong)*
+- ✅ **SELESAI:** `LINKEDIN_URL` · `CV_FILE`
+- 🔴 5 token `PROOF_*` · `ownVsTeam` (4 proyek) · `learned` (semua proyek) · `PHOTO_FILE`
+- 🟠 `ANKOP_MONTHS` · `ANKOP_KG_CUMULATIVE` · `CLIENT_NAME_PERMISSION` · `IO_FESTIVAL_DATE` · `IO_FESTIVAL_STACK` · durasi Tera · tenant nyata Tera · `lesson` surabayadev · 1 post Log kalah/ikut
+- 🟡 `DOMAIN` · skor Lighthouse · tes HP asli · repo GitHub · file Satoshi
+**Commit:** `data: isi profil dari CV asli + LinkedIn (LINKEDIN_URL, CV_FILE, pengalaman, pendidikan, organisasi, sertifikasi)`
+
 ### [2026-07-26 00:14] — Sprint S7 — Log / Activity (MDX, fast-follow)
 **Status:** 🟡 jalan — infrastruktur Log **selesai & jalan**, tapi seed post kurang satu dan tidak bisa saya isi sendiri.
 **Selesai:**

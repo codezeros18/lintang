@@ -38,7 +38,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "Tailwind CSS" },
       { name: "React Native", level: "basic" },
     ],
-    provenBy: "Bisasinema & Tera; React Native (basic) → Juara 2 Internal CIMB Niaga",
+    provenBy:
+      "Bisasinema, Tera & Ankop; React Native (basic) → aplikasi pembukaan rekening digital, Juara 2 Internal CIMB Niaga",
   },
   {
     title: "Backend & API",
@@ -63,9 +64,12 @@ export const skillGroups: SkillGroup[] = [
       { name: "Pandas" },
       { name: "NumPy" },
       { name: "Scikit-learn" },
+      { name: "Matplotlib" },
+      { name: "Seaborn" },
+      { name: "Folium" },
       { name: "Looker Studio" },
     ],
-    provenBy: "Analisis Hotel & Bank Sampah",
+    provenBy: "Analisis Hotel & Bank Sampah Digital",
   },
   {
     title: "Database & Arsitektur",
@@ -76,7 +80,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Supabase" },
       { name: "Multi-tenant (RLS)" },
     ],
-    provenBy: "RLS 6-role di Tera · Prisma di Ankop",
+    provenBy: "RLS 6-role di Tera · Prisma + MySQL di Ankop",
   },
   {
     title: "DevOps & Integrasi",

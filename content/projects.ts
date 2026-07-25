@@ -69,33 +69,44 @@ export const projects: Project[] = [
   {
     slug: "ankop-trace",
     name: "Ankop Trace",
+    // Nama klien di CV: PT Anugrah Kopi Nusantara (Ankop).
     anonymousName: "Produsen kopi specialty",
     tagline:
-      "Ops kopi offline-first — dari intake sampai pembayaran supplier, tetap jalan waktu sinyal hilang.",
+      "Ops kopi offline-first — dari intake ceri sampai pembayaran supplier, tetap jalan waktu sinyal hilang.",
     role: "Full-Stack Software Engineer",
-    durationNote: "Jun 2026–sekarang",
+    durationNote: "Jun 2026–sekarang · Bandung",
     problem:
       "Operasional kopi berjalan di atas kertas dan Excel. Sinyal sering drop di pabrik, sehingga penimbangan bisa hilang begitu saja. Pembayaran supplier dihitung manual dan tidak transparan bagi yang dibayar.",
     approach: [
-      "Offline-first: input diantre di perangkat dan tersinkron otomatis saat koneksi kembali. Dipilih karena constraint lapangan yang nyata — sinyal di pabrik memang tidak bisa diandalkan — bukan karena arsitekturnya sedang tren.",
-      "NestJS + Prisma untuk backend yang type-safe, karena alurnya panjang dan saling bergantung: intake → fermentasi → drying → hulling → sorting → warehouse → payment → reporting. Satu salah tipe di tengah rantai itu mahal.",
+      "Offline-first: input di lapangan diantre lokal dan tersinkron otomatis saat koneksi kembali. Dipilih karena constraint lapangan yang nyata — sinyal di pabrik memang tidak bisa diandalkan — bukan karena arsitekturnya sedang tren. Efeknya: tidak ada penimbangan yang hilang.",
+      "NestJS + Prisma untuk backend yang type-safe, karena alurnya panjang dan saling bergantung: intake ceri → fermentasi → drying → hulling → sorting → warehouse → payment → owner reporting. Satu salah tipe di tengah rantai itu mahal.",
       "Docker + Railway supaya lingkungan deploy konsisten dan rilis tidak bergantung pada mesin siapa pun.",
-      "Pembayaran auto-computed dari kilogram yang diterima lalu melewati approval, menggantikan hitungan manual yang sebelumnya jadi sumber sengketa.",
+      "Pembayaran auto-computed dari kilogram yang diterima lalu melewati approval, menggantikan hitungan manual yang sebelumnya jadi sumber sengketa — pemilik dapat visibilitas real-time tanpa laporan manual.",
+      "Modul Workforce Scheduling dan Anti-Fraud Attendance dengan audit trail penuh, supaya kehadiran dan penjadwalan bisa ditelusuri, bukan sekadar dicatat.",
     ],
-    ownVsTeam: null, // TODO(lintang): solo atau tim? Kalau tim, sebut porsi kerjamu.
+    ownVsTeam: null, // TODO(lintang): CV tidak menyebut tim. Solo atau ada tim? Kalau tim, sebut porsimu.
     results: [
-      // "5.000+ kg kopi dilacak" WAJIB tampil bersama konteks waktu (§0.2).
-      // Selama `ANKOP_MONTHS` kosong, angka ini sengaja TIDAK ditampilkan.
+      // "5.000+ kg" WAJIB tampil bersama konteks waktu (§0.2). CV menyebut angkanya
+      // tanpa rentang waktu, jadi selama `ANKOP_MONTHS` kosong angka ini disembunyikan.
       // TODO(lintang): isi ANKOP_MONTHS + ANKOP_KG_CUMULATIVE.
       ...(isSet(ankopMonths)
-        ? [`5.000+ kg kopi dilacak dalam ${ankopMonths} bulan pertama sejak live`]
+        ? [`5.000+ kg ceri kopi dilacak dalam ${ankopMonths} bulan pertama sejak live`]
         : []),
       "15+ supplier aktif",
       "~80% acceptance rate (live)",
       "Puluhan juta rupiah pembayaran supplier terdigitalisasi",
+      "Log pergerakan berat otomatis menggantikan pencatatan Excel manual",
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik (mis. cara menyelesaikan konflik sync offline)
-    tech: ["NestJS", "Prisma", "PostgreSQL", "Docker", "Railway", "Offline-first"],
+    tech: [
+      "Next.js",
+      "NestJS",
+      "Prisma",
+      "MySQL",
+      "Docker",
+      "Railway",
+      "Offline-first",
+    ],
     proof: {
       configKey: "PROOF_ANKOP",
       pendingNote:
@@ -113,19 +124,20 @@ export const projects: Project[] = [
     tagline:
       "Platform belajar-dan-tiket dengan pembayaran live — presence digital pertama sebuah brand film.",
     role: "Tech Lead & Assistant Product Manager",
-    durationNote: "Mar 2026–sekarang",
+    durationNote: "Mar 2026–sekarang · Tangerang",
     problem:
-      "Sebuah brand film dan edukasi belum punya presence digital sama sekali, dan belum punya cara menjual kelas maupun tiket selain manual.",
+      "Sebuah brand media film dan edukasi belum punya presence digital sama sekali, dan belum punya cara menjual kelas maupun tiket selain manual.",
     approach: [
-      "Membangun platform ala Coursera (Filmmaking Lab + Masterclass) supaya kelas bisa dijual berulang, bukan sekali jalan per event.",
+      "Membangun platform belajar ala Coursera yang menopang dua produk sekaligus: Filmmaking Lab (kursus offline 1 minggu) dan tiket digital Masterclass — dari registrasi sampai checkout.",
       "Midtrans untuk transaksi live: pembayaran harus benar-benar menerima uang dengan aman, bukan sekadar tombol checkout yang mengarah ke transfer manual.",
       "Dashboard monitoring internal untuk pembayaran dan penjualan secara real-time, menggantikan pencatatan manual yang sebelumnya jadi satu-satunya sumber angka.",
       "Technical SEO sejak awal supaya penemuan organik tidak bergantung pada iklan.",
     ],
-    ownVsTeam: null, // TODO(lintang): CV menulis "Led end-to-end build" — kerja sendiri, atau memimpin tim? Sebut anggotanya bila ada.
+    ownVsTeam: null, // TODO(lintang): CV menulis "Led the end-to-end build" — kerja sendiri, atau memimpin tim? Sebut anggotanya bila ada.
     results: [
       "Rp20jt+ penjualan tiket pada peluncuran awal Learning Lab",
-      "Visibilitas pencarian teratas untuk keyword inti",
+      "Visibilitas pencarian teratas untuk keyword inti — penemuan organik tanpa iklan",
+      "Presence digital pertama brand ini, dibangun dari nol",
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik dari membangun & meluncurkan ini
     tech: ["React", "Tailwind CSS", "Express.js", "Midtrans", "Technical SEO"],
@@ -143,21 +155,25 @@ export const projects: Project[] = [
     slug: "tera",
     name: "Tera",
     tagline:
-      "SaaS multi-tenant untuk ops ekspor — isolasi data ditegakkan sampai level database.",
+      "SaaS multi-tenant untuk ops ekspor kopi specialty — isolasi data ditegakkan sampai level database.",
     role: "Full-Stack Engineer",
-    durationNote: null, // TODO(lintang): durasi proyek Tera (dan apakah ini solo project)
+    durationNote: null, // TODO(lintang): durasi proyek Tera (CV tidak mencantumkannya)
     problem:
-      "Operasional ekspor melibatkan banyak pihak dalam satu sistem. Data antar-tenant tidak boleh saling terlihat, dan tiap peran — admin, field officer, procurement, CEO, viewer, Q-grader — butuh akses yang berbeda.",
+      "Operasional ekspor kopi specialty melibatkan banyak pihak dalam satu sistem. Data antar-tenant tidak boleh saling terlihat, dan tiap peran — admin, field officer, procurement, CEO, viewer, Q-grader — butuh akses yang berbeda.",
     approach: [
-      "Access control 3 lapis: route guard di frontend, penegakan peran di API, dan PostgreSQL Row Level Security. RLS dipakai supaya isolasi tetap berlaku di level database — kalau ada bug di API, data tenant lain tetap tidak bisa terbaca.",
+      "Access control 3 lapis: route guard di frontend, penegakan peran di API, dan PostgreSQL Row-Level Security. RLS dipakai supaya isolasi tetap berlaku di level database — kalau ada bug di API, data tenant lain tetap tidak bisa terbaca.",
+      "Self-serve signup dengan penyediaan tenant otomatis, supaya menambah tenant baru tidak perlu campur tangan manual.",
       "6 dashboard yang dibatasi per peran, supaya tiap pihak melihat persis yang jadi urusannya.",
-      "Rule-based pricing engine dengan alur weigh → price → WhatsApp, mengikuti cara pihak lapangan sudah bekerja alih-alih memaksa mereka pindah alat.",
-      "Traceability harvest-to-buyer supaya asal barang bisa ditelusuri di sepanjang rantai.",
+      "Rule-based pricing engine yang transparan dengan alur weigh → price → WhatsApp, mengikuti cara pihak lapangan sudah bekerja alih-alih memaksa mereka pindah alat.",
+      "Timeline traceability harvest-to-buyer supaya asal barang bisa ditelusuri di sepanjang rantai.",
     ],
-    ownVsTeam: null, // TODO(lintang): solo project atau ada tim?
+    // CV mendaftarkan Tera di bagian PROJECTS tanpa menyebut tim — tapi "tidak disebut"
+    // bukan berarti "sendirian", jadi tidak saya simpulkan.
+    ownVsTeam: null, // TODO(lintang): Tera dikerjakan sendiri atau ada tim?
     results: [
-      "6 dashboard role-gated",
+      "6 dashboard role-gated (admin, field officer, procurement, CEO, viewer, Q-grader)",
       "Isolasi data multi-tenant penuh (frontend, API, dan RLS di database)",
+      "Penyediaan tenant otomatis lewat self-serve signup",
       // TODO(lintang): apakah sudah ada tenant nyata / tenant berbayar?
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik
@@ -210,19 +226,22 @@ export const projects: Project[] = [
   {
     slug: "kuali",
     name: "Kuali",
-    tagline: "AI ops assistant lewat WhatsApp — chat diubah jadi data terstruktur.",
-    role: "Builder",
+    tagline:
+      "AI ops assistant untuk UMKM kuliner yang hidup di WhatsApp — chat berantakan jadi pesanan terstruktur.",
+    role: "Team lead",
     durationNote: "Hackathon",
     problem:
-      "Pekerjaan operasional sehari-hari masih dicatat lewat percakapan, sehingga datanya tidak pernah rapi.",
+      "UMKM kuliner menerima pesanan lewat percakapan WhatsApp yang berantakan, sehingga datanya tidak pernah rapi dan operasionalnya sulit direncanakan.",
     approach: [
-      "Pipeline LLM chat→JSON supaya pesan bebas bisa berubah jadi data terstruktur yang bisa diproses.",
+      "Pipeline parsing LLM chat→JSON terstruktur, supaya pesan bebas berubah jadi pesanan, pengingat pembayaran, perencanaan bahan/produksi, dan rekap harian.",
       "Arsitektur produk dirancang di sekitar WhatsApp, kanal yang memang sudah dipakai penggunanya.",
     ],
-    ownVsTeam: null, // TODO(lintang)
+    // CV: "Led a hackathon team building an AI assistant…"
+    ownVsTeam:
+      "Memimpin tim hackathon; memegang desain pipeline parsing LLM dan arsitektur produknya.",
     results: [],
-    learned: null, // TODO(lintang)
-    tech: ["LLM", "WhatsApp", "Product architecture"],
+    learned: null, // TODO(lintang): 1 pelajaran spesifik
+    tech: ["Next.js", "Supabase", "LLM"],
     // BLUEPRINT §0.1 belum menyediakan token bukti untuk Kuali, jadi tidak ada
     // klaim bukti apa pun di sini. TODO(lintang): tambahkan bila memang ada.
     honesty: "hackathon",
@@ -233,19 +252,21 @@ export const projects: Project[] = [
   {
     slug: "bank-sampah-digital",
     name: "Bank Sampah Digital",
-    tagline: "Dashboard keputusan untuk CEO, dari data operasional yang tadinya mentah.",
-    role: "Data analyst (virtual internship)",
-    durationNote: "Bootcamp / virtual internship",
+    tagline:
+      "Dashboard keputusan untuk CEO, dari data keberlanjutan & operasional yang tadinya mentah.",
+    role: "Data Scientist Intern",
+    durationNote: "Jan 2026–Mar 2026 · virtual internship",
     problem:
-      "Data operasional tersedia tapi belum berbentuk yang bisa dipakai pimpinan untuk mengambil keputusan.",
+      "Data keberlanjutan dan operasional tersedia, tapi belum berbentuk yang bisa dipakai pimpinan untuk mengambil keputusan cepat.",
     approach: [
-      "EDA, cleaning, dan feature engineering untuk membuat datanya layak dianalisis.",
-      "Dashboard Looker Studio yang ditujukan langsung ke kebutuhan CEO.",
+      "Menerjemahkan problem transformasi digital jadi tujuan analitis yang terukur — supaya analisisnya menjawab keputusan, bukan sekadar menampilkan grafik.",
+      "Eksplorasi, cleaning, penanganan anomali, dan feature engineering untuk membuat datanya layak dipercaya.",
+      "Dashboard monitoring Looker Studio yang ditujukan langsung ke kebutuhan CEO, plus laporan akhir yang disempurnakan lewat masukan stakeholder.",
     ],
-    ownVsTeam: null, // TODO(lintang)
+    ownVsTeam: null, // TODO(lintang): magang ini dikerjakan sendiri atau dalam tim?
     results: [],
-    learned: null, // TODO(lintang)
-    tech: ["Looker Studio", "Pandas", "EDA"],
+    learned: null, // TODO(lintang): 1 pelajaran spesifik
+    tech: ["Python", "Looker Studio", "Data Storytelling"],
     proof: {
       configKey: "PROOF_BANKSAMPAH",
       pendingNote: "Rencana bukti: screenshot dashboard CEO.",

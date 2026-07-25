@@ -68,7 +68,8 @@ export type Config = {
 };
 
 export const CONFIG: Config = {
-  LINKEDIN_URL: null, // TODO(lintang): URL LinkedIn asli — CV lama mengarah ke /tinachi1, klik-tes dulu
+  // ✅ Dikonfirmasi Lintang 2026-07-26 + cocok dengan header CV (linkedin.com/in/lintangbalakosa).
+  LINKEDIN_URL: "https://www.linkedin.com/in/lintangbalakosa/",
   ANKOP_MONTHS: null, // TODO(lintang): berapa bulan sejak Ankop live?
   ANKOP_KG_CUMULATIVE: null, // TODO(lintang): 5.000+ kg itu kumulatif sejak live atau bukan?
   PROOF_ANKOP: null, // TODO(lintang): jenis bukti Ankop + izin sebut nama klien
@@ -77,7 +78,7 @@ export const CONFIG: Config = {
   PROOF_HOTEL: null, // TODO(lintang): link Looker view-only / notebook GitHub
   PROOF_BANKSAMPAH: null, // TODO(lintang): screenshot dashboard CEO
   CLIENT_NAME_PERMISSION: null, // TODO(lintang): boleh sebut nama Bisasinema/Ankop?
-  CV_FILE: null, // TODO(lintang): taruh PDF di public/cv/ lalu isi nama filenya
+  CV_FILE: "Lintang-Balakosa-Ardhana-CV.pdf", // ✅ ada di public/cv/
   PHOTO_FILE: null, // TODO(lintang): taruh foto di public/images/ lalu isi nama filenya
   DOMAIN: "lintangbalakosa.dev", // 🟡 default saran BLUEPRINT §0.1 — TODO(lintang): konfirmasi/registrasi
   IO_FESTIVAL_DATE: null, // TODO(lintang): tanggal I/O Festival

@@ -1,31 +1,31 @@
 /**
- * Experience · Achievements · Certifications.
+ * Experience · Education · Achievements · Certifications · Organisasi.
  *
- * ⚠️ CATATAN SUMBER — penting.
- * File CV tidak ada di repo ini, dan `PORTFOLIO_BLUEPRINT.md` (satu-satunya sumber
- * kebenaran yang tersedia) hanya memuat sebagian data S5:
+ * SUMBER: CV `Lintang Balakosa Ardhana` (public/cv/Lintang-Balakosa-Ardhana-CV.pdf),
+ * dibaca langsung pada 2026-07-26. Semua judul role, periode, penerbit, dan tanggal
+ * di bawah ini disalin dari CV — tidak ada yang ditebak.
  *
- *   Ada di BLUEPRINT  : Ankop (role + Jun 2026), Bisasinema (role + Mar 2026),
- *                       Bank Sampah Digital (§5.3), 3 medali (§0.2),
- *                       BNSP "Associate Data Scientist (Competent)" (§0.2),
- *                       "Data Science Bootcamp (Excellent Graduate)" (§0.2),
- *                       "magang frontend di lingkungan produksi sejak 2023" (§4.3).
- *   TIDAK ada         : role & periode persis di PT Anugrah Energi, penerbit/nama
- *                       sertifikat Coursera, periode Bank Sampah, dan seluruh org roles.
- *
- * Yang tidak ada sumbernya TIDAK dikarang: field-nya `null` + `// TODO(lintang)`,
- * dan UI menyembunyikan elemennya (§9).
+ * Yang masih `null` = memang tidak ada di CV (mis. tahun I/O Festival & CIMB Niaga).
  */
 
 export type WorkItem = {
   org: string;
   role: string;
-  /** `null` = periode belum dipastikan → tidak ditampilkan. */
+  /** `null` = tidak ada di CV → tidak ditampilkan. */
   period: string | null;
+  location: string | null;
   /** Ringkas 1–2 baris. Hindari skill-dump. */
   summary: string;
-  /** Tautkan ke case study bila proyeknya sudah punya halaman sendiri. */
+  /** Tautkan ke case study bila proyeknya punya halaman sendiri. */
   projectSlug?: string;
+  order: number;
+};
+
+export type EducationItem = {
+  school: string;
+  program: string;
+  period: string;
+  note?: string;
   order: number;
 };
 
@@ -33,29 +33,63 @@ export type Achievement = {
   medal: string;
   title: string;
   scope: string;
-  /** `null` = tanggal/tahun belum dipastikan. */
+  /** `null` = tahun tidak tercantum di CV. */
   year: string | null;
-  /** Bila prestasinya sudah diceritakan sebagai case study, tunjuk ke sana
-   *  alih-alih menceritakan ulang (anti double-count, §5.2). */
+  /** Satu baris konteks dari CV. */
+  detail: string;
+  /** Bila prestasinya sudah jadi case study, tunjuk ke sana alih-alih
+   *  menceritakan ulang (anti double-count, §5.2). */
   projectSlug?: string;
   order: number;
 };
 
 export type Certification = {
   name: string;
-  /** `null` = penerbit belum dipastikan → tidak ditampilkan. */
-  issuer: string | null;
-  note?: string;
+  issuer: string;
+  date: string;
   order: number;
 };
 
+export type OrganizationRole = {
+  org: string;
+  role: string;
+  period: string;
+  /** Satu baris saja — §S5 melarang skill-dump di bagian organisasi. */
+  summary: string;
+  order: number;
+};
+
+export const education: EducationItem[] = [
+  {
+    school: "Universitas Multimedia Nusantara",
+    program: "B.Sc. Informatics",
+    period: "Agu 2024–sekarang",
+    note: "IPK 3.48",
+    order: 1,
+  },
+  {
+    school: "Digital Skola",
+    program: "Data Science Bootcamp",
+    period: "Jun 2025–Okt 2025",
+    note: "Excellent Graduate",
+    order: 2,
+  },
+  {
+    school: "SMKN 4 Kota Tangerang",
+    program: "Rekayasa Perangkat Lunak",
+    period: "Jun 2021–Jul 2024",
+    order: 3,
+  },
+];
+
 export const workItems: WorkItem[] = [
   {
-    org: "Ankop Trace",
+    org: "PT Anugrah Kopi Nusantara (Ankop)",
     role: "Full-Stack Software Engineer",
     period: "Jun 2026–sekarang",
+    location: "Bandung",
     summary:
-      "Membangun sistem operasional kopi offline-first, dari intake sampai pembayaran supplier.",
+      "Membangun Ankop Trace, sistem operasional kopi offline-first yang memindahkan produsen kopi specialty sepenuhnya lepas dari kertas — dari intake ceri sampai pembayaran supplier dan laporan pemilik.",
     projectSlug: "ankop-trace",
     order: 1,
   },
@@ -63,28 +97,28 @@ export const workItems: WorkItem[] = [
     org: "Bisasinema",
     role: "Tech Lead & Assistant Product Manager",
     period: "Mar 2026–sekarang",
+    location: "Tangerang",
     summary:
-      "Membangun platform belajar-dan-tiket dengan pembayaran live dan dashboard monitoring internal.",
+      "Memimpin pembangunan platform produk pertama Bisasinema: kelas ala Coursera, tiket digital dengan pembayaran live, dashboard monitoring internal, dan technical SEO.",
     projectSlug: "bisasinema",
     order: 2,
   },
   {
     org: "Bank Sampah Digital",
-    role: "Data Analyst (virtual internship)",
-    period: null, // TODO(lintang): periode virtual internship Bank Sampah Digital
+    role: "Data Scientist Intern",
+    period: "Jan 2026–Mar 2026",
+    location: "Serang · virtual internship",
     summary:
-      "Menyiapkan data operasional dan membangun dashboard keputusan untuk CEO.",
+      "Membangun dashboard monitoring untuk CEO dan menyiapkan datanya — dari eksplorasi, cleaning, penanganan anomali, sampai feature engineering.",
     order: 3,
   },
   {
-    org: "PT Anugrah Energi",
-    // TODO(lintang): konfirmasi judul role persis di CV. BLUEPRINT §4.3 hanya menyebut
-    // "magang frontend di lingkungan produksi sejak 2023" tanpa menyebut nama perusahaan;
-    // nama PT Anugrah Energi berasal dari EXECUTION_PROMPTS.md.
-    role: "Frontend Developer (magang)",
-    period: null, // TODO(lintang): periode magang (BLUEPRINT hanya menyebut "sejak 2023")
+    org: "PT Anugrah Energi Indonesia",
+    role: "Frontend Developer",
+    period: "Jun 2023–Okt 2023",
+    location: "Tangerang · magang SMK",
     summary:
-      "Magang frontend di lingkungan produksi — pengalaman kerja pertama di luar proyek kelas.",
+      "Magang SMK: membangun antarmuka web yang responsif dan scalable dengan React dan Tailwind CSS di lingkungan produksi.",
     order: 4,
   },
 ];
@@ -94,23 +128,28 @@ export const achievements: Achievement[] = [
     medal: "🥇",
     title: "Juara 1 Nasional — I/O Festival",
     scope: "Kompetisi nasional",
-    year: null, // TODO(lintang): tanggal/tahun I/O Festival (token IO_FESTIVAL_DATE)
+    year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
+    detail: "Membangun platform B2B untuk ekonomi sirkular.",
     order: 1,
   },
   {
     medal: "🥉",
-    title: "Juara 3 Nasional — SurabayaDev",
-    scope: "Kompetisi nasional",
+    title: "Juara 3 Nasional — SurabayaDev Developer Battle 2025",
+    scope: "Kompetisi analisis data nasional",
     year: "2025",
-    // Prestasinya sudah diceritakan penuh sebagai case study Analisis Pembatalan Hotel.
+    detail:
+      "Kompetisi analisis data nasional dengan fokus pola booking dan pembatalan hotel.",
+    // Pekerjaannya sudah diceritakan penuh sebagai case study.
     projectSlug: "analisis-pembatalan-hotel",
     order: 2,
   },
   {
     medal: "🥈",
-    title: "Juara 2 — Internal CIMB Niaga",
+    title: "Juara 2 Internal — CIMB Niaga Pitching Day (UMN)",
     scope: "Kompetisi internal",
-    year: null, // TODO(lintang): tahun kompetisi internal CIMB Niaga
+    year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
+    detail:
+      "Membangun aplikasi mobile pembukaan rekening digital yang berfungsi, memakai React Native dan Expo Go.",
     order: 3,
   },
 ];
@@ -119,19 +158,71 @@ export const certifications: Certification[] = [
   {
     name: "Associate Data Scientist (Competent)",
     issuer: "BNSP",
+    date: "Jan 2026",
     order: 1,
   },
   {
     name: "Data Science Bootcamp (Excellent Graduate)",
-    // Nama penerbit "Digital Skola" disebut di EXECUTION_PROMPTS.md, bukan di BLUEPRINT.
     issuer: "Digital Skola",
+    date: "Nov 2025",
     order: 2,
   },
-  // TODO(lintang): sertifikat Coursera — nama kursus & penerbitnya tidak ada di BLUEPRINT
-  // maupun di repo ini, jadi sengaja tidak ditulis. Kirim datanya dan saya tambahkan.
+  {
+    name: "Exploratory Data Analysis for Machine Learning",
+    issuer: "IBM (Coursera)",
+    date: "Jan 2026",
+    order: 3,
+  },
+  {
+    name: "Supervised Machine Learning: Regression",
+    issuer: "IBM (Coursera)",
+    date: "Jan 2026",
+    order: 4,
+  },
+  {
+    name: "Data Science Capstone Project: Predicting Bicycle Rental",
+    issuer: "University of London (Coursera)",
+    date: "Jan 2025",
+    order: 5,
+  },
+  {
+    name: "Python for Data Science, AI & Development",
+    issuer: "IBM (Coursera)",
+    date: "Jan 2025",
+    order: 6,
+  },
 ];
 
-// TODO(lintang): organizational roles (§S5 "org roles = ringkas 1 baris").
-// Tidak ada satu pun data organisasi di BLUEPRINT, jadi tidak ada yang bisa ditulis
-// tanpa mengarang. Kirim daftarnya bila memang mau ditampilkan.
-export const organizationRoles: { org: string; role: string }[] = [];
+export const organizationRoles: OrganizationRole[] = [
+  {
+    org: "UMN ECO",
+    role: "Koordinator Divisi Website",
+    period: "Jan 2026–sekarang",
+    summary: "Memimpin pengembangan dan perawatan website organisasi.",
+    order: 1,
+  },
+  {
+    org: "Duta Anti Narkoba UMN",
+    role: "Koordinator Divisi Website",
+    period: "Des 2024–Nov 2025",
+    summary:
+      "Mengelola pengiriman website end-to-end, termasuk jadwal acara dan fitur ticketing.",
+    order: 2,
+  },
+  {
+    org: "STARLIGHT",
+    role: "Anggota Divisi Website",
+    period: "Okt 2024–Nov 2025",
+    summary:
+      "Membangun halaman divisi yang interaktif dengan fokus usability dan desain responsif.",
+    order: 3,
+  },
+  {
+    org: "AI Community",
+    role: "Volunteer",
+    period: "Mar 2025–Mei 2025",
+    summary:
+      "Membawakan demonstrasi dan sesi praktik AI di acara Open House untuk siswa dan orang tua.",
+    order: 4,
+  },
+];

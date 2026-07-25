@@ -101,7 +101,7 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [x] `components/sections/experience-achievements.tsx`: timeline + medali + cert (jujur, tanpa buzzword). Medali SurabayaDev menunjuk ke case study, tidak diceritakan ulang.
 - [x] `components/sections/contact.tsx`: ajakan §4.5 + email + GitHub + tombol Download CV — ⚠️ **LinkedIn tidak ditautkan** selama `LINKEDIN_URL` kosong
 - [x] `CV_FILE` belum ada → tombol **disabled** ("Download CV — segera") + `// TODO(lintang)`; tidak ada link mati
-- [ ] Org roles = ringkas 1 baris — ⛔ **tidak dikerjakan: nol data organisasi di BLUEPRINT.** Struktur `organizationRoles` sudah siap dan section-nya muncul otomatis begitu diisi.
+- [x] Org roles = ringkas 1 baris — ✅ **selesai 2026-07-26** setelah CV asli dibaca (UMN ECO, Duta Anti Narkoba UMN, STARLIGHT, AI Community).
 
 **Definition of Done:** timeline & achievements akurat dari CV; Contact berfungsi; Download CV bekerja bila `CV_FILE` ada (else disabled rapi); build sukses.
 **Files:** `content/experience.ts`, `components/sections/ExperienceAchievements.tsx`, `Contact.tsx`, `public/cv/`.
@@ -175,4 +175,6 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] **Case study belum "lengkap"**: blok *Kerja sendiri vs tim* dan *Satu pelajaran* disembunyikan di keempat proyek karena `ownVsTeam` & `learned` belum diisi Lintang. Ini bagian paling meyakinkan buat recruiter — prioritas tertinggi setelah token bukti.
 - [ ] **`CLIENT_NAME_PERMISSION` masih `null`** → nama "Ankop Trace" & "Bisasinema" **ditampilkan**. Set ke `false` bila belum boleh disebut; nama anonim (`anonymousName`) sudah disiapkan dan otomatis dipakai.
 - [x] Untuk S5: medali SurabayaDev sudah tampil di kartu/halaman Analisis Hotel. Di section Achievements, tulis sebagai rujukan ke case study itu — jangan diceritakan ulang seolah pekerjaan terpisah. → **selesai**, kartunya hanya memuat judul + link "Lihat case study-nya".
-- [ ] **Data S5 yang hilang dan tidak bisa dikarang:** role & periode persis PT Anugrah Energi · periode Bank Sampah Digital · tahun I/O Festival & CIMB Niaga · nama sertifikat Coursera · seluruh org roles. Kirim CV-nya (atau datanya) dan semua ini bisa diisi dalam hitungan menit.
+- [x] ~~Data S5 yang hilang~~ → ✅ **terisi 2026-07-26 dari CV asli**: role & periode PT Anugrah Energi (Frontend Developer, Jun–Okt 2023) · Bank Sampah Digital (Data Scientist Intern, Jan–Mar 2026) · 4 sertifikat Coursera · org roles · blok Pendidikan. **Sisa yang tetap tidak ada di CV:** tahun I/O Festival & CIMB Niaga.
+- [ ] 🔴 **CV publik memuat nomor HP Lintang** — keputusan: terbitkan apa adanya atau siapkan versi web tanpa nomor.
+- [ ] 🔧 Koreksi tercatat: database Ankop = **MySQL** (bukan PostgreSQL seperti tulisan S4). Sudah diperbaiki.

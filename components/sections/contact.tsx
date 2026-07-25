@@ -7,11 +7,9 @@ import { CONFIG, CONTACT, isSet } from "@/content/config";
 /**
  * Contact — naskah BLUEPRINT §4.5.
  *
- * Aturan link: tidak ada link mati (§9).
- * - `LINKEDIN_URL` masih kosong DAN CV lama diketahui mengarah ke profil yang salah
- *   (`/tinachi1`), jadi LinkedIn sengaja tidak ditautkan sampai URL-nya dipastikan.
- * - Tombol Download CV muncul hanya bila `CV_FILE` ada; selama kosong, tombolnya
- *   dirender **disabled** dengan keterangan singkat, bukan link yang menuju 404.
+ * Aturan link: tidak ada link mati (§9). Fallback-nya tetap dipertahankan —
+ * kalau suatu saat `LINKEDIN_URL` atau `CV_FILE` dikosongkan lagi, elemennya
+ * menyembunyikan/menonaktifkan diri, bukan menghasilkan 404.
  */
 export function Contact() {
   const cvFile = CONFIG.CV_FILE;
@@ -43,11 +41,22 @@ export function Contact() {
               Download CV
             </Button>
           ) : (
-            // TODO(lintang): taruh PDF di `public/cv/` lalu isi `CONFIG.CV_FILE`.
             <Button variant="secondary" size="lg" disabled>
               Download CV — segera
             </Button>
           )}
+
+          {isSet(linkedinUrl) ? (
+            <Button
+              href={linkedinUrl}
+              variant="ghost"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </Button>
+          ) : null}
         </div>
       </Reveal>
 
