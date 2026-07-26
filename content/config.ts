@@ -65,6 +65,21 @@ export type Config = {
 
   /** Stack proyek I/O Festival untuk seed post Log. */
   IO_FESTIVAL_STACK: string[] | null;
+
+  /**
+   * Nomor WhatsApp publik untuk tombol `wa.me`, format internasional tanpa `+`
+   * (mis. `6281234567890`).
+   *
+   * `null` = tombol WhatsApp TIDAK dirender. Keputusan Lintang 2026-07-26:
+   * email saja dulu, supaya nomornya tidak jadi tautan yang mudah dipanen bot spam.
+   */
+  WHATSAPP_NUMBER: string | null;
+
+  /**
+   * URL booking Cal.com (gratis) untuk section Help.
+   * `null` = tombol booking disembunyikan — bukan link mati.
+   */
+  CAL_COM_URL: string | null;
 };
 
 export const CONFIG: Config = {
@@ -87,6 +102,10 @@ export const CONFIG: Config = {
   DOMAIN: "lintangbalakosa.dev", // 🟡 default saran BLUEPRINT §0.1 — TODO(lintang): konfirmasi/registrasi
   IO_FESTIVAL_DATE: null, // TODO(lintang): tanggal I/O Festival
   IO_FESTIVAL_STACK: null, // TODO(lintang): stack proyek I/O Festival
+  // ✅ Keputusan Lintang 2026-07-26: nomor WhatsApp TIDAK dipublikasikan dulu.
+  // Isi dengan format `62812…` (tanpa `+`) bila suatu saat berubah pikiran.
+  WHATSAPP_NUMBER: null,
+  CAL_COM_URL: null, // TODO(lintang): buat akun Cal.com lalu tempel URL-nya di sini
 };
 
 /**

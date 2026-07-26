@@ -37,7 +37,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 | **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | ✅ |
 | **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | ✅ |
 | **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | ✅ |
-| **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | 🔲 |
+| **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | ✅ |
 | **R6** | Polish · a11y · perf · SEO/OG · **Re-deploy (REDESIGN LIVE)** | Gate performa, OG per-tipe, domain, retest HP | 🔲 |
 
 Legenda: 🔲 belum · 🟡 jalan · ✅ selesai.
@@ -137,10 +137,10 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** dua kail branding: (a) Collabs — orang bisa ajak Lintang kolaborasi (lomba/kerja/bantu UMKM); (b) Help — Lintang terbuka bantu developer.
 
 **Tasks:**
-- [ ] `app/collabs/page.tsx` **atau** section di home: showcase aktivitas kolaboratif (lomba nyata dari CV: I/O Festival, SurabayaDev, CIMB) + kartu "Ajak saya collab" (lomba / bantu UMKM / proyek).
-- [ ] CTA Collabs = `mailto:` + link WhatsApp (`wa.me/62812…` — **konfirmasi Lintang** apakah mau nomornya publik; ada isu privasi nomor di CV — lihat backlog fase 1). Default: email dulu, WA opsional.
-- [ ] Section **Help / Open to mentor**: framing **jujur** — bukan "jasa konsultan berbayar" (overclaim untuk fresh-grad), tapi "terbuka bantu developer yang lagi bingung". Link **Cal.com** (gratis, open-source) untuk booking ngobrol.
-- [ ] Semua statis; tanpa DB. Form (bila perlu) via Formspree/Web3Forms free tier — bukan backend sendiri.
+- [x] `app/collabs/page.tsx`: showcase 3 lomba dari CV (I/O Festival, SurabayaDev, CIMB Niaga) + 3 kartu ajakan collab (kompetisi / bantu usaha kecil / proyek dengan pengguna nyata).
+- [x] CTA: `mailto:` + LinkedIn. ✅ **Ditanyakan & diputuskan Lintang: nomor WhatsApp TIDAK dipublikasikan.** Token `WHATSAPP_NUMBER` disiapkan (`null`) — tombol wa.me muncul otomatis bila suatu saat diisi.
+- [x] `components/sections/help.tsx`: framing "Open to collaborate — and happy to help other developers" + kalimat eksplisit **"Not a paid service"**. Token `CAL_COM_URL` disiapkan (`null` → tombol booking disembunyikan, bukan link mati); sementara jalurnya email.
+- [x] Semua statis (`/collabs` prerender), tanpa DB dan tanpa form — CTA cukup `mailto:`, jadi tidak perlu Formspree/Web3Forms sama sekali.
 
 **Catatan jujur (branding, jangan dilewati):** hindari kata "Consulting" berbayar selama masih mahasiswa/fresh-grad — bisa terbaca overclaim & menurunkan kredibilitas. "Open to collaborate & help" lebih autentik dan tetap menjual.
 

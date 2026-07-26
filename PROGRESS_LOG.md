@@ -27,6 +27,45 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 07:55] — Fase 2 · Sprint R5 — Collabs + Open-to-help
+**Status:** ✅ selesai
+**Keputusan Lintang (ditanyakan lebih dulu, sesuai instruksi R5):**
+- 🔒 **Nomor WhatsApp TIDAK dipublikasikan.** CTA cukup email. Token `WHATSAPP_NUMBER` tetap disiapkan (`null`) supaya tombol `wa.me` muncul otomatis kalau suatu saat berubah pikiran — tanpa perlu menyentuh komponen. Nomor tetap ada di dalam PDF CV, tapi tidak jadi tautan yang mudah dipanen bot.
+- 📅 **Belum punya Cal.com.** Token `CAL_COM_URL` disiapkan (`null` → tombol "Book a chat" **disembunyikan**, bukan link mati). Sementara jalur satu-satunya adalah email.
+**Selesai:**
+- `app/collabs/page.tsx` — dua lapis: (1) **bukti** kolaborasi nyata dari CV (I/O Festival 🥇, SurabayaDev 🥉, CIMB Niaga 🥈, lengkap dengan konteks masing-masing), (2) **ajakan** lewat 3 kartu: kompetisi & hackathon · membantu usaha kecil go-digital · proyek sampingan dengan pengguna nyata.
+- Anti double-count dijaga: kartu SurabayaDev tetap menunjuk ke SATU case study Hotel, bukan diceritakan ulang.
+- `components/sections/help.tsx` — framing **"Open to collaborate — and happy to help other developers"**, dengan kalimat eksplisit **"Not a paid service. Just someone a few steps into the same road, with time to talk."** Tidak ada satu pun klaim jasa berbayar.
+- Kalimat jujur tambahan di Help: *"I'll also tell you when something is outside what I've done. That's more useful than a confident guess."* — dan di Collabs: pengakuan bahwa ia masih mahasiswa sehingga tidak bisa menerima semua ajakan, tapi akan menjawab cepat alih-alih menghilang.
+- Nav **Collabs tidak lagi "soon"**; `/collabs` masuk sitemap. Halaman **statis penuh** (prerender), tanpa DB, tanpa form, tanpa Formspree/Web3Forms — `mailto:` sudah cukup.
+- `npm run build` ✅ (19 halaman) · `npm run lint` ✅.
+**Verifikasi yang benar-benar dijalankan:**
+- ✅ `/collabs` → 200, ter-prerender statis.
+- ✅ CTA benar: `mailto:…?subject=Collaboration` dan `mailto:…?subject=Question / help` ada; **`wa.me` dan "Book a chat" TIDAK ada** — sesuai keputusan privasi.
+- ✅ Nol kata "consulting"/"hire me"/"paid service" sebagai klaim; yang ada justru penyangkalannya ("Not a paid service").
+- ✅ Isi halaman lengkap di HTML (prestasi, kartu ajakan, section Help).
+- ⚠️ Screenshot hanya bisa memverifikasi bagian atas halaman — lihat temuan di bawah.
+**🔴 Temuan penting untuk R6 (tidak diperbaiki di sini karena di luar scope R5):**
+- Saat mencoba men-screenshot `/collabs`, seluruh konten di bawah heading **tidak terlihat**. Setelah ditelusuri, ini bukan bug layout melainkan sifat komponen motion warisan S2:
+  1. HTML server memuat **14 elemen `data-reveal` dengan `opacity:0`** (terukur, bukan dugaan).
+  2. **`useReducedMotion` tidak berpengaruh pada SSR** — hook itu hanya hidup di client. Artinya pengunjung yang menyalakan `prefers-reduced-motion` **tetap menerima HTML tersembunyi** dan baru melihat isinya setelah hidrasi. Itu justru kebalikan dari maksud reduced-motion.
+  3. Pengaman `<noscript>` ada dan selektornya benar (`[data-reveal]{opacity:1!important}` — `!important` di stylesheet memang mengalahkan inline style), tapi **aktivasinya tidak bisa saya buktikan** di headless ini: flag `--disable-javascript` sudah tidak berfungsi dan `--blink-settings=scriptEnabled=false` membuat screenshot gagal dihasilkan.
+- Konsekuensi nyata: pada perangkat lambat, JS gagal, atau observer tidak memicu, **seluruh konten di bawah lipatan bisa tidak pernah muncul**. Ini kelas masalah yang sama dengan bug `CountUp` yang saya perbaiki di R1 (yang itu menampilkan angka salah; yang ini menyembunyikan konten).
+- **Rekomendasi R6 (sprint a11y + perf):** ubah `Reveal`/`Stagger` agar **default-nya terlihat**, dan penyembunyian hanya dilakukan di client setelah dipastikan animasinya akan berjalan — persis pola yang dipakai untuk memperbaiki `CountUp`.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **Verifikasi visual `/collabs` tidak lengkap.** Yang terbukti tampil hanya heading; sisanya dipastikan lewat HTML, bukan mata. Saya tidak mengklaim halamannya "terlihat bagus" — belum bisa saya lihat utuh.
+- ⚠️ Section Help hanya ada di `/collabs`, **tidak di beranda**. Pertimbangannya beranda sudah panjang dan Collabs+Help adalah permukaan konversi yang sama. Kalau ingin Help juga di beranda, tinggal satu baris di `app/page.tsx`.
+- ⚠️ `CAL_COM_URL` kosong → tidak ada jalur booking; orang hanya bisa email.
+- 🔴 **Repo GitHub masih belum ada** (utang sejak R0).
+- ⚠️ Belum di-deploy (R5 tidak memintanya).
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — terhadap diff R5:**
+- ✅ Nol hex mentah · nol `font-family` baru · nol aset — memakai `Card`, `Badge`, `Button`, `SectionHeading` yang sudah ada.
+- ✅ Situs referensi tidak dibuka selama R5.
+- ✅ Copy kartu collab ditulis dari pengalaman Lintang sendiri (lomba nyata, ops kopi, "bukan demo yang berhenti di localhost").
+- ✅ Framing Help sengaja **menolak** pola "consulting" yang lazim di situs portofolio — justru menjauh dari template, bukan mendekatinya.
+**Commit:** `R5: collabs + open-to-help (no paid backend)`
+**Sprint berikutnya:** R6 — Polish · a11y · perf · SEO/OG · re-deploy (menunggu instruksi)
+
 ### [2026-07-26 07:15] — Fase 2 · Sprint R4 — Blog (MDX/SSG + RSS + alur cross-post LinkedIn)
 **Status:** ✅ selesai
 **Selesai:**

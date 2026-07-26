@@ -25,7 +25,7 @@ export const navItems: NavItem[] = [
   { label: "Projects", sectionId: "projects" },
   { label: "About", sectionId: "about" },
   { label: "Blog", href: "/blog" }, // rutenya dibangun di R4
-  { label: "Collabs", href: "/collabs", pending: true }, // TODO(R5)
+  { label: "Collabs", href: "/collabs" }, // rutenya dibangun di R5
   { label: "Contact", sectionId: "contact" },
 ];
 

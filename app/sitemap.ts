@@ -55,5 +55,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.5,
     })),
+    {
+      url: `${SITE_URL}/collabs`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
   ];
 }
