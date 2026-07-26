@@ -17,9 +17,12 @@ import { getBlogPosts } from "@/lib/mdx";
 /**
  * Beranda — **ringkasan**, bukan tempat semua isi ditumpuk.
  *
- * Struktur baru (keputusan Lintang 2026-07-26): intro pendek, lalu tujuh blok
- * bernomor `01 — experience`, `02 — projects`, … yang masing-masing hanya memuat
- * cuplikan dan mengantar ke halaman detailnya sendiri.
+ * Struktur (keputusan Lintang 2026-07-26): intro pendek, lalu enam blok bernomor
+ * `01 — experience`, `02 — projects`, … yang masing-masing hanya memuat cuplikan
+ * dan mengantar ke halaman detailnya sendiri.
+ *
+ * Stack sengaja TIDAK jadi blok bernomor sendiri — ia menempel di bawah projects,
+ * karena tools-nya memang milik proyek-proyek itu.
  */
 
 function Row({
@@ -119,29 +122,39 @@ export default async function Home() {
                 />
               ))}
             </ul>
+
+            {/* Stack menempel di bawah projects, bukan blok bernomor sendiri
+                (keputusan Lintang) — tools-nya memang milik proyek-proyek di atas. */}
+            <div className="border-border/70 mt-6 border-t pt-5">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <p className="mono text-n-500 text-[11px] tracking-[0.16em] uppercase">
+                  Stack
+                </p>
+                <Link
+                  href="/stack"
+                  className="mono text-ink-muted hover:text-ink focus-visible:ring-ring rounded-sm text-[12px] tracking-[0.08em] uppercase outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                >
+                  Full stack
+                  <span aria-hidden="true">&nbsp;→</span>
+                </Link>
+              </div>
+
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {skillGroups.flatMap((group) =>
+                  group.items.slice(0, 3).map((item) => (
+                    <li key={`${group.title}-${item.name}`}>
+                      <Badge mono tone="outline">
+                        {item.name}
+                      </Badge>
+                    </li>
+                  )),
+                )}
+              </ul>
+            </div>
           </NumberedSection>
 
           <NumberedSection
             index={3}
-            label="stack"
-            href="/stack"
-            linkLabel="Full stack"
-          >
-            <ul className="flex flex-wrap gap-2">
-              {skillGroups.flatMap((group) =>
-                group.items.slice(0, 3).map((item) => (
-                  <li key={`${group.title}-${item.name}`}>
-                    <Badge mono tone="outline">
-                      {item.name}
-                    </Badge>
-                  </li>
-                )),
-              )}
-            </ul>
-          </NumberedSection>
-
-          <NumberedSection
-            index={4}
             label="certifications"
             href="/certifications"
             linkLabel="All certifications"
@@ -159,7 +172,7 @@ export default async function Home() {
           </NumberedSection>
 
           <NumberedSection
-            index={5}
+            index={4}
             label="education"
             href="/education"
             linkLabel="All education"
@@ -177,7 +190,7 @@ export default async function Home() {
           </NumberedSection>
 
           <NumberedSection
-            index={6}
+            index={5}
             label="collabs"
             href="/collabs"
             linkLabel="All collabs"
@@ -195,7 +208,7 @@ export default async function Home() {
           </NumberedSection>
 
           <NumberedSection
-            index={7}
+            index={6}
             label="blog"
             href="/blog"
             linkLabel="All posts"

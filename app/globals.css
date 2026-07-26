@@ -43,7 +43,7 @@
   --radius: 14px;
   --shadow-soft:
     0 1px 2px rgba(23, 23, 23, 0.04), 0 8px 24px rgba(23, 23, 23, 0.05);
-  --maxw: 1120px;
+  --maxw: 880px; /* dikecilkan dari 1120px atas permintaan Lintang */
 
   /* Layout shell — dikunci di docs/DESIGN_LANGUAGE.md §2.4 (R0).
      Keduanya UKURAN, bukan warna/font: kelipatan skala 4px §3.3. */
