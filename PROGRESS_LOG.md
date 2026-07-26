@@ -27,6 +27,42 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 07:15] — Fase 2 · Sprint R4 — Blog (MDX/SSG + RSS + alur cross-post LinkedIn)
+**Status:** ✅ selesai
+**Selesai:**
+- `lib/mdx.ts` di-extend untuk `content/blog/*.mdx` memakai pipeline yang sama dengan Log (gray-matter + `next-mdx-remote`, dibaca saat build). **Nol backend, nol DB, nol biaya server.**
+- Frontmatter: `title, date, tags[], summary, canonical, draft`.
+- `app/blog/page.tsx` (judul · tanggal · tag · ringkasan) + `app/blog/[slug]/page.tsx` (SSG, `dynamicParams=false`, `generateMetadata`).
+- `app/blog/rss.xml/route.ts` dengan **`dynamic = "force-static"`** → dirender sekali saat build dan disajikan sebagai file; tidak ada fungsi server yang jalan per-request. Terverifikasi `Content-Type: application/rss+xml`, XML valid, karakter di-escape (`&apos;` pada judul berapostrof).
+- Tag dihitung dari frontmatter saat build (`getBlogTags()`) — statis, tanpa DB.
+- `content/blog/_TEMPLATE.mdx` — alur **cross-post LinkedIn → MDX** 5 langkah, ditulis dengan premis "jangan menulis untuk blog; tulis untuk LinkedIn lalu pindahkan", karena itu satu-satunya ritme yang realistis dan blog mati lebih merugikan daripada tidak punya blog.
+- Nav: item **Blog tidak lagi "soon"** — rutenya sudah ada, jadi kini tautan sungguhan. `sitemap.ts` memuat `/blog` + post terbit.
+**Keputusan penting: `draft: true` dan kenapa itu ada**
+- R4 meminta 2 seed post tapi melarang mengarang artikel utuh seolah tulisan Lintang. Dua hal itu bertabrakan kalau seed langsung diterbitkan.
+- Solusinya: field **`draft`**. Draft **tidak muncul** di `/blog`, RSS, maupun sitemap di produksi, dan halamannya **404**. Di `next dev` draft tetap terbuka supaya Lintang bisa menulis sambil melihat hasilnya.
+- Dua seed dibuat sebagai **kerangka** — judul, tag, dan ringkasan diturunkan dari fakta yang sudah ada (Ankop offline-first; SurabayaDev + pelajaran I/O Festival), lalu tiap bagian isinya `TODO(lintang)`. **Nol paragraf karangan.**
+- Efek sampingnya jujur: **`/blog` di produksi saat ini kosong.** Halamannya mengakui itu apa adanya ("No posts published yet") dan mengarahkan ke LinkedIn — yang sekarang bisa ditautkan karena `LINKEDIN_URL` sudah terisi.
+**Verifikasi yang benar-benar dijalankan:**
+- ✅ Produksi: `/blog` 200 · `/blog/rss.xml` 200 · `/blog/offline-first-was-not-a-choice` **404** (draft benar-benar tidak bocor).
+- ✅ Dev: kedua draft tampil dengan badge `draft`, halaman draft 200, RSS ikut merender item + `<category>`. Artinya pipeline-nya benar; yang kosong di produksi memang karena statusnya draft, bukan karena rusak.
+- ✅ Sitemap produksi hanya memuat `/blog`, nol URL draft.
+- ✅ Screenshot 1280px: halaman kosong tetap terbaca rapi, bukan seperti halaman rusak.
+**🔧 Perbaikan yang ditemukan saat verifikasi:**
+- Screenshot pertama `/blog` menunjukkan **judul halaman hilang** — `SectionHeading` terbungkus `Reveal` padahal ia berada **di atas lipatan**, melanggar aturan yang saya tetapkan sendiri di R2 (`opacity:0` dilarang di atas lipatan). Diperbaiki: heading dirender langsung, motion hanya untuk kartu di bawahnya.
+- ⚠️ **`/log` punya masalah yang sama** (warisan S7: `SectionHeading`-nya dibungkus `Reveal`). Tidak saya sentuh karena di luar scope R4 — **dicatat untuk R6**.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **Blog kosong di produksi.** Ini konsekuensi sadar dari larangan mengarang, bukan kelalaian. Sampai Lintang menulis, `/blog` hanya berisi pengakuan + tautan LinkedIn. Backlog fase 2 sendiri sudah menargetkan "2–3 post cross-post saat launch" — itu tetap harus Lintang yang isi.
+- ⚠️ **RSS belum diuji dengan post terbit sungguhan di produksi** (karena belum ada). Sudah diuji di dev dan itemnya ter-render benar.
+- ⚠️ **Filter tag belum interaktif** — tag hanya ditampilkan sebagai daftar. R4 memintanya "sederhana, statis, tanpa DB", jadi ini sesuai; tapi mengkliknya belum menyaring apa pun. Kalau nanti diinginkan, bentuk termurahnya `/blog/tag/[tag]` yang tetap SSG.
+- 🔴 **Repo GitHub MASIH belum ada.** Ini sprint yang paling bergantung padanya: seluruh alur di `_TEMPLATE.mdx` berakhir di "`git push` → Vercel deploy otomatis", dan langkah itu **belum benar-benar berlaku**. Sekarang menambah post masih berarti deploy manual. Utang ini sudah menggantung sejak R0.
+- ⚠️ Belum di-deploy (R4 tidak memintanya).
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — terhadap diff R4:**
+- ✅ Nol hex mentah · nol `font-family` baru · nol aset — memakai `Card`, `Badge`, `SectionHeading` yang sudah ada.
+- ✅ Situs referensi tidak dibuka selama R4.
+- ✅ Copy halaman blog ditulis dari premis cross-post milik Lintang sendiri.
+**Commit:** `R4: blog (mdx/ssg + rss + linkedin cross-post flow)`
+**Sprint berikutnya:** R5 — Collabs + Help (menunggu instruksi)
+
 ### [2026-07-26 06:35] — Fase 2 · Sprint R3 — Case study naratif (leerob-style voice)
 **Status:** ✅ selesai
 **Selesai:**

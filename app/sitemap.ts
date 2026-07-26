@@ -1,13 +1,15 @@
 import type { MetadataRoute } from "next";
 
 import { caseStudyProjects } from "@/content/projects";
-import { getLogPosts } from "@/lib/mdx";
+import { getBlogPosts, getLogPosts } from "@/lib/mdx";
 import { SITE_URL } from "@/lib/seo";
 
 /** Sitemap hanya memuat rute yang BENAR-BENAR sudah ada. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
   const logPosts = await getLogPosts();
+  // Draft sudah tersaring di `getBlogPosts()`, jadi tidak mungkin bocor ke sitemap.
+  const blogPosts = await getBlogPosts();
 
   return [
     {
@@ -39,5 +41,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           })),
         ]
       : []),
+    // `/blog` selalu ada sebagai halaman (walau isinya masih kosong), tapi
+    // detail post hanya didaftarkan bila memang ada post terbit.
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    },
+    ...blogPosts.map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    })),
   ];
 }

@@ -24,7 +24,7 @@ export const navItems: NavItem[] = [
   { label: "Home", sectionId: "top" },
   { label: "Projects", sectionId: "projects" },
   { label: "About", sectionId: "about" },
-  { label: "Blog", href: "/blog", pending: true }, // TODO(R4)
+  { label: "Blog", href: "/blog" }, // rutenya dibangun di R4
   { label: "Collabs", href: "/collabs", pending: true }, // TODO(R5)
   { label: "Contact", sectionId: "contact" },
 ];

@@ -111,3 +111,103 @@ export function resultTone(result: LogResult): "accent" | "neutral" | "outline" 
       return "neutral";
   }
 }
+
+/* ==========================================================================
+   Blog — fase 2 R4
+   Pipeline yang sama persis dengan Log: MDX git-based, dibaca saat build.
+   Tambah post = tulis `.mdx` + `git push`. **Tanpa backend/DB berbayar.**
+   ========================================================================== */
+
+export const BLOG_DIR = join(process.cwd(), "content", "blog");
+
+export type BlogFrontmatter = {
+  title: string;
+  /** `YYYY-MM-DD`. Kosong → tanggal tidak ditampilkan & post diurutkan terakhir. */
+  date: string;
+  tags: string[];
+  summary: string;
+  /**
+   * URL asli bila tulisannya lebih dulu terbit di tempat lain (mis. LinkedIn).
+   * Dipakai sebagai `alternates.canonical` DAN ditampilkan sebagai tautan
+   * "Originally published on …" — supaya pembaca tahu asalnya, bukan disamarkan.
+   */
+  canonical: string | null;
+  /**
+   * `true` = kerangka yang belum ditulis Lintang.
+   * Draft **tidak diterbitkan** di produksi: tidak muncul di `/blog`, RSS, maupun
+   * sitemap, dan halamannya 404. Di `next dev` tetap bisa dibuka untuk menulis.
+   */
+  draft: boolean;
+};
+
+export type BlogPost = BlogFrontmatter & {
+  slug: string;
+  body: string;
+};
+
+function normalizeBlog(data: Record<string, unknown>): BlogFrontmatter {
+  return {
+    title: typeof data.title === "string" ? data.title : "",
+    date: typeof data.date === "string" ? data.date : "",
+    tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
+    summary: typeof data.summary === "string" ? data.summary : "",
+    canonical:
+      typeof data.canonical === "string" && data.canonical.length > 0
+        ? data.canonical
+        : null,
+    draft: data.draft === true,
+  };
+}
+
+/**
+ * Post blog, terbaru di atas.
+ *
+ * Draft disembunyikan di produksi. Ini yang menjaga janji "jangan mengarang":
+ * kerangka post boleh ada di repo tanpa pernah tampil sebagai tulisan Lintang
+ * sampai ia benar-benar menulisnya.
+ */
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  let files: string[];
+  try {
+    files = await readdir(BLOG_DIR);
+  } catch {
+    return [];
+  }
+
+  const posts = await Promise.all(
+    files
+      .filter((file) => file.endsWith(".mdx") && !file.startsWith("_"))
+      .map(async (file) => {
+        const raw = await readFile(join(BLOG_DIR, file), "utf8");
+        const { data, content } = matter(raw);
+        return {
+          ...normalizeBlog(data),
+          slug: file.replace(/\.mdx$/, ""),
+          body: content.trim(),
+        } satisfies BlogPost;
+      }),
+  );
+
+  const visible =
+    process.env.NODE_ENV === "production"
+      ? posts.filter((post) => !post.draft)
+      : posts;
+
+  return visible.sort((a, b) => {
+    if (!a.date && !b.date) return a.title.localeCompare(b.title);
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.localeCompare(a.date);
+  });
+}
+
+export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  const posts = await getBlogPosts();
+  return posts.find((post) => post.slug === slug) ?? null;
+}
+
+/** Semua tag yang dipakai post terbit — dihitung dari frontmatter, tanpa DB. */
+export async function getBlogTags(): Promise<string[]> {
+  const posts = await getBlogPosts();
+  return [...new Set(posts.flatMap((post) => post.tags))].sort();
+}

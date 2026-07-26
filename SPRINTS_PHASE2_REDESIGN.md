@@ -36,7 +36,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 | **R1** | Layout shell — sidebar + container + rhythm | Sidebar nav, container lega, spacing scale, sticky/scroll-spy | ✅ |
 | **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | ✅ |
 | **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | ✅ |
-| **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | 🔲 |
+| **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | ✅ |
 | **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | 🔲 |
 | **R6** | Polish · a11y · perf · SEO/OG · **Re-deploy (REDESIGN LIVE)** | Gate performa, OG per-tipe, domain, retest HP | 🔲 |
 
@@ -118,13 +118,13 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** section blog hidup untuk branding "berbagi insight & bantu developer", nol biaya server.
 
 **Tasks:**
-- [ ] Reuse pipeline MDX fase-1 (`lib/mdx.ts`, `next-mdx-remote`) untuk `content/blog/*.mdx`.
-- [ ] `app/blog/page.tsx` (list: judul, tanggal, tag, ringkasan) + `app/blog/[slug]/page.tsx` (SSG) + `generateMetadata`.
-- [ ] `app/blog/rss.xml` (route handler statis) untuk feed.
-- [ ] Tag/kategori sederhana (statis, dari frontmatter) — **tanpa DB**.
-- [ ] **Strategi anti-blog-mati (WAJIB, seperti Log):** dokumentasikan alur **cross-post dari LinkedIn** — tiap post LinkedIn jadi `.mdx`. Sediakan `content/blog/_TEMPLATE.mdx`.
-- [ ] Seed 2 post nyata dari materi Lintang (mis. pelajaran dari Ankop/kompetisi) — `// TODO(lintang)` untuk isi final; **jangan mengarang artikel**.
-- [ ] Frontmatter: `title, date, tags[], summary, canonical (opsional link LinkedIn)`.
+- [x] `lib/mdx.ts` di-extend untuk `content/blog/*.mdx` (gray-matter + `next-mdx-remote`, pipeline sama persis dengan Log).
+- [x] `app/blog/page.tsx` (judul, tanggal, tag, ringkasan) + `app/blog/[slug]/page.tsx` (SSG, `dynamicParams=false`) + `generateMetadata`.
+- [x] `app/blog/rss.xml/route.ts` dengan `dynamic = "force-static"` → dirender saat build, **nol fungsi server per-request**. Terverifikasi `application/rss+xml`.
+- [x] Tag dihitung dari frontmatter saat build (`getBlogTags()`), tanpa DB dan tanpa filter dinamis.
+- [x] `content/blog/_TEMPLATE.mdx` memuat alur cross-post LinkedIn→MDX 5 langkah + peringatan trade-off SEO `canonical` + aturan "jangan terbitkan tulisan agen atas namamu".
+- [x] 2 seed dibuat sebagai **draft berkerangka** (`draft: true`) dengan `TODO(lintang)` di tiap bagian. **Tidak ada paragraf karangan** — draft tidak pernah tampil di produksi.
+- [x] Frontmatter: `title, date, tags[], summary, canonical, draft`.
 
 **Catatan jujur:** blog bernilai TINGGI untuk brandingmu, TAPI **blog mati > tak ada blog**. Komit ritme realistis (mis. 1–2/bulan atau tiap ada post LinkedIn). Jangan janji mingguan.
 
