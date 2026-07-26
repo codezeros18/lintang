@@ -15,6 +15,7 @@ export function NumberedSection({
   linkLabel,
   children,
   className,
+  id,
 }: {
   /** Nomor urut; diformat jadi 01, 02, … */
   index: number;
@@ -23,11 +24,13 @@ export function NumberedSection({
   linkLabel: string;
   children: React.ReactNode;
   className?: string;
+  /** Dipakai target anchor, mis. tautan "Know me more ↓" di HomeIntro. */
+  id?: string;
 }) {
   const number = String(index).padStart(2, "0");
 
   return (
-    <section className={cn("border-border border-t pt-7", className)}>
+    <section id={id} className={cn("border-border scroll-mt-6 border-t pt-7", className)}>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="mono text-ink text-[13px] tracking-[0.08em]">
           <span className="text-n-500">{number}</span>

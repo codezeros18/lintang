@@ -89,6 +89,7 @@ export default async function Home() {
 
         <div className="space-y-16 md:space-y-20">
           <NumberedSection
+            id="experience"
             index={1}
             label="experience"
             href="/experience"

@@ -6,21 +6,61 @@ import { CONFIG, CONTACT, isSet } from "@/content/config";
 import { getHookStats } from "@/content/hook-stats";
 
 /**
- * HomeIntro — pembuka beranda: foto + perkenalan singkat + strip angka.
+ * HomeIntro — pembuka beranda: foto + bio dengan tautan inline + strip angka.
  *
- * Layout foto:teks dibagi **50:50** lewat `grid-cols-2` (keputusan Lintang).
- * Ukuran teks: 15px untuk paragraf, judul memakai Geist Pixel `--step-2`,
- * angka strip 18px, label strip 11px.
+ * Bio ditulis mengikuti gaya leerob.com: tautan diselipkan LANGSUNG di dalam
+ * kalimat dan digarisbawahi, bukan dikumpulkan jadi baris ikon terpisah seperti
+ * versi sebelumnya. Ditutup satu tautan "Know me more ↓" yang membawa pembaca
+ * turun ke bagian pertama daftar bernomor (`#experience`) — jembatan ke isi
+ * portfolio yang sudah ada, bukan halaman baru.
  *
- * Foto TIDAK dibingkai kotak/border — background-nya sudah transparan, dan
- * jaraknya ke teks dibuat rapat (bukan lebar seperti versi sebelumnya).
- *
- * Fotonya adalah elemen LCP halaman ini, jadi memakai `next/image` dengan
- * `priority` + `sizes` supaya browser memuatnya lebih awal dan mengunduh ukuran
- * yang tepat. `width`/`height` diisi dimensi asli foto (500×500) agar tidak ada CLS.
+ * Layout foto:teks tetap 50:50 (`grid-cols-2`), tanpa bingkai/border di foto.
+ * Ukuran teks: 15px bio, 18px angka strip, 11px label strip, judul Geist Pixel
+ * `--step-2`.
  *
  * Tanpa komponen motion — ini konten atas-lipatan (aturan R2).
  */
+
+function InlineLink({
+  href,
+  external,
+  download,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  download?: boolean;
+  children: React.ReactNode;
+}) {
+  const className =
+    "text-ink decoration-border hover:decoration-ink underline underline-offset-4";
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+  if (download) {
+    return (
+      <a href={href} download className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 export function HomeIntro() {
   const stats = getHookStats();
   const photo = CONFIG.PHOTO_FILE;
@@ -55,63 +95,54 @@ export function HomeIntro() {
 
           <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-relaxed">
             <p>
-              I&rsquo;m a full-stack engineer. I build systems real businesses
+              I&rsquo;m a{" "}
+              <InlineLink href="/experience">full-stack engineer</InlineLink>{" "}
+              and informatics student at UMN. I build systems real businesses
               run on — offline-first operations, multi-tenant SaaS, and live
-              payments — and then prove their impact with data.
+              payments — starting with{" "}
+              <InlineLink href="/projects/ankop-trace">Ankop Trace</InlineLink>
+              , then prove their impact with data.
             </p>
             <p className="text-ink-muted">
-              Right now I&rsquo;m shipping production software while finishing my
-              informatics degree. Every project here has a story, from the
-              problem to the proof.
+              You can find my code on{" "}
+              <InlineLink href={CONTACT.github} external>
+                GitHub
+              </InlineLink>
+              {isSet(CONFIG.LINKEDIN_URL) ? (
+                <>
+                  , connect on{" "}
+                  <InlineLink href={CONFIG.LINKEDIN_URL} external>
+                    LinkedIn
+                  </InlineLink>
+                </>
+              ) : null}
+              , or reach me by{" "}
+              <InlineLink href={`mailto:${CONTACT.email}`}>email</InlineLink>.
+              {isSet(CONFIG.CV_FILE) ? (
+                <>
+                  {" "}
+                  Want the full picture? Here&rsquo;s my{" "}
+                  <InlineLink href={`/cv/${CONFIG.CV_FILE}`} download>
+                    CV
+                  </InlineLink>
+                  .
+                </>
+              ) : null}
             </p>
           </div>
 
-          <div className="mono text-ink-muted mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
-            <a
-              href={CONTACT.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-ink focus-visible:ring-ring rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            >
-              github <span aria-hidden="true">↗</span>
-            </a>
-            {isSet(CONFIG.LINKEDIN_URL) ? (
-              <a
-                href={CONFIG.LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-ink focus-visible:ring-ring rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              >
-                linkedin <span aria-hidden="true">↗</span>
-              </a>
-            ) : null}
-            <a
-              href={`mailto:${CONTACT.email}`}
-              className="hover:text-ink focus-visible:ring-ring rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            >
-              email
-            </a>
-            {isSet(CONFIG.CV_FILE) ? (
-              <a
-                href={`/cv/${CONFIG.CV_FILE}`}
-                download
-                className="hover:text-ink focus-visible:ring-ring rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              >
-                cv <span aria-hidden="true">↓</span>
-              </a>
-            ) : null}
-            <Link
-              href="/projects/ankop-trace"
-              className="hover:text-ink focus-visible:ring-ring rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            >
-              start with ankop trace <span aria-hidden="true">→</span>
-            </Link>
-          </div>
+          {/* Jembatan ke daftar bernomor di bawah (Experience, Projects, dst). */}
+          <a
+            href="#experience"
+            className="mono text-ink-muted hover:text-ink focus-visible:ring-ring mt-6 inline-flex items-center gap-1.5 rounded-sm text-[13px] tracking-[0.04em] outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            Know me more
+            <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </div>
 
-      {/* Strip angka — tanpa garis pembagi antar item (keputusan Lintang);
-          angka 18px, label 11px, keduanya Geist Mono. */}
+      {/* Strip angka — tanpa garis pembagi antar item; angka 18px, label 11px. */}
       <dl className="border-border mt-8 grid grid-cols-1 gap-6 border-t pt-6 sm:grid-cols-3 sm:gap-8">
         {stats.map((stat) => (
           <div key={stat.label}>
