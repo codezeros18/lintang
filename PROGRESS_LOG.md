@@ -27,6 +27,36 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 10:30] — Di luar sprint — Restrukturisasi IA + palet netral + Geist Pixel
+**Status:** ✅ selesai & **LIVE** di https://lintang-sigma.vercel.app
+**Pemicu:** Arahan Lintang: hero terlalu besar ("sampe pusing"), tiap bagian portfolio harus punya halaman detail sendiri di sidebar, kontak di kaki sidebar, beranda jadi ringkasan bernomor, dan palet grey/white.
+**Selesai:**
+- **Tipografi sesuai permintaan:** nav sidebar **Geist Mono 13px**, nama **Geist Pixel 15px**. Geist Pixel hanya tersedia di paket resmi `geist` (bukan Google Fonts) — dipasang dari sana, varian **Square** (paling terbaca di ukuran kecil). Terverifikasi live: variabel `--font-geist-pixel-square` benar-benar terdefinisi dan dipakai, bukan jatuh ke fallback mono.
+- **Ikon `lucide-react`** di tiap item nav (sudah terpasang sejak shadcn init S1, jadi nol dependency baru).
+- **Sidebar dirombak:** wordmark → grup nav tanpa judul (Home, About, Blog, Collabs, Log) → grup **Portfolio** (Projects, Experience, Stack, Certifications, Education) → **blok kontak di kaki** ("For work, collabs & everything else, reach me at" + email). Lebar 240px → **264px** agar label panjang & blok kontak muat.
+- **7 halaman detail** — `/projects`, `/experience`, `/stack`, `/certifications`, `/education` dibuat baru; `/blog` & `/collabs` sudah ada. Semua 200 dan masuk sitemap.
+- **Beranda jadi ringkasan bernomor:** intro pendek lalu `01 — experience`, `02 — projects`, `03 — stack`, `04 — certifications`, `05 — education`, `06 — collabs`, `07 — blog`, tiap blok punya tautan "ALL … →" ke halaman detailnya.
+- **Hero dikecilkan.** Headline lama memakai `--step-4` (sampai 4.6rem) — itu penyebab "pusing". Sekarang nama memakai `--step-2` dalam Geist Pixel + dua paragraf pendek + baris tautan mono (github / linkedin / email / cv / start with ankop trace).
+- **Palet netral grey + white.** Tangga `--n-0` … `--n-900` menggantikan paper/ink/indigo/coral. Nama token lama dipertahankan sebagai alias supaya seluruh komponen tidak perlu diubah. Favicon, apple-icon, dan OG image ikut dinetralkan.
+- `npm run build` ✅ (30 halaman) · `npm run lint` ✅ · 360px diverifikasi lewat iframe: tidak ada overflow, hook strip benar (`Rp20M+ · 5,000+ kg · 6`).
+**Kontras diukur ulang untuk palet baru — semua lolos WCAG AA:**
+ink #171717/paper #FAFAFA **17.18** · ink-muted #5C5C5C/paper **6.41** · ink-muted/card **6.69** · ink-muted/secondary **6.08** · putih/ink **17.93** · n-500 #737373/paper **4.54**.
+**Keputusan yang saya ambil sendiri (perlu diketahui):**
+- 🟡 **Halaman `/about` ditambahkan meski tidak diminta.** Struktur baru menghapus section About dari beranda, padahal BLUEPRINT §9 mewajibkan About memuat **kredensial BNSP** dan **micro-copy anti-salah-baca** ("data = pembeda, bukan pengalih"). Keduanya akan hilang dari situs kalau saya diam. Jadi keduanya dipindah ke `/about`, bukan dihapus. Kalau tidak mau ada, tinggal bilang.
+- 🟡 **Jadi ada 8 item portfolio, bukan 7** (About + 7 lainnya). Konsekuensi dari poin di atas.
+- Section beranda lama (`hero`, `about`, `skills`, `featured-projects`, `experience-achievements`, `contact`, `log-teaser`) **dihapus** karena isinya sudah pindah ke halaman detail — tidak ada kode mati yang ditinggal.
+- `use-active-section.ts` (scroll-spy R1) dihapus: nav sekarang berbasis halaman, bukan anchor, jadi scroll-spy tidak relevan lagi.
+**Batas yang tetap saya pegang (dan ini satu-satunya hal yang tidak saya ikuti mentah-mentah):**
+- Palet grey/white **diturunkan sendiri** sebagai tangga luminance yang rata — **bukan** hasil mengambil nilai hex dari situs referensi. ANTI-CLONE §3.1 **#1 (hex) dan #4 (aset) tetap berlaku penuh**; yang dilonggarkan hanya #2 (font), itu pun sudah tercatat sejak perubahan Geist sebelumnya.
+- Tidak ada aset, ilustrasi, foto halftone, atau copy yang diambil dari situs referensi.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **Foto profil belum ada** (`PHOTO_FILE` kosong), sedangkan referensi menyambut dengan foto besar. Intro beranda masih murni teks. Kirim fotonya dan saya pasang di sisi kanan intro.
+- ⚠️ **Fitur kecil di referensi tidak dibuat** karena tidak diminta dan sebagian butuh backend: "people viewing now", community chat, command palette (Alt+K), typing test, toggle tema/suara. Bilang kalau ada yang mau ditambahkan.
+- ⚠️ Interaksi drawer di HP tetap belum diuji di browser sungguhan.
+- 🔴 **Gate Lighthouse R6 masih menunggu** — dan sekarang justru lebih penting: struktur, font, dan palet semuanya berubah, jadi ukur setelah ini.
+- 🔴 Repo GitHub masih belum ada.
+**Commit:** `redesign: sidebar IA, per-section pages, numbered home, neutral palette`
+
 ### [2026-07-26 09:20] — Di luar sprint — Tipografi diganti ke keluarga Geist
 **Status:** ✅ selesai
 **Pemicu:** Permintaan Lintang — memakai keluarga **Geist**, mengacu pada portfolio referensi (bryllim).

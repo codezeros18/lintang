@@ -10,27 +10,44 @@
    Dark mode = fast-follow (belum di-scope MVP), jadi belum ada blok `.dark`.
    ===================================================================== */
 :root {
-  /* Palet inti */
-  --paper: #fbfaf7; /* background warm paper */
-  --ink: #14141a; /* teks utama */
-  --ink-muted: #55555f; /* teks sekunder */
-  --card: #ffffff; /* permukaan kartu */
-  --indigo: #3d5afe; /* aksen utama */
-  --coral: #ff6a3d; /* aksen kedua — HEMAT (CTA/hover kecil saja) */
-  /* Coral versi gelap khusus TEKS: #FF6A3D hanya 2.73:1 di atas paper — gagal AA.
-     Yang ini 5.12:1 di atas paper & 5.34:1 di atas card. Coral asli tetap dipakai
-     untuk isian/aksen non-teks. */
-  --coral-ink: #b34a2b;
-  --accent: var(--indigo);
+  /* =====================================================================
+     Palet netral — keputusan Lintang 2026-07-26 (grey + white).
+     Menggantikan paper/ink/indigo/coral dari BLUEPRINT §3.2.
+
+     Nilainya adalah **tangga abu-abu netral yang diturunkan sendiri**
+     (langkah luminance yang rata), BUKAN hasil mengambil warna dari situs
+     mana pun — ANTI-CLONE §3.1 #1 tetap berlaku penuh.
+     Semua pasangan teks/latar diukur lolos WCAG AA; lihat PROGRESS_LOG.
+     ===================================================================== */
+  --n-0: #ffffff;
+  --n-50: #fafafa;
+  --n-100: #f4f4f4;
+  --n-200: #e6e6e6;
+  --n-300: #d4d4d4;
+  --n-500: #737373;
+  --n-600: #5c5c5c;
+  --n-800: #2b2b2b;
+  --n-900: #171717;
+
+  /* Nama token lama dipertahankan supaya seluruh komponen tidak perlu diubah. */
+  --paper: var(--n-50); /* background */
+  --ink: var(--n-900); /* teks utama */
+  --ink-muted: var(--n-600); /* teks sekunder */
+  --card: var(--n-0); /* permukaan kartu */
+  /* Aksen ikut netral: penekanan lewat kontras & berat, bukan warna. */
+  --indigo: var(--n-900);
+  --coral: var(--n-500);
+  --coral-ink: var(--n-900);
+  --accent: var(--ink);
 
   --radius: 14px;
   --shadow-soft:
-    0 1px 2px rgba(20, 20, 26, 0.04), 0 8px 24px rgba(20, 20, 26, 0.06);
+    0 1px 2px rgba(23, 23, 23, 0.04), 0 8px 24px rgba(23, 23, 23, 0.05);
   --maxw: 1120px;
 
   /* Layout shell — dikunci di docs/DESIGN_LANGUAGE.md §2.4 (R0).
      Keduanya UKURAN, bukan warna/font: kelipatan skala 4px §3.3. */
-  --sidebar-w: 240px;
+  --sidebar-w: 264px;
   --nav-item-h: 36px;
   --topbar-h: 56px;
 
@@ -49,15 +66,15 @@
   --popover: var(--card);
   --popover-foreground: var(--ink);
   --primary: var(--indigo);
-  --primary-foreground: #ffffff;
-  --secondary: #f2f0ea;
+  --primary-foreground: var(--n-0);
+  --secondary: var(--n-100);
   --secondary-foreground: var(--ink);
-  --muted: #f2f0ea;
+  --muted: var(--n-100);
   --muted-foreground: var(--ink-muted);
-  --accent-foreground: #ffffff;
+  --accent-foreground: var(--n-0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #e6e3dc; /* garis warm */
-  --input: #e6e3dc;
+  --border: var(--n-200);
+  --input: var(--n-200);
   --ring: var(--indigo);
 }
 
@@ -86,12 +103,18 @@
   --color-indigo-brand: var(--indigo);
   --color-coral: var(--coral);
   --color-coral-ink: var(--coral-ink);
+  --color-n-0: var(--n-0);
+  --color-n-100: var(--n-100);
+  --color-n-200: var(--n-200);
+  --color-n-300: var(--n-300);
+  --color-n-500: var(--n-500);
+  --color-n-900: var(--n-900);
 
-  /* Fonts — keluarga Geist (lihat lib/fonts.ts).
-     Ketiganya selalu terdefinisi, jadi tidak perlu rantai fallback lagi. */
-  --font-sans: var(--font-body);
-  --font-heading: var(--font-display);
-  --font-mono: var(--font-code);
+  /* Fonts — paket `geist` memakai nama variabelnya sendiri, dipetakan di sini. */
+  --font-sans: var(--font-geist-sans);
+  --font-heading: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-geist-pixel-square);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -114,20 +137,20 @@
     background: var(--paper);
     color: var(--ink);
     font-size: var(--step-0);
-    font-family: var(--font-body), system-ui, sans-serif;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
   }
   h1,
   h2,
   h3 {
-    font-family: var(--font-display), system-ui, sans-serif;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
     letter-spacing: -0.02em;
   }
 }
 
-/* Angka hook / tech chips / kode */
+/* Nav, angka, tech chips, kode */
 .mono,
 .stat-num {
-  font-family: var(--font-code), ui-monospace, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 /* Reveal-on-scroll (R6) — digerakkan CSS, bukan JS.
@@ -163,4 +186,9 @@
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* Nama di sidebar — Geist Pixel (keputusan Lintang 2026-07-26). */
+.pixel {
+  font-family: var(--font-pixel), var(--font-geist-mono), ui-monospace, monospace;
 }

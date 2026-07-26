@@ -4,8 +4,11 @@ import { ImageResponse } from "next/og";
  * Bingkai OG image bersama (R6).
  *
  * Satu renderer untuk semua tipe halaman (home / project / blog / collabs) supaya
- * preview share selalu terlihat dari keluarga yang sama. Warnanya token BLUEPRINT
- * §3.2 apa adanya — lihat `docs/DESIGN_LANGUAGE.md` §2.1.
+ * preview share selalu terlihat dari keluarga yang sama.
+ *
+ * Warnanya disalin dari tangga netral di `app/globals.css` (grey + white,
+ * keputusan 2026-07-26). Satori tidak bisa membaca CSS variable, jadi nilainya
+ * terpaksa ditulis ulang di sini — kalau paletnya berubah, ubah juga di sini.
  *
  * TODO(lintang): `PHOTO_FILE` masih kosong, jadi semua OG masih murni tipografi.
  */
@@ -13,11 +16,11 @@ import { ImageResponse } from "next/og";
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-const PAPER = "#FBFAF7";
-const INK = "#14141A";
-const INK_MUTED = "#55555F";
-const INDIGO = "#3D5AFE";
-const BORDER = "#E6E3DC";
+const PAPER = "#FAFAFA";
+const INK = "#171717";
+const INK_MUTED = "#5C5C5C";
+const ACCENT = "#171717";
+const BORDER = "#E6E6E6";
 
 export type OgStat = { display: string; label: string };
 
@@ -71,7 +74,7 @@ export function renderOgImage({
               style={{
                 width: 40,
                 height: 8,
-                background: INDIGO,
+                background: ACCENT,
                 borderRadius: 4,
                 display: "flex",
               }}

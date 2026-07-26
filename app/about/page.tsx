@@ -1,26 +1,31 @@
-import { Reveal } from "@/components/motion/reveal";
 import { Section } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageHeader } from "@/components/ui/page-header";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "About",
+  description:
+    "Lintang Balakosa Ardhana — full-stack engineer and informatics student at UMN, with an Associate Data Scientist (BNSP) certification.",
+  path: "/about",
+});
 
 /**
- * About — naskah ±120 kata PORTFOLIO_BLUEPRINT.md §4.3, diterjemahkan ke Inggris
- * tanpa mengubah fakta, ditutup micro-copy anti-salah-baca §4.6.
+ * /about — naskah ±120 kata BLUEPRINT §4.3 + micro-copy anti-salah-baca §4.6.
  *
- * Di sinilah kredensial data muncul (Associate Data Scientist BNSP) — bukan di hero,
- * supaya positioning full-stack tidak kabur (§1).
+ * Halaman ini WAJIB ada: §9 mensyaratkan About memuat kredensial BNSP dan
+ * micro-copy "data = pembeda, bukan pengalih". Saat beranda diubah jadi ringkasan
+ * bernomor, keduanya kehilangan tempat — jadi dipindah ke sini, bukan dihapus.
  */
-export function About() {
+export default function AboutPage() {
   return (
-    <Section id="about">
-      <Reveal>
-        <SectionHeading
+    <main id="main">
+      <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
+        <PageHeader
           eyebrow="About"
           title="Build what people use, then prove it works."
         />
-      </Reveal>
 
-      <Reveal delay={0.05}>
-        <div className="mt-10 max-w-3xl space-y-6 text-(length:--step-0) leading-relaxed">
+        <div className="mt-10 max-w-3xl space-y-6 leading-relaxed">
           <p>
             I&rsquo;m Lintang Balakosa Ardhana, a full-stack engineer and
             informatics student at Universitas Multimedia Nusantara. The path
@@ -48,18 +53,16 @@ export function About() {
             </strong>
           </p>
         </div>
-      </Reveal>
 
-      {/* Micro-copy anti-salah-baca — §4.6 */}
-      <Reveal delay={0.1}>
-        <p className="bg-secondary/60 border-l-indigo-brand mt-10 max-w-2xl border-l-[3px] px-5 py-4 text-(length:--step-0) leading-relaxed">
+        {/* Micro-copy anti-salah-baca — §4.6 */}
+        <p className="bg-secondary border-border mt-10 max-w-2xl border-l-2 px-5 py-4 leading-relaxed">
           My focus is full-stack engineering; the data side is a{" "}
           <strong className="font-semibold">
             differentiator, not a distraction
           </strong>{" "}
           — I build the system, then read what it tells me.
         </p>
-      </Reveal>
-    </Section>
+      </Section>
+    </main>
   );
 }

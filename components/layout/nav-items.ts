@@ -1,43 +1,61 @@
+import {
+  Award,
+  Braces,
+  BriefcaseBusiness,
+  FileText,
+  FolderGit2,
+  GraduationCap,
+  Handshake,
+  Home,
+  type LucideIcon,
+  User,
+  Users,
+} from "lucide-react";
+
 /**
- * Item navigasi — IA fase 2 (`SPRINTS_PHASE2_REDESIGN.md` R1).
+ * Item navigasi sidebar — struktur baru (keputusan Lintang 2026-07-26).
  *
- * Dua jenis item:
- * - `sectionId` → anchor ke section di halaman utama; dipakai scroll-spy.
- * - `href`      → rute tersendiri.
+ * Setiap bagian portfolio kini punya **halaman detailnya sendiri**, bukan sekadar
+ * anchor ke section di beranda. Beranda berubah jadi ringkasan bernomor yang
+ * mengantar ke halaman-halaman ini.
  *
- * `pending: true` = rutenya BELUM dibangun (Blog = R4, Collabs = R5). Item seperti ini
- * dirender sebagai teks non-link bertanda "soon", **bukan tautan ke 404** — aturan
- * "tidak ada link mati" (BLUEPRINT §9) tetap berlaku di fase 2.
+ * Ikon memakai `lucide-react` (sudah terpasang sejak shadcn init di S1).
  */
 
 export type NavItem = {
   label: string;
-  /** Id section di halaman utama. */
-  sectionId?: string;
-  /** Rute mandiri. */
-  href?: string;
-  /** Rutenya belum ada → render non-link. */
-  pending?: boolean;
+  href: string;
+  icon: LucideIcon;
 };
 
-export const navItems: NavItem[] = [
-  { label: "Home", sectionId: "top" },
-  { label: "Projects", sectionId: "projects" },
-  { label: "About", sectionId: "about" },
-  { label: "Blog", href: "/blog" }, // rutenya dibangun di R4
-  { label: "Collabs", href: "/collabs" }, // rutenya dibangun di R5
-  { label: "Contact", sectionId: "contact" },
+export type NavGroup = {
+  /** `null` = grup pertama, tanpa judul. */
+  title: string | null;
+  items: NavItem[];
+};
+
+export const navGroups: NavGroup[] = [
+  {
+    title: null,
+    items: [
+      { label: "Home", href: "/", icon: Home },
+      { label: "About", href: "/about", icon: User },
+      { label: "Blog", href: "/blog", icon: FileText },
+      { label: "Collabs", href: "/collabs", icon: Users },
+      { label: "Log", href: "/log", icon: Handshake },
+    ],
+  },
+  {
+    title: "Portfolio",
+    items: [
+      { label: "Projects", href: "/projects", icon: FolderGit2 },
+      { label: "Experience", href: "/experience", icon: BriefcaseBusiness },
+      { label: "Stack", href: "/stack", icon: Braces },
+      { label: "Certifications", href: "/certifications", icon: Award },
+      { label: "Education", href: "/education", icon: GraduationCap },
+    ],
+  },
 ];
 
-/** Id section yang diamati scroll-spy, sesuai urutan di halaman. */
-export const sectionIds = navItems
-  .filter((item) => item.sectionId)
-  .map((item) => item.sectionId as string);
-
-/**
- * Anchor section berlaku lintas halaman: di `/` cukup `#id`, di halaman lain
- * harus `/#id` supaya tetap membawa pengunjung kembali ke beranda.
- */
-export function sectionHref(sectionId: string, pathname: string): string {
-  return pathname === "/" ? `#${sectionId}` : `/#${sectionId}`;
-}
+/** Datar — dipakai untuk menentukan item aktif. */
+export const allNavItems = navGroups.flatMap((group) => group.items);

@@ -61,5 +61,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
+    // Halaman detail per bagian portfolio (struktur baru 2026-07-26).
+    ...["/about", "/projects", "/experience", "/stack", "/certifications", "/education"].map(
+      (path) => ({
+        url: `${SITE_URL}${path}`,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }),
+    ),
   ];
 }
