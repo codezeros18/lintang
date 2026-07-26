@@ -26,10 +26,10 @@ export default function CertificationsPage() {
           {sorted.map((cert) => (
             <li key={cert.name} className="border-border border-t py-5">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <h2 className="font-medium">{cert.name}</h2>
+                <h2 className="text-[15px] font-medium">{cert.name}</h2>
                 <span className="mono text-n-500 text-[12px]">{cert.date}</span>
               </div>
-              <p className="mono text-ink-muted mt-1 text-[13px]">
+              <p className="mono text-ink-muted mt-1 text-[14px]">
                 {cert.issuer}
               </p>
             </li>

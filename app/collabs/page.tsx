@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Trophy } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
@@ -70,16 +71,20 @@ export default function CollabsPage() {
             {sortedAchievements.map((item) => (
               <StaggerItem key={item.title}>
                 <Card padding="sm" elevation="flat" className="flex gap-4">
-                  <span aria-hidden="true" className="text-2xl leading-none">
-                    {item.medal}
-                  </span>
+                  {/* Ikon grey konsisten menggantikan emoji medali. */}
+                  <Trophy
+                    aria-hidden="true"
+                    className="text-n-500 mt-0.5 size-5 shrink-0"
+                  />
                   <div>
-                    <p className="font-semibold">{item.title}</p>
-                    <p className="text-ink-muted mt-1 text-sm">
+                    <p className="text-ink text-[15px] font-medium">
+                      {item.title}
+                    </p>
+                    <p className="mono text-n-500 mt-1 text-[12px]">
                       {item.scope}
                       {item.year ? ` · ${item.year}` : null}
                     </p>
-                    <p className="text-ink-muted mt-2 text-sm leading-relaxed">
+                    <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
                       {item.detail}
                     </p>
                     {item.projectSlug ? (
@@ -111,10 +116,10 @@ export default function CollabsPage() {
           {collabInvites.map((invite) => (
             <StaggerItem key={invite.title} className="h-full">
               <Card className="flex h-full flex-col">
-                <h3 className="text-(length:--step-1) leading-snug font-semibold">
+                <h3 className="text-ink text-[15px] font-medium">
                   {invite.title}
                 </h3>
-                <p className="text-ink-muted mt-3 leading-relaxed">
+                <p className="text-ink-muted mt-3 text-[14px] leading-relaxed">
                   {invite.body}
                 </p>
               </Card>

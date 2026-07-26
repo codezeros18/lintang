@@ -36,7 +36,7 @@ export default function ProjectsPage() {
                 className="focus-visible:ring-ring hover:bg-secondary/50 group block rounded-sm py-6 outline-none transition-colors focus-visible:ring-2"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-                  <h2 className="text-(length:--step-1) leading-snug font-semibold">
+                  <h2 className="text-ink text-[15px] font-medium">
                     {displayName(project)}
                   </h2>
                   <span className="mono text-n-500 text-[12px]">
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
                   </span>
                 </div>
 
-                <p className="text-ink-muted mt-2 max-w-2xl leading-relaxed">
+                <p className="text-ink-muted mt-2 max-w-2xl text-[14px] leading-relaxed">
                   {project.tagline}
                 </p>
 
@@ -71,12 +71,14 @@ export default function ProjectsPage() {
                 className="border-border bg-card rounded-(--radius) border p-5"
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-semibold">{displayName(project)}</h3>
+                  <h3 className="text-[15px] font-medium">
+                    {displayName(project)}
+                  </h3>
                   <span className="mono text-n-500 text-[12px]">
                     {project.honesty}
                   </span>
                 </div>
-                <p className="text-ink-muted mt-2 text-sm leading-relaxed">
+                <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
                   {project.tagline}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

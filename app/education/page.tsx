@@ -26,12 +26,12 @@ export default function EducationPage() {
           {sorted.map((item) => (
             <li key={item.school} className="border-border border-t py-5">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <h2 className="font-medium">{item.school}</h2>
+                <h2 className="text-[15px] font-medium">{item.school}</h2>
                 <span className="mono text-n-500 text-[12px]">
                   {item.period}
                 </span>
               </div>
-              <p className="mono text-ink-muted mt-1 text-[13px]">
+              <p className="mono text-ink-muted mt-1 text-[14px]">
                 {item.program}
                 {item.note ? ` · ${item.note}` : null}
               </p>

@@ -29,7 +29,7 @@ export default function ExperiencePage() {
           {sortedWork.map((item) => (
             <li key={item.org} className="border-border border-t py-6">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <h2 className="text-(length:--step-1) leading-snug font-semibold">
+                <h2 className="text-ink text-[15px] font-medium">
                   {item.role}
                 </h2>
                 {item.period ? (
@@ -39,12 +39,12 @@ export default function ExperiencePage() {
                 ) : null}
               </div>
 
-              <p className="mono text-ink-muted mt-1 text-[13px]">
+              <p className="mono text-ink-muted mt-1 text-[14px]">
                 {item.org}
                 {item.location ? ` · ${item.location}` : null}
               </p>
 
-              <p className="text-ink-muted mt-3 max-w-2xl leading-relaxed">
+              <p className="text-ink-muted mt-3 max-w-2xl text-[14px] leading-relaxed">
                 {item.summary}
               </p>
 
@@ -72,15 +72,15 @@ export default function ExperiencePage() {
                   className="border-border/70 border-b py-4 last:border-b-0"
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <p className="font-medium">{item.role}</p>
+                    <p className="text-[15px] font-medium">{item.role}</p>
                     <span className="mono text-n-500 text-[12px]">
                       {item.period}
                     </span>
                   </div>
-                  <p className="mono text-ink-muted mt-1 text-[13px]">
+                  <p className="mono text-ink-muted mt-1 text-[14px]">
                     {item.org}
                   </p>
-                  <p className="text-ink-muted mt-2 text-sm leading-relaxed">
+                  <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
                     {item.summary}
                   </p>
                 </li>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Trophy } from "lucide-react";
 
 import { NumberedSection } from "@/components/home/numbered-section";
 import { HomeIntro } from "@/components/sections/home-intro";
@@ -46,7 +47,7 @@ function Row({
   );
 
   const body = secondary ? (
-    <p className="text-ink-muted mt-1.5 text-[15px] leading-relaxed">
+    <p className="text-ink-muted mt-1.5 text-[14px] leading-relaxed">
       {secondary}
     </p>
   ) : null;
@@ -197,12 +198,34 @@ export default async function Home() {
           >
             <ul>
               {sortedAchievements.map((item) => (
-                <Row
+                <li
                   key={item.title}
-                  primary={`${item.medal} ${item.title}`}
-                  secondary={item.detail}
-                  meta={item.year ?? undefined}
-                />
+                  className="border-border/70 border-b py-5 first:pt-0 last:border-b-0 last:pb-0"
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Ikon grey konsisten menggantikan emoji medali — lebih
+                        rapi & seragam (keputusan Lintang). */}
+                    <Trophy
+                      aria-hidden="true"
+                      className="text-n-500 mt-0.5 size-4 shrink-0"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <span className="text-ink text-[15px] font-medium">
+                          {item.title}
+                        </span>
+                        {item.year ? (
+                          <span className="mono text-n-500 text-[12px]">
+                            {item.year}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="text-ink-muted mt-1.5 text-[14px] leading-relaxed">
+                        {item.detail}
+                      </p>
+                    </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </NumberedSection>

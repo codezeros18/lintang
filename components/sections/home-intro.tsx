@@ -8,12 +8,16 @@ import { getHookStats } from "@/content/hook-stats";
 /**
  * HomeIntro — pembuka beranda: foto + perkenalan singkat + strip angka.
  *
- * Ukuran teks: **semuanya 15px kecuali judul** (keputusan Lintang). Judul memakai
- * Geist Pixel `--step-2`.
+ * Layout foto:teks dibagi **50:50** lewat `grid-cols-2` (keputusan Lintang).
+ * Ukuran teks: 15px untuk paragraf, judul memakai Geist Pixel `--step-2`,
+ * angka strip 18px, label strip 11px.
+ *
+ * Foto TIDAK dibingkai kotak/border — background-nya sudah transparan, dan
+ * jaraknya ke teks dibuat rapat (bukan lebar seperti versi sebelumnya).
  *
  * Fotonya adalah elemen LCP halaman ini, jadi memakai `next/image` dengan
  * `priority` + `sizes` supaya browser memuatnya lebih awal dan mengunduh ukuran
- * yang tepat. `width`/`height` diisi dimensi asli (896×896) agar tidak ada CLS.
+ * yang tepat. `width`/`height` diisi dimensi asli foto (500×500) agar tidak ada CLS.
  *
  * Tanpa komponen motion — ini konten atas-lipatan (aturan R2).
  */
@@ -23,17 +27,21 @@ export function HomeIntro() {
 
   return (
     <section id="top" className="pt-10 pb-12 md:pt-14">
-      <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:gap-10">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center sm:gap-5">
         {isSet(photo) ? (
-          <Image
-            src={`/images/${photo}`}
-            alt="Lintang Balakosa Ardhana"
-            width={896}
-            height={896}
-            priority
-            sizes="(max-width: 640px) 160px, 200px"
-            className="border-border bg-card h-40 w-40 shrink-0 rounded-(--radius) border object-cover sm:h-50 sm:w-50"
-          />
+          <div className="order-first sm:order-0">
+            {/* Tanpa border/bg-card di sekeliling foto — fotonya sendiri sudah
+                transparan (background dihapus), jadi tidak butuh bingkai kotak. */}
+            <Image
+              src={`/images/${photo}`}
+              alt="Lintang Balakosa Ardhana"
+              width={500}
+              height={500}
+              priority
+              sizes="(max-width: 640px) 224px, 320px"
+              className="aspect-square w-full max-w-56 object-contain sm:max-w-80"
+            />
+          </div>
         ) : null}
 
         <div className="min-w-0">
@@ -102,22 +110,18 @@ export function HomeIntro() {
         </div>
       </div>
 
-      {/* Strip angka — dibagi garis, angka pakai Geist Mono. */}
-      <dl className="border-border mt-10 grid grid-cols-1 gap-6 border-t pt-8 sm:grid-cols-3 sm:gap-0">
-        {stats.map((stat, index) => (
-          <div
-            key={stat.label}
-            className={
-              index > 0 ? "sm:border-border sm:border-l sm:pl-6" : "sm:pr-6"
-            }
-          >
+      {/* Strip angka — tanpa garis pembagi antar item (keputusan Lintang);
+          angka 18px, label 11px, keduanya Geist Mono. */}
+      <dl className="border-border mt-8 grid grid-cols-1 gap-6 border-t pt-6 sm:grid-cols-3 sm:gap-8">
+        {stats.map((stat) => (
+          <div key={stat.label}>
             <dt className="sr-only">{stat.label}</dt>
             <dd>
               <CountUp
                 to={stat.value}
                 prefix={stat.prefix}
                 suffix={stat.suffix}
-                className="text-ink block text-(length:--step-1) leading-none font-medium"
+                className="text-ink block text-[18px] leading-none font-medium"
               />
               <span className="mono text-n-500 mt-2 block text-[11px] tracking-[0.12em] uppercase">
                 {stat.label}
