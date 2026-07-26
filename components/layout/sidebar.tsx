@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  *
  * Semua nilai visual diambil dari `docs/DESIGN_LANGUAGE.md` §1.1:
  * latar `--paper` (sama dengan halaman, dipisah garis — bukan blok warna),
- * item Space Grotesk `--step--1`, normal `--ink-muted` → hover `--secondary`
+ * item Geist Sans `--step--1`, normal `--ink-muted` → hover `--secondary`
  * → aktif `--indigo` + penanda kiri 2px, monogram "LBA", radius `--radius-sm`.
  *
  * Tanpa Framer Motion: transisi drawer memakai CSS, sehingga aturan global

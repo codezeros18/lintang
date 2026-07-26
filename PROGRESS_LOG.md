@@ -27,6 +27,29 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 09:20] — Di luar sprint — Tipografi diganti ke keluarga Geist
+**Status:** ✅ selesai
+**Pemicu:** Permintaan Lintang — memakai keluarga **Geist**, mengacu pada portfolio referensi (bryllim).
+**Selesai:**
+- `lib/fonts.ts` ditulis ulang: **Geist Sans** untuk `--font-display` **dan** `--font-body`, **Geist Mono** untuk `--font-code`. Semuanya lewat `next/font/google` → tetap **self-hosted saat build**, nol permintaan ke server Google saat halaman dibuka.
+- `app/globals.css`: rantai fallback `var(--font-body, var(--font-body-fallback))` dihapus di dua tempat karena `--font-body` kini selalu terdefinisi.
+- Space Grotesk, Space Mono, dan DM Sans **dilepas seluruhnya**; komentar di `sidebar.tsx`, `badge.tsx`, `section-heading.tsx` ikut disesuaikan agar tidak menyesatkan.
+- **Utang Satoshi lunas.** Blok `localFont` yang sejak S1 dinonaktifkan sudah tidak relevan; `public/fonts/` dikosongkan. Item "file Satoshi belum ada" bisa dicoret dari daftar utang.
+- `npm run build` ✅ (24 halaman) · `npm run lint` ✅ · diverifikasi lewat screenshot 1280px: headline, body, dan angka hook semuanya ter-render Geist.
+**Yang saya sampaikan sebelum mengerjakan (dan tetap berlaku):**
+- ✅ **Aman secara lisensi.** Geist open-source (OFL) buatan Vercel dan bahkan jadi font default `create-next-app` — scaffold S1 kita memakainya sebelum saya ganti ke Space Grotesk. Memakainya **bukan** plagiat dalam bentuk apa pun.
+- ⚠️ **Biayanya di diferensiasi, bukan legalitas.** Geist sangat lazim di portfolio Next.js. Space Grotesk membuat situs terbaca sebagai keputusan desain; Geist mendekatkannya ke tampilan default framework. Untuk positioning "di atas level template", ini kemunduran kecil yang perlu disadari.
+- Lintang tetap memilih Geist. **Keputusan pemilik proyek, dan mudah dibalik** (ganti 3 baris di `lib/fonts.ts`).
+**Dampak ke dokumen (dirapikan supaya tidak saling bertentangan):**
+- `docs/DESIGN_LANGUAGE.md` §2.2 ditulis ulang + baris font di §1.1/§1.4 disesuaikan + catatan kaki di tabel peta terjemahan (tabelnya sendiri tidak diedit karena harus "persis" salinan sprint doc).
+- **ANTI-CLONE §3.1 aturan #2 dilonggarkan secara eksplisit** dan tercatat: larangan memakai font referensi dicabut untuk Geist. **Yang tetap penuh berlaku:** jangan membuka situs referensi untuk mengambil nilai apa pun, dan penambahan font baru butuh keputusan Lintang — bukan inisiatif agen.
+- `PORTFOLIO_BLUEPRINT.md` §3.1 diberi blok **OVERRIDE** di atas spesifikasi lama. Spesifikasi aslinya **sengaja tidak dihapus** supaya niat desain awal tetap terbaca dan gampang dikembalikan.
+**Gagal / skip / blocker (jujur):**
+- ⚠️ **OG image belum ikut Geist.** `lib/og.tsx` merender lewat Satori, yang butuh **berkas font mentah** — `next/font` tidak menyediakannya. Jadi preview share masih memakai sans-serif bawaan sistem, sementara situsnya Geist. Tidak saya kerjakan karena tidak diminta dan butuh mengunduh `.ttf` ke repo. **Kalau mau seragam, bilang** — saya unduh Geist `.ttf` ke `public/fonts/` lalu suapkan ke `ImageResponse`.
+- ⚠️ Belum di-deploy saat entri ini ditulis (menyusul di langkah berikutnya).
+- ⚠️ Gate Lighthouse R6 **masih menunggu Lintang**; perubahan font tidak menggugurkan kebutuhan itu — malah sebaiknya diukur setelah font final terpasang.
+**Commit:** `type: switch typography to the Geist family`
+
 ### [2026-07-26 08:45] — Fase 2 · Sprint R6 — Polish · a11y · SEO/OG · redeploy
 **Status:** 🟡 **jalan — SENGAJA belum ✅.** Semua yang bisa dikerjakan agen sudah selesai dan **redesign sudah LIVE**, tapi gate performa belum dibuktikan. Instruksi R6 melarang menutupnya sebelum Lintang mengonfirmasi Lighthouse.
 **URL live (redesign):** **https://lintang-sigma.vercel.app**

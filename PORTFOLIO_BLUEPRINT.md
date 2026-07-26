@@ -84,6 +84,12 @@ Diisi di `content/config.ts`. Sampai terisi, UI menampilkan nilai token apa adan
 ## §3 — DESIGN SYSTEM
 
 ### 3.1 Tipografi (BUKAN Poppins/Inter)
+
+> ⚠️ **OVERRIDE 2026-07-26 (keputusan Lintang):** situs kini memakai keluarga **Geist**
+> (Geist Sans untuk display + body, Geist Mono untuk angka/chip) menggantikan
+> Space Grotesk / Satoshi+DM Sans / Space Mono di bawah. Spesifikasi asli sengaja
+> **tidak dihapus** supaya niat desain awalnya tetap terbaca dan mudah dikembalikan.
+> Detail & konsekuensinya: `docs/DESIGN_LANGUAGE.md` §2.2.
 - **Display/headings:** Space Grotesk — `next/font/google`.
 - **Body:** Satoshi — `next/font/local` (Fontshare). **Fallback DM Sans** (`next/font/google`) agar build tak blok bila file Satoshi belum ada.
 - **Angka hook / tech chips / kode:** Space Mono — `next/font/google`.

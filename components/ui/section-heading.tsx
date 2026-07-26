@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export type SectionHeadingProps = {
-  /** Label kecil di atas judul (Space Mono, uppercase). Opsional. */
+  /** Label kecil di atas judul (mono, uppercase). Opsional. */
   eyebrow?: string;
   title: string;
   /** Satu kalimat penjelas di bawah judul. Opsional. */

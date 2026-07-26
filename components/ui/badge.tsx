@@ -17,7 +17,7 @@ const badgeVariants = cva(
           "text-coral-ink border-transparent bg-[color-mix(in_oklab,var(--coral),transparent_88%)]",
         outline: "border-border bg-transparent text-ink-muted",
       },
-      /** Tech chip & angka memakai Space Mono (§3.1). */
+      /** Tech chip & angka memakai font mono (Geist Mono). */
       mono: {
         true: "font-mono tracking-tight",
         false: "",

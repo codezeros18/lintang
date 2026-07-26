@@ -87,9 +87,9 @@
   --color-coral: var(--coral);
   --color-coral-ink: var(--coral-ink);
 
-  /* Fonts — lihat lib/fonts.ts. `--font-body` baru terdefinisi setelah file
-     Satoshi ditambahkan; sampai itu terjadi, DM Sans yang menang. */
-  --font-sans: var(--font-body, var(--font-body-fallback));
+  /* Fonts — keluarga Geist (lihat lib/fonts.ts).
+     Ketiganya selalu terdefinisi, jadi tidak perlu rantai fallback lagi. */
+  --font-sans: var(--font-body);
   --font-heading: var(--font-display);
   --font-mono: var(--font-code);
 
@@ -114,8 +114,7 @@
     background: var(--paper);
     color: var(--ink);
     font-size: var(--step-0);
-    font-family: var(--font-body, var(--font-body-fallback)), system-ui,
-      sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
   }
   h1,
   h2,

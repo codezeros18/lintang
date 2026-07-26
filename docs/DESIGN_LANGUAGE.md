@@ -46,6 +46,10 @@ dijabarkan jadi nilai konkret versi Lintang.
 | leerob: case study naratif personal/fun | Gaya menulis | Narasi problem→akhir pakai suara Lintang (jujur, konkret, angka CV) | Bukan meniru kata-kata/joke leerob; cerita nyata Ankop/Bisasinema |
 | leerob: konten-first, ringan | Prinsip performa | LCP <2s dipertahankan (hero tanpa motion berat) | — |
 
+> ℹ️ Tabel di atas disalin **persis** dari sprint doc, jadi sengaja tidak diedit.
+> Satu hal sudah berubah sejak ditulis: **"Space Grotesk" kini menjadi Geist Sans**
+> atas keputusan Lintang (2026-07-26) — lihat §2.2. Sisa barisnya masih berlaku.
+
 ---
 
 ### 1.1 Sidebar nav kiri tetap → **nilai konkret Lintang**
@@ -60,12 +64,12 @@ dijabarkan jadi nilai konkret versi Lintang.
 | Latar | **`var(--paper)` `#FBFAF7`** — sama dengan halaman | §3.2. Sidebar dipisahkan garis, bukan blok warna; nav tidak boleh menyaingi konten |
 | Pemisah | garis kanan **1px `var(--border)` `#E6E3DC`** | §3.2 |
 | Padding | **`p-6` (24px)**, gap antar item **`gap-2` (8px)** | Skala 4px §3.3 |
-| Font item nav | **Space Grotesk** (`--font-display`) | §3.1 |
+| Font item nav | **Geist Sans** (`--font-display`) | §2.2 |
 | Ukuran item nav | **`--step--1`** (0.83→0.94rem) | §3.3 |
 | Item normal | `var(--ink-muted)` `#55555F` | §3.2 · kontras 7.06:1 di atas paper (diukur S6) |
 | Item hover | teks `var(--ink)`, latar `var(--secondary)` `#F2F0EA` | §3.2 · 6.46:1 |
 | Item aktif | teks `var(--indigo)` `#3D5AFE` + penanda kiri 2px indigo | §3.2 · 4.92:1 (lolos AA untuk teks besar/UI) |
-| Monogram | **"LBA"**, Space Grotesk, `letter-spacing: -0.02em`, indigo | §3.1–3.2 · inisial Lintang Balakosa Ardhana |
+| Monogram | **"LBA"**, Geist Sans, `letter-spacing: -0.02em`, indigo | §3.1–3.2 · inisial Lintang Balakosa Ardhana |
 | Radius item | **`--radius-sm`** = `calc(14px × 0.6)` ≈ 8.4px | §3.2 turunan `--radius` |
 | Fokus keyboard | ring 2px `var(--ring)` (indigo) + offset 2px | Pola fokus fase 1, a11y AA |
 
@@ -108,10 +112,10 @@ bentuk referensi.
 
 | Aspek | Nilai terkunci |
 |---|---|
-| Font isi | Satoshi bila tersedia, **fallback DM Sans** (`--font-body` → `--font-body-fallback`) |
+| Font isi | **Geist Sans** (`--font-body`) |
 | Ukuran isi | `--step-0`, `leading-relaxed` |
-| Subjudul | Space Grotesk, `--step-1`/`--step-2`, `letter-spacing: -0.02em` |
-| Angka & chip | Space Mono (`.mono` / `--font-code`) |
+| Subjudul | Geist Sans, `--step-1`/`--step-2`, `letter-spacing: -0.02em` |
+| Angka & chip | Geist Mono (`.mono` / `--font-code`) |
 | Aksen kutipan | border kiri 3px `var(--indigo)` + latar `--secondary` (pola yang sudah dipakai micro-copy About) |
 | Isi cerita | Ankop, Bisasinema, Tera, Hotel — **fakta CV**, angka berkonteks waktu |
 
@@ -156,17 +160,33 @@ mengunci dua tambahan yang lahir dari kebutuhan nyata, keduanya **turunan**, buk
 **Tidak ada warna baru di fase 2.** Butuh nuansa? Turunkan dari token yang ada
 (`color-mix`), jangan perkenalkan hex baru.
 
-### 2.2 Tipografi — terkunci
+### 2.2 Tipografi — **DIUBAH 2026-07-26 (keputusan Lintang)**
 
 | Peran | Font | Variabel |
 |---|---|---|
-| Display/heading, item nav, monogram | **Space Grotesk** | `--font-display` |
-| Body | **Satoshi** bila filenya ada, **fallback DM Sans** | `--font-body` → `--font-body-fallback` |
-| Angka, tech chip, eyebrow, kode | **Space Mono** | `--font-code` |
+| Display/heading, item nav, monogram | **Geist Sans** | `--font-display` |
+| Body | **Geist Sans** | `--font-body` |
+| Angka, tech chip, eyebrow, kode | **Geist Mono** | `--font-code` |
 
-Catatan warisan: `public/fonts/Satoshi-Variable.woff2` **belum ada**, jadi body masih
-DM Sans. Blok `localFont` di `lib/fonts.ts` sengaja dinonaktifkan agar build tidak gagal.
-Ini tidak memblokir R1–R6.
+**Sebelumnya** (BLUEPRINT §3.1, dipakai S1–R6): Space Grotesk / Satoshi+DM Sans / Space Mono.
+
+**Kenapa berubah:** Lintang meminta keluarga **Geist**, mengacu pada portfolio referensi.
+Keputusan pemilik proyek, dicatat terbuka di sini agar sprint berikutnya tidak
+"memperbaikinya" kembali.
+
+**Yang perlu diketahui soal keputusan ini:**
+- ✅ **Aman secara lisensi.** Geist open-source (OFL) buatan Vercel, tersedia lewat
+  `next/font/google`, tetap self-hosted saat build — nol permintaan ke Google saat
+  halaman dibuka. Memakainya **bukan** pelanggaran hak apa pun.
+- ⚠️ **Biayanya di diferensiasi.** Geist adalah font default `create-next-app` dan
+  sangat lazim di portfolio Next.js. Space Grotesk membuat situs terlihat seperti
+  keputusan desain; Geist membuatnya lebih dekat ke tampilan default framework.
+- ✅ **Utang Satoshi lunas.** Rantai fallback Satoshi/DM Sans tidak lagi diperlukan
+  karena `--font-body` kini selalu terdefinisi. `public/fonts/` sudah kosong.
+- ⚠️ **OG image belum ikut.** `lib/og.tsx` masih merender dengan `sans-serif` bawaan
+  sistem, karena Satori butuh berkas font mentah. Preview share karena itu belum
+  memakai Geist. TODO(lintang): kalau mau seragam, unduh Geist `.ttf` ke
+  `public/fonts/` lalu suapkan ke `ImageResponse` lewat opsi `fonts`.
 
 ### 2.3 Ruang, bentuk, ukuran — terkunci
 
@@ -195,8 +215,12 @@ pekerjaan itu **berhenti dan diulang**.
 1. ❌ **Mengambil nilai hex apa pun dari bryllim.com / leerob.com** — termasuk hasil
    inspect element, screenshot yang di-eyedrop, atau CSS yang di-fetch. Semua warna
    **wajib** berasal dari daftar §2.1.
-2. ❌ **Memakai font yang dipakai referensi** (kecuali kebetulan sudah ada di §2.2 sejak
-   BLUEPRINT fase 1). Jangan pernah membuka situs referensi untuk mencari nama fontnya.
+2. ⚠️ **Font — aturan ini DILONGGARKAN oleh Lintang pada 2026-07-26.**
+   Semula: dilarang memakai font yang dipakai referensi. Sekarang keluarga **Geist**
+   dipakai atas permintaan pemilik proyek (lihat §2.2).
+   **Yang tetap berlaku:** jangan membuka situs referensi untuk mencari nama font,
+   ukuran, atau nilai apa pun. Font yang boleh dipakai hanya yang tercantum di §2.2 —
+   penambahan font baru butuh keputusan eksplisit Lintang, bukan inisiatif agen.
 3. ❌ **Menyalin layout signature** — proporsi persis, urutan elemen yang khas, bentuk
    penanda nav, komposisi hero, atau susunan grid yang menjadi ciri visual mereka.
 4. ❌ **Mengambil aset** — logo, ikon, ilustrasi, foto, ikon SVG, animasi Lottie, pola
@@ -250,4 +274,5 @@ Jawab sebelum menutup sprint mana pun:
 | Tanggal | Perubahan |
 |---|---|
 | 2026-07-26 | Dokumen dibuat & dikunci di R0. Tokens dikonfirmasi tanpa perubahan palet/font; ditambah `--sidebar-w` & `--nav-item-h` (dipasang R1). |
+| 2026-07-26 (pasca-R6) | **Tipografi diganti ke keluarga Geist** atas permintaan Lintang (§2.2). Aturan ANTI-CLONE §3.1 #2 dilonggarkan khusus untuk font; larangan mengambil nilai lain dari referensi tetap penuh. |
 | 2026-07-26 (R1) | **Koreksi breakpoint:** baris sidebar semula menulis "≥1024px", padahal `SPRINTS_PHASE2_REDESIGN.md` R1 menetapkan collapse **<768px**. Diselaraskan jadi persisten ≥768px — sprint doc yang menang. Ditambah nilai lebar drawer & `--topbar-h`. |
