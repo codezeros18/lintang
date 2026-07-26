@@ -29,11 +29,14 @@ export function PageHeader({
       <p className="mono text-n-500 text-[11px] tracking-[0.16em] uppercase">
         {eyebrow}
       </p>
-      <Heading className="mt-3 text-(length:--step-2) leading-tight font-semibold">
+      {/* Judul lebih besar + jarak ke deskripsi dilonggarkan (permintaan Lintang,
+          menyamai proporsi referensi). Deskripsi 16px supaya tetap enak dibaca
+          sebagai kalimat pengantar, bukan caption. */}
+      <Heading className="mt-3 text-(length:--step-3) leading-tight font-semibold">
         {title}
       </Heading>
       {description ? (
-        <p className="text-ink-muted mt-4 text-[15px] leading-relaxed">
+        <p className="text-ink-muted mt-6 text-[16px] leading-relaxed">
           {description}
         </p>
       ) : null}

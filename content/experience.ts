@@ -54,10 +54,17 @@ export type Certification = {
    */
   category: "Professional" | "Bootcamp" | "Coursework";
   /**
-   * URL verifikasi kredensial. `null` = tautan "Verify" TIDAK dirender —
-   * jangan pernah menampilkan tombol verifikasi yang tidak bisa dibuktikan.
+   * URL verifikasi resmi dari penerbit (mis. tautan kredensial Coursera).
+   * `null` = tautan "Verify" TIDAK dirender — jangan pernah menampilkan tombol
+   * verifikasi yang tidak bisa dibuktikan.
    */
   credentialUrl: string | null;
+  /**
+   * Alternatif bila penerbitnya tidak punya halaman verifikasi online:
+   * foto/scan sertifikat di `public/images/certification_course/`.
+   * Ditulis relatif dari `/images/`, mis. `certification_course/bnsp.jpg`.
+   */
+  credentialImage: string | null;
   order: number;
 };
 
@@ -171,7 +178,8 @@ export const certifications: Certification[] = [
     issuer: "BNSP",
     date: "Jan 2026",
     category: "Professional",
-    credentialUrl: null, // TODO(lintang): tempel URL verifikasi BNSP bila ada
+    credentialUrl: null, // TODO(lintang): URL verifikasi BNSP bila ada
+    credentialImage: null, // TODO(lintang): atau foto sertifikat di public/images/certification_course/
     order: 1,
   },
   {
@@ -179,7 +187,8 @@ export const certifications: Certification[] = [
     issuer: "Digital Skola",
     date: "Nov 2025",
     category: "Bootcamp",
-    credentialUrl: null, // TODO(lintang): tempel URL sertifikat Digital Skola
+    credentialUrl: null, // TODO(lintang): URL sertifikat Digital Skola bila ada
+    credentialImage: null, // TODO(lintang): atau foto sertifikat di public/images/certification_course/
     order: 2,
   },
   {
@@ -187,7 +196,8 @@ export const certifications: Certification[] = [
     issuer: "IBM (Coursera)",
     date: "Jan 2026",
     category: "Coursework",
-    credentialUrl: null, // TODO(lintang): tempel URL Coursera
+    credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
+    credentialImage: null,
     order: 3,
   },
   {
@@ -195,7 +205,8 @@ export const certifications: Certification[] = [
     issuer: "IBM (Coursera)",
     date: "Jan 2026",
     category: "Coursework",
-    credentialUrl: null, // TODO(lintang): tempel URL Coursera
+    credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
+    credentialImage: null,
     order: 4,
   },
   {
@@ -203,7 +214,8 @@ export const certifications: Certification[] = [
     issuer: "University of London (Coursera)",
     date: "Jan 2025",
     category: "Coursework",
-    credentialUrl: null, // TODO(lintang): tempel URL Coursera
+    credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
+    credentialImage: null,
     order: 5,
   },
   {
@@ -211,7 +223,8 @@ export const certifications: Certification[] = [
     issuer: "IBM (Coursera)",
     date: "Jan 2025",
     category: "Coursework",
-    credentialUrl: null, // TODO(lintang): tempel URL Coursera
+    credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
+    credentialImage: null,
     order: 6,
   },
 ];

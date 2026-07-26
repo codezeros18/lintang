@@ -1,3 +1,5 @@
+import { SiCoursera } from "react-icons/si";
+
 import { Section } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import {
@@ -15,14 +17,17 @@ export const metadata = buildMetadata({
 });
 
 /**
- * Inisial penerbit sebagai "mark" di kartu — dipakai karena belum ada berkas
- * logo di `public/images/`. Sengaja huruf, bukan logo asli milik penerbit:
- * menampilkan logo IBM/Coursera/BNSP tanpa izin justru bermasalah.
- * TODO(lintang): kalau nanti ada aset logo yang boleh dipakai, ganti di sini.
+ * Ikon penerbit dari `react-icons/si` (Simple Icons).
+ *
+ * Hanya Coursera yang tersedia di sana — IBM sudah ditarik dari Simple Icons,
+ * dan BNSP/Digital Skola memang tidak ada. Untuk sertifikat Coursera, ikon
+ * Coursera dipakai karena di situlah kredensialnya diverifikasi; penerbit
+ * aslinya (IBM, University of London) tetap ditulis apa adanya di bawah judul.
+ * Sisanya jatuh ke inisial huruf — bukan logo tiruan buatan sendiri.
  */
-function issuerMark(issuer: string) {
+function issuerInitials(issuer: string) {
   return issuer
-    .replace(/\(.*?\)/g, "") // buang "(Coursera)" dsb.
+    .replace(/\(.*?\)/g, "")
     .trim()
     .split(/\s+/)
     .slice(0, 2)
@@ -31,15 +36,34 @@ function issuerMark(issuer: string) {
     .toUpperCase();
 }
 
+function IssuerMark({ issuer }: { issuer: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="bg-secondary text-ink flex size-9 items-center justify-center rounded-full"
+    >
+      {/coursera/i.test(issuer) ? (
+        <SiCoursera className="size-4" />
+      ) : (
+        <span className="mono text-[12px] font-medium">
+          {issuerInitials(issuer)}
+        </span>
+      )}
+    </span>
+  );
+}
+
 function CertificationCard({ cert }: { cert: Certification }) {
+  // Verifikasi bisa lewat halaman resmi penerbit ATAU foto sertifikatnya.
+  // Kalau dua-duanya kosong, tautannya tidak dirender sama sekali.
+  const verifyHref =
+    cert.credentialUrl ??
+    (cert.credentialImage ? `/images/${cert.credentialImage}` : null);
+  const verifyIsExternal = Boolean(cert.credentialUrl);
+
   return (
     <li className="border-border bg-card hover:border-n-300 flex flex-col rounded-(--radius) border p-5 transition-colors">
-      <span
-        aria-hidden="true"
-        className="bg-secondary text-ink mono flex size-9 items-center justify-center rounded-full text-[12px] font-medium"
-      >
-        {issuerMark(cert.issuer)}
-      </span>
+      <IssuerMark issuer={cert.issuer} />
 
       <h3 className="text-ink mt-4 text-[15px] leading-snug font-medium">
         {cert.name}
@@ -52,13 +76,11 @@ function CertificationCard({ cert }: { cert: Certification }) {
       <div className="border-border/70 mt-4 flex items-center justify-between gap-3 border-t pt-4">
         <span className="mono text-n-500 text-[12px]">{cert.date}</span>
 
-        {/* Tautan "Verify" HANYA muncul kalau URL-nya memang ada — tombol
-            verifikasi yang tidak bisa dibuktikan lebih buruk daripada tidak ada. */}
-        {cert.credentialUrl ? (
+        {verifyHref ? (
           <a
-            href={cert.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={verifyHref}
+            target={verifyIsExternal ? "_blank" : undefined}
+            rel={verifyIsExternal ? "noopener noreferrer" : undefined}
             className="mono text-ink-muted hover:text-ink focus-visible:ring-ring rounded-sm text-[12px] tracking-[0.08em] uppercase outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             Verify
@@ -79,10 +101,10 @@ export default function CertificationsPage() {
         <PageHeader
           eyebrow="Certifications"
           title="Credentials I can show."
-          description="All issued and dated — nothing in progress is listed as finished."
+          description="Issued and dated — each one verifiable at its source once the credential link or certificate scan is in."
         />
 
-        <div className="mt-12 space-y-12">
+        <div className="mt-14 space-y-12">
           {certificationCategories.map((category) => {
             const items = sorted.filter((cert) => cert.category === category);
             if (items.length === 0) return null;
