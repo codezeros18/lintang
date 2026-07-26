@@ -38,35 +38,35 @@ function Row({
 }) {
   const content = (
     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-      <span className="text-ink font-medium">{primary}</span>
+      <span className="text-ink text-[15px] font-medium">{primary}</span>
       {meta ? (
         <span className="mono text-n-500 text-[12px]">{meta}</span>
       ) : null}
     </div>
   );
 
+  const body = secondary ? (
+    <p className="text-ink-muted mt-1.5 text-[15px] leading-relaxed">
+      {secondary}
+    </p>
+  ) : null;
+
+  // `py-5` + `gap-y` yang lega: sebelumnya `py-3` membuat baris berikutnya
+  // menempel ke deskripsi baris sebelumnya sehingga terlihat bertabrakan.
   return (
-    <li className="border-border/70 border-b py-3 last:border-b-0">
+    <li className="border-border/70 border-b py-5 first:pt-0 last:border-b-0 last:pb-0">
       {href ? (
         <Link
           href={href}
-          className="focus-visible:ring-ring block rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          className="focus-visible:ring-ring hover:bg-secondary/40 -mx-3 block rounded-(--radius-sm) px-3 py-1 outline-none transition-colors focus-visible:ring-2"
         >
           {content}
-          {secondary ? (
-            <p className="text-ink-muted mt-1 text-sm leading-relaxed">
-              {secondary}
-            </p>
-          ) : null}
+          {body}
         </Link>
       ) : (
         <>
           {content}
-          {secondary ? (
-            <p className="text-ink-muted mt-1 text-sm leading-relaxed">
-              {secondary}
-            </p>
-          ) : null}
+          {body}
         </>
       )}
     </li>
@@ -86,7 +86,7 @@ export default async function Home() {
       <Section className="pt-0 pb-24 md:pt-0 md:pb-28">
         <HomeIntro />
 
-        <div className="space-y-14">
+        <div className="space-y-16 md:space-y-20">
           <NumberedSection
             index={1}
             label="experience"

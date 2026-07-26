@@ -27,7 +27,7 @@ export function NumberedSection({
   const number = String(index).padStart(2, "0");
 
   return (
-    <section className={cn("border-border border-t pt-8", className)}>
+    <section className={cn("border-border border-t pt-7", className)}>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="mono text-ink text-[13px] tracking-[0.08em]">
           <span className="text-n-500">{number}</span>
@@ -43,7 +43,7 @@ export function NumberedSection({
         </Link>
       </div>
 
-      <div className="mt-6">{children}</div>
+      <div className="mt-5">{children}</div>
     </section>
   );
 }

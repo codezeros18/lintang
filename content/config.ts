@@ -98,7 +98,7 @@ export const CONFIG: Config = {
   // ✅ Dikonfirmasi Lintang 2026-07-26: nama klien boleh disebut.
   CLIENT_NAME_PERMISSION: true,
   CV_FILE: "Lintang-Balakosa-Ardhana-CV.pdf", // ✅ ada di public/cv/
-  PHOTO_FILE: null, // TODO(lintang): taruh foto di public/images/ lalu isi nama filenya
+  PHOTO_FILE: "lintang.png", // ✅ ada di public/images/ (896×896)
   DOMAIN: "lintangbalakosa.dev", // 🟡 default saran BLUEPRINT §0.1 — TODO(lintang): konfirmasi/registrasi
   IO_FESTIVAL_DATE: null, // TODO(lintang): tanggal I/O Festival
   IO_FESTIVAL_STACK: null, // TODO(lintang): stack proyek I/O Festival
