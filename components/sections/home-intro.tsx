@@ -22,6 +22,11 @@ import { getHookStats } from "@/content/hook-stats";
  * Ukuran teks: 15px bio, 18px angka strip, 11px label strip, judul Geist Pixel
  * `--step-2`.
  *
+ * Juga dipakai di puncak `/home` (dengan `showKnowMore={false}`) — Lintang
+ * meminta foto+headline+KPI ini TIDAK hilang dari `/home`, supaya orang yang
+ * mendarat langsung di sana (mis. lewat sidebar) tetap melihatnya, bukan cuma
+ * pengunjung yang datang dari splash `/`.
+ *
  * Tanpa komponen motion — ini konten atas-lipatan (aturan R2).
  */
 
@@ -65,7 +70,12 @@ function InlineLink({
   );
 }
 
-export function HomeIntro() {
+export function HomeIntro({
+  showKnowMore = true,
+}: {
+  /** `false` di `/home` — tautannya tidak masuk akal menunjuk ke halaman sendiri. */
+  showKnowMore?: boolean;
+}) {
   const stats = getHookStats();
   const photo = CONFIG.PHOTO_FILE;
 
@@ -138,19 +148,23 @@ export function HomeIntro() {
           {/* Pintu masuk ke /home (portfolio lengkap bersidebar) — bukan tombol,
               melainkan tautan yang menyatu dengan nada bio: santai, digarisbawahi,
               dengan panah yang "meloncat" pelan saat di-hover (bukan makna
-              fungsional, murni sentuhan playful sesuai permintaan Lintang). */}
-          <SmoothLink
-            href="/home"
-            className="group text-ink decoration-border hover:decoration-ink mt-6 inline-flex items-center gap-1 text-[15px] italic underline underline-offset-4"
-          >
-            Know me more
-            <span
-              aria-hidden="true"
-              className="not-italic transition-transform duration-200 group-hover:translate-x-1"
+              fungsional, murni sentuhan playful sesuai permintaan Lintang).
+              Disembunyikan di /home sendiri — menunjuk ke halaman yang sedang
+              dibuka tidak ada gunanya. */}
+          {showKnowMore ? (
+            <SmoothLink
+              href="/home"
+              className="group text-ink decoration-border hover:decoration-ink mt-6 inline-flex items-center gap-1 text-[15px] italic underline underline-offset-4"
             >
-              →
-            </span>
-          </SmoothLink>
+              Know me more
+              <span
+                aria-hidden="true"
+                className="not-italic transition-transform duration-200 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </SmoothLink>
+          ) : null}
         </div>
       </div>
 

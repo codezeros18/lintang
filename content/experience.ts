@@ -47,6 +47,17 @@ export type Certification = {
   name: string;
   issuer: string;
   date: string;
+  /**
+   * Pengelompokan di halaman `/certifications`. Ini label jenis kredensialnya —
+   * diturunkan dari apa yang tertulis di CV (sertifikasi profesi vs bootcamp vs
+   * kursus), bukan kategori karangan.
+   */
+  category: "Professional" | "Bootcamp" | "Coursework";
+  /**
+   * URL verifikasi kredensial. `null` = tautan "Verify" TIDAK dirender —
+   * jangan pernah menampilkan tombol verifikasi yang tidak bisa dibuktikan.
+   */
+  credentialUrl: string | null;
   order: number;
 };
 
@@ -159,38 +170,57 @@ export const certifications: Certification[] = [
     name: "Associate Data Scientist (Competent)",
     issuer: "BNSP",
     date: "Jan 2026",
+    category: "Professional",
+    credentialUrl: null, // TODO(lintang): tempel URL verifikasi BNSP bila ada
     order: 1,
   },
   {
     name: "Data Science Bootcamp (Excellent Graduate)",
     issuer: "Digital Skola",
     date: "Nov 2025",
+    category: "Bootcamp",
+    credentialUrl: null, // TODO(lintang): tempel URL sertifikat Digital Skola
     order: 2,
   },
   {
     name: "Exploratory Data Analysis for Machine Learning",
     issuer: "IBM (Coursera)",
     date: "Jan 2026",
+    category: "Coursework",
+    credentialUrl: null, // TODO(lintang): tempel URL Coursera
     order: 3,
   },
   {
     name: "Supervised Machine Learning: Regression",
     issuer: "IBM (Coursera)",
     date: "Jan 2026",
+    category: "Coursework",
+    credentialUrl: null, // TODO(lintang): tempel URL Coursera
     order: 4,
   },
   {
     name: "Data Science Capstone Project: Predicting Bicycle Rental",
     issuer: "University of London (Coursera)",
     date: "Jan 2025",
+    category: "Coursework",
+    credentialUrl: null, // TODO(lintang): tempel URL Coursera
     order: 5,
   },
   {
     name: "Python for Data Science, AI & Development",
     issuer: "IBM (Coursera)",
     date: "Jan 2025",
+    category: "Coursework",
+    credentialUrl: null, // TODO(lintang): tempel URL Coursera
     order: 6,
   },
+];
+
+/** Urutan tampil grup di halaman `/certifications`. */
+export const certificationCategories: Certification["category"][] = [
+  "Professional",
+  "Bootcamp",
+  "Coursework",
 ];
 
 export const organizationRoles: OrganizationRole[] = [

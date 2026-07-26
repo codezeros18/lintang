@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageHeader } from "@/components/ui/page-header";
 import { CONFIG, CONTACT, isSet } from "@/content/config";
 import { achievements } from "@/content/experience";
 import { buildMetadata } from "@/lib/seo";
@@ -54,12 +54,12 @@ export default function CollabsPage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-16 md:pt-16 md:pb-20">
-        {/* Heading di atas lipatan → tanpa `Reveal` (aturan R2). */}
-        <SectionHeading
+        {/* `PageHeader` seragam dengan halaman detail lain (keputusan Lintang);
+            di atas lipatan → tanpa `Reveal` (aturan R2). */}
+        <PageHeader
           eyebrow="Collabs"
           title="Things I've built with other people."
           description="Competitions, teams, and the kind of work I'd like to do more of."
-          as="h1"
         />
 
         <div className="mt-10 max-w-3xl">
@@ -105,7 +105,10 @@ export default function CollabsPage() {
 
       <Section className="pt-4 pb-16 md:pt-6 md:pb-20">
         <Reveal>
-          <SectionHeading
+          {/* Sub-section (bukan judul halaman) — memakai `PageHeader` dengan
+              `as="h2"` supaya bentuknya seragam tapi hierarki heading tetap benar. */}
+          <PageHeader
+            as="h2"
             eyebrow="Work with me"
             title="Invite me to build something."
             description="Open to competitions, small-business projects, and things that ship to real users."

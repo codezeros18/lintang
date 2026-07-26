@@ -4,7 +4,7 @@ import { HoverLift, Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageHeader } from "@/components/ui/page-header";
 import { CONFIG, isSet } from "@/content/config";
 import { formatLogDate, getBlogPosts, getBlogTags } from "@/lib/mdx";
 import { buildMetadata } from "@/lib/seo";
@@ -29,14 +29,13 @@ export default async function BlogPage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-32">
-        {/* Heading TIDAK dibungkus `Reveal`: ia berada di atas lipatan, dan aturan
-            R2 melarang `opacity:0` di sana — kalau observer gagal memicu, judul
-            halaman ikut hilang. Motion hanya untuk kartu di bawahnya. */}
-        <SectionHeading
+        {/* `PageHeader` dipakai seragam di SEMUA halaman detail (keputusan
+            Lintang) — dan sengaja tidak dibungkus `Reveal` karena berada di atas
+            lipatan; aturan R2 melarang `opacity:0` di sana. */}
+        <PageHeader
           eyebrow="Blog"
           title="Notes from building things that run."
           description="Mostly cross-posted from LinkedIn: what I learned shipping production systems, and what the data said afterwards."
-          as="h1"
         />
 
         {tags.length > 0 ? (

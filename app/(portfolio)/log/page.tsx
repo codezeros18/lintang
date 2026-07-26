@@ -1,11 +1,10 @@
 import Link from "next/link";
 
-import { Reveal } from "@/components/motion/reveal";
 import { HoverLift, Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageHeader } from "@/components/ui/page-header";
 import { formatLogDate, getLogPosts, resultTone } from "@/lib/mdx";
 import { buildMetadata } from "@/lib/seo";
 
@@ -27,23 +26,13 @@ export default async function LogPage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-32">
-        <Link
-          href="/"
-          className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
-        >
-          ← Back to home
-        </Link>
-
-        <div className="mt-8">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Log"
-              title="What I&rsquo;m working on."
-              description="Competitions, events, and projects — written plainly, including the ones that did not go my way."
-              as="h1"
-            />
-          </Reveal>
-        </div>
+        {/* `PageHeader` seragam dengan halaman detail lain (keputusan Lintang);
+            tidak dibungkus `Reveal` karena berada di atas lipatan (aturan R2). */}
+        <PageHeader
+          eyebrow="Log"
+          title="What I&rsquo;m working on."
+          description="Competitions, events, and projects — written plainly, including the ones that did not go my way."
+        />
 
         {posts.length === 0 ? (
           <p className="text-ink-muted mt-10">No posts yet.</p>

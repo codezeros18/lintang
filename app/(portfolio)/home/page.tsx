@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Trophy } from "lucide-react";
 
 import { NumberedSection } from "@/components/home/numbered-section";
+import { HomeIntro } from "@/components/sections/home-intro";
 import { Badge } from "@/components/ui/badge";
 import { Section } from "@/components/ui/container";
-import { PageHeader } from "@/components/ui/page-header";
 import {
   achievements,
   certifications,
@@ -24,14 +24,16 @@ export const metadata = buildMetadata({
 });
 
 /**
- * /home — **ringkasan**, bukan tempat semua isi ditumpuk.
+ * /home — "portfolio lengkap" bersidebar, dimasuki dari splash `/` lewat
+ * tautan "Know me more", TAPI juga bisa dituju langsung (mis. lewat sidebar).
  *
- * Ini "portfolio lengkap" yang dimasuki dari splash `/` lewat tautan
- * "Know me more" (keputusan Lintang 2026-07-26). Foto + bio pembuka sudah
- * ditampilkan di splash, jadi halaman ini TIDAK mengulang `HomeIntro` —
- * langsung ke enam blok bernomor `01 — experience`, `02 — projects`, …
- * yang masing-masing hanya memuat cuplikan dan mengantar ke halaman detailnya.
+ * Karena itu foto + headline + strip KPI (`HomeIntro`) TETAP ditampilkan di
+ * sini juga — Lintang meminta itu tidak boleh hilang dari `/home` (2026-07-26),
+ * hanya saja tautan "Know me more"-nya disembunyikan (`showKnowMore={false}`)
+ * karena menunjuk ke halaman yang sedang dibuka sendiri.
  *
+ * Di bawahnya: enam blok bernomor `01 — experience`, `02 — projects`, … yang
+ * masing-masing hanya memuat cuplikan dan mengantar ke halaman detailnya.
  * Stack sengaja TIDAK jadi blok bernomor sendiri — ia menempel di bawah
  * projects, karena tools-nya memang milik proyek-proyek itu.
  */
@@ -93,13 +95,9 @@ export default async function HomePage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
-        <PageHeader
-          eyebrow="Home"
-          title="Everything, one section at a time."
-          description="A summary of what I've worked on — open a section for the full page."
-        />
+        <HomeIntro showKnowMore={false} />
 
-        <div className="mt-12 space-y-16 md:space-y-20">
+        <div className="mt-16 space-y-16 md:space-y-20">
           <NumberedSection
             index={1}
             label="experience"
