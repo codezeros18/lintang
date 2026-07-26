@@ -27,6 +27,39 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 06:35] — Fase 2 · Sprint R3 — Case study naratif (leerob-style voice)
+**Status:** ✅ selesai
+**Selesai:**
+- `components/projects/case-study-article.tsx` — layout artikel: header (badge kejujuran, judul, tagline, role · durasi · **reading-time**, tech chip), prosa bersubjudul, lalu blok What changed / Evidence / Project status, ditutup **"Next project"**.
+- `app/projects/[slug]/page.tsx` dirampingkan jadi pemanggil komponen artikel. **SSG `generateStaticParams` + `dynamicParams=false` + `generateMetadata` dipertahankan** — 4 halaman tetap ter-prerender.
+- **Narasi Ankop Trace lengkap** dalam sudut pandang orang pertama: intro + 5 subjudul — *Why paper was expensive · The constraint I could not negotiate with · Why NestJS and Prisma, specifically · Payments people can actually check · Attendance you can audit*.
+- **Reading-time dihitung dari teks yang benar-benar dirender** (4 min untuk Ankop), bukan angka hiasan. Blok yang disembunyikan sengaja tidak ikut dihitung — kalau `learned` nanti diisi, angkanya ikut naik dengan sendirinya.
+- **"Next project" berputar** Ankop → Bisasinema → Tera → Hotel → Ankop (diverifikasi keempatnya), jadi pembaca selalu punya langkah berikutnya.
+- Proyek tanpa `narrative` (Bisasinema, Tera, Hotel) **tetap tampil sebagai artikel**, isinya dirakit dari `problem` + `approach` yang sudah ada — tidak ada teks yang dikarang untuk menambal.
+- `npm run build` ✅ (16 halaman, 4 case study SSG) · `npm run lint` ✅.
+**Verifikasi yang benar-benar dijalankan:**
+- ✅ Struktur heading Ankop persis seperti rancangan; `4 min read` dan `Jun 2026–present · Bandung` tampil.
+- ✅ **Blok "Solo vs team" dan "One lesson" TIDAK ada di HTML** — token `ownVsTeam`/`learned` masih `null`, jadi benar-benar disembunyikan, bukan diisi tebakan.
+- ✅ **Anti double-count:** badge `3rd Place, National — SurabayaDev 2025` hanya muncul di case study Hotel, nol kemunculan di case study lain.
+- ✅ `PROOF_ANKOP` kosong → "Evidence coming soon" + rencana buktinya. Nol demo palsu.
+- ✅ Screenshot desktop 1280px: artikel terbaca lega, tipografi Space Grotesk untuk subjudul, prosa memakai `max-w-3xl`.
+**Gagal / skip / blocker (jujur):**
+- 🟠 **"Momen sulit" TIDAK ditulis sebagai anekdot personal — ini penyimpangan sadar dari instruksi R3.** Instruksi meminta "proses/momen sulit", tapi kejadian personal (mis. "suatu malam sync-nya konflik dan saya begadang memperbaikinya") **hanya Lintang yang tahu**; mengarangnya sama saja memalsukan pengalaman, dan itu melanggar aturan inti proyek.
+  Yang saya tulis sebagai gantinya: **kendala yang terdokumentasi** — sinyal yang drop di pabrik — dinarasikan sebagai bagian tersulit yang membentuk arsitektur ("The constraint I could not negotiate with"). Semuanya bersumber CV. **Kalau Lintang mengirim satu cerita nyata (bug tersulit, konflik sync, penolakan di lapangan), saya sisipkan dan artikelnya langsung jauh lebih kuat.**
+- ⚠️ **Hanya Ankop yang punya narasi penuh.** DoD R3 memang menetapkan "minimal `ankop-trace`", jadi ini terpenuhi — tapi Bisasinema, Tera, dan Hotel masih terasa lebih kaku dibanding Ankop. Menulis narasi mereka butuh detail proses yang tidak ada di CV.
+- ⚠️ `learned` keempat proyek masih kosong, jadi **tidak ada satu pun artikel yang ditutup dengan pelajaran** — padahal justru itu penutup terkuat sebuah case study naratif.
+- ⚠️ **Repo GitHub masih belum ada** (utang sejak R0; R4/blog benar-benar mengandalkannya).
+- ⚠️ Belum di-deploy (R3 tidak memintanya).
+**Catatan penulisan:**
+- Setiap kalimat naratif bisa ditelusuri ke CV atau BLUEPRINT §5.2. Tipe `narrative` di `content/projects.ts` diberi komentar aturan ini supaya sprint berikutnya tidak tergoda menambah anekdot.
+- Yang saya ambil dari referensi hanyalah **cara bercerita** (prosa orang pertama, subjudul yang berupa kalimat, membuka dengan konteks sebelum teknis). Nol kata, nol struktur kalimat, nol lelucon yang dipinjam.
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — terhadap diff R3:**
+- ✅ Nol hex mentah · nol `font-family` baru · nol aset — semua warna lewat token yang sudah ada.
+- ✅ Situs referensi tidak dibuka selama R3.
+- ✅ Judul-judul section ditulis dari materi Ankop sendiri, bukan pola judul referensi.
+**Commit:** `R3: narrative case study (leerob-style voice)`
+**Sprint berikutnya:** R4 — Blog MDX/SSG (menunggu instruksi) — **repo GitHub sebaiknya beres dulu**
+
 ### [2026-07-26 06:05] — Fase 2 · Sprint R2 — Hero + storytelling entry
 **Status:** ✅ selesai
 **Selesai:**

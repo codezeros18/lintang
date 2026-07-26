@@ -45,6 +45,20 @@ export type Project = {
   learned: string | null;
   tech: string[];
   award?: string;
+  /**
+   * Narasi panjang untuk halaman case study (R3).
+   *
+   * ATURAN: setiap kalimat di sini harus bisa ditelusuri ke CV atau BLUEPRINT §5.2.
+   * Yang dinarasikan adalah **kendala dan keputusan yang terdokumentasi** — BUKAN
+   * anekdot ("suatu malam sync-nya rusak dan saya…"), karena kejadian personal
+   * semacam itu hanya Lintang yang tahu dan mengarangnya = memalsukan pengalaman.
+   *
+   * `undefined` → halaman jatuh ke struktur `problem` + `approach` seperti biasa.
+   */
+  narrative?: {
+    intro: string[];
+    sections: { heading: string; paragraphs: string[] }[];
+  };
   /** Belum semua proyek punya token bukti sendiri di §0.1 (mis. Kuali). */
   proof?: {
     /** Token CONFIG yang menentukan bukti apa yang boleh ditampilkan. */
@@ -107,6 +121,49 @@ export const projects: Project[] = [
       "Railway",
       "Offline-first",
     ],
+    narrative: {
+      intro: [
+        "Ankop Trace is the system that took a specialty coffee producer off paper. I joined PT Anugrah Kopi Nusantara in June 2026 as their full-stack engineer, and the scope was the whole operation: from the moment cherry arrives at the gate to the moment a supplier gets paid.",
+        "Before it existed, all of that lived in notebooks and spreadsheets.",
+      ],
+      sections: [
+        {
+          heading: "Why paper was expensive",
+          paragraphs: [
+            "Every weighing was written down by hand first and typed into Excel later. That gap sounds harmless until you follow what the number does next: the kilograms accepted at intake are what a supplier eventually gets paid for.",
+            "So the cost of paper was not really inefficiency. It was trust. When the figure that decides someone's payment is copied twice before anyone can check it, the person being paid has no way to verify anything — they can only take your word for it.",
+          ],
+        },
+        {
+          heading: "The constraint I could not negotiate with",
+          paragraphs: [
+            "At the factory, the signal drops. Not occasionally — reliably enough that any design assuming a live connection would lose data on its first bad afternoon. A weighing that fails to save is not a failed request; it is a truck already unloaded and a number nobody can reconstruct.",
+            "That single fact decided the architecture. Field inputs queue locally on the device and sync automatically the moment the connection returns, so no weighing is ever lost. I chose offline-first because of a constraint I could not argue with, not because the pattern was fashionable — and I would have chosen a simpler build if the site had reliable signal.",
+          ],
+        },
+        {
+          heading: "Why NestJS and Prisma, specifically",
+          paragraphs: [
+            "The pipeline is long and every stage feeds the next: cherry intake, fermentation, drying, hulling, sorting, warehouse, payment, then owner reporting. Eight stages, each inheriting the numbers from the one before it.",
+            "In a chain like that, a type error rarely announces itself as a crash. It shows up much later as a wrong number in somebody's payment — which is the worst possible place to find a bug. NestJS plus Prisma gave me typed boundaries from the API down to the MySQL schema, so mismatches surface at build time instead of at payout time.",
+            "Docker and Railway handle the deploys, which keeps releases independent of whichever machine happens to be around.",
+          ],
+        },
+        {
+          heading: "Payments people can actually check",
+          paragraphs: [
+            "Payments are computed automatically from the kilograms accepted, then routed through an approval step before anything is settled. The arithmetic that used to be done by hand — and used to be the source of disputes — is now the same calculation every time, visible to both sides.",
+            "The owner gets real-time visibility with zero manual reports, and the automated weight-movement log replaced the Excel tracking entirely.",
+          ],
+        },
+        {
+          heading: "Attendance you can audit",
+          paragraphs: [
+            "I also designed a workforce scheduling and anti-fraud attendance module with a full audit trail — because in an operation where shifts and weighings both feed payroll, attendance records need to be traceable, not merely recorded.",
+          ],
+        },
+      ],
+    },
     proof: {
       configKey: "PROOF_ANKOP",
       pendingNote:

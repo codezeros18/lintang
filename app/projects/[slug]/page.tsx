@@ -1,16 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Section } from "@/components/ui/container";
+import { CaseStudyArticle } from "@/components/projects/case-study-article";
 import {
   caseStudyProjects,
   displayName,
   getProjectBySlug,
-  honestyTone,
-  resolveProof,
-  type Project,
 } from "@/content/projects";
 import { buildMetadata } from "@/lib/seo";
 
@@ -37,161 +31,22 @@ export async function generateMetadata({ params }: PageParams) {
   });
 }
 
-function Block({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="border-border border-t pt-8">
-      <h2 className="mono text-ink-muted text-xs tracking-[0.14em] uppercase">
-        {title}
-      </h2>
-      <div className="mt-4">{children}</div>
-    </section>
-  );
-}
-
-function Proof({ project }: { project: Project }) {
-  const proof = resolveProof(project);
-  if (!proof) return null;
-
-  // Selama token PROOF_* kosong: tampilkan "bukti menyusul" apa adanya.
-  // TIDAK pernah merender demo palsu atau link mati (§9).
-  if (proof.status === "pending") {
-    return (
-      <Card padding="sm" elevation="flat" className="bg-secondary/50">
-        <p className="font-medium">Evidence coming soon.</p>
-        <p className="text-ink-muted mt-2 text-sm leading-relaxed">
-          {proof.note}
-        </p>
-      </Card>
-    );
-  }
-
-  return (
-    <Card padding="sm" elevation="flat">
-      <p className="font-medium">{proof.label}</p>
-      {proof.url ? (
-        <a
-          href={proof.url}
-          className="text-ink hover:text-coral-ink hover:decoration-coral-ink decoration-border mt-2 inline-block text-sm underline underline-offset-4"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View evidence
-        </a>
-      ) : null}
-    </Card>
-  );
-}
-
 export default async function ProjectPage({ params }: PageParams) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
   if (!project || !project.featured) notFound();
 
-  const name = displayName(project);
+  // "Next project" berputar mengikuti urutan hero (§5.2), jadi pembaca selalu
+  // punya satu langkah berikutnya alih-alih berhenti di ujung halaman.
+  const index = caseStudyProjects.findIndex((item) => item.slug === slug);
+  const candidate = caseStudyProjects[(index + 1) % caseStudyProjects.length];
+  const nextProject =
+    candidate && candidate.slug !== project.slug ? candidate : undefined;
 
   return (
     <main id="main">
-      <Section className="pt-12 pb-20 md:pt-16 md:pb-28">
-        <Link
-          href="/#projects"
-          className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
-        >
-          ← All projects
-        </Link>
-
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          <Badge tone={honestyTone(project.honesty)}>{project.honesty}</Badge>
-          {project.award ? <Badge tone="coral">{project.award}</Badge> : null}
-        </div>
-
-        <h1 className="mt-5 max-w-3xl text-(length:--step-3) leading-tight font-semibold">
-          {name}
-        </h1>
-        <p className="text-ink-muted mt-5 max-w-2xl text-(length:--step-1) leading-relaxed">
-          {project.tagline}
-        </p>
-
-        <p className="text-ink-muted mt-6 text-sm">
-          {project.role}
-          {project.durationNote ? ` · ${project.durationNote}` : null}
-        </p>
-
-        <ul className="mt-6 flex flex-wrap gap-2">
-          {project.tech.map((tech) => (
-            <li key={tech}>
-              <Badge mono>{tech}</Badge>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-14 max-w-3xl space-y-10">
-          <Block title="Problem">
-            <p className="leading-relaxed">{project.problem}</p>
-          </Block>
-
-          <Block title="Decisions & why">
-            <ul className="space-y-4">
-              {project.approach.map((item) => (
-                <li key={item} className="flex gap-3 leading-relaxed">
-                  <span
-                    aria-hidden="true"
-                    className="bg-indigo-brand mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Block>
-
-          {/* Blok jujur "sendiri vs tim" hanya muncul setelah Lintang mengisinya.
-              Selama null, blok ini disembunyikan — tidak ada tebakan porsi kerja. */}
-          {project.ownVsTeam ? (
-            <Block title="Solo vs team">
-              <p className="leading-relaxed">{project.ownVsTeam}</p>
-            </Block>
-          ) : null}
-
-          {project.results.length > 0 ? (
-            <Block title="Results">
-              <ul className="space-y-3">
-                {project.results.map((result) => (
-                  <li key={result} className="flex gap-3 leading-relaxed">
-                    <span
-                      aria-hidden="true"
-                      className="bg-indigo-brand mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                    />
-                    <span>{result}</span>
-                  </li>
-                ))}
-              </ul>
-            </Block>
-          ) : null}
-
-          {project.learned ? (
-            <Block title="One lesson">
-              <p className="leading-relaxed">{project.learned}</p>
-            </Block>
-          ) : null}
-
-          <Block title="Evidence">
-            <Proof project={project} />
-          </Block>
-
-          <Block title="Project status">
-            <p className="leading-relaxed">
-              This project is labeled{" "}
-              <strong className="font-semibold">{project.honesty}</strong>.
-            </p>
-          </Block>
-        </div>
-      </Section>
+      <CaseStudyArticle project={project} nextProject={nextProject} />
     </main>
   );
 }

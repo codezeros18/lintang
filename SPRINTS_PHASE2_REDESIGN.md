@@ -35,7 +35,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 | **R0** | Design-language lock (inspired, not copied) | Bedah pola bryllim/leerob → terjemah ke design tokens Lintang; git+domain decision | ✅ |
 | **R1** | Layout shell — sidebar + container + rhythm | Sidebar nav, container lega, spacing scale, sticky/scroll-spy | ✅ |
 | **R2** | Hero + navigasi baru (storytelling entry) | Hero versi baru, nav antar-section, motion aman-LCP | ✅ |
-| **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | 🔲 |
+| **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | ✅ |
 | **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | 🔲 |
 | **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | 🔲 |
 | **R6** | Polish · a11y · perf · SEO/OG · **Re-deploy (REDESIGN LIVE)** | Gate performa, OG per-tipe, domain, retest HP | 🔲 |
@@ -102,12 +102,12 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** ubah case study dari "kartu terstruktur" jadi **cerita mengalir** (problem → keputusan → proses → hasil → pelajaran), personal & jujur.
 
 **Tasks:**
-- [ ] Template baru `app/projects/[slug]/page.tsx`: layout artikel (prosa panjang + subjudul) alih-alih blok kaku. Pertahankan field data (`content/projects.ts`) sbg sumber.
-- [ ] Tulis narasi Ankop **lengkap** (hero utama) dengan suara Lintang — konkret, angka CV + konteks waktu, jujur soal `ownVsTeam`/`learned` **begitu Lintang mengisi** (sampai itu, blok disembunyikan, jangan diarang).
-- [ ] Sisipkan elemen "cerita": kutipan keputusan ("kenapa offline-first"), momen sulit, apa yang berubah setelahnya.
-- [ ] Bukti tetap etis: `PROOF_*` kosong → "Bukti menyusul" + rencana; tak ada demo palsu.
-- [ ] Anti double-count: Analisis Hotel = 1 case study + badge SurabayaDev (pertahankan).
-- [ ] Reading-time + "next project" di akhir (dorong lanjut baca).
+- [x] `components/projects/case-study-article.tsx` + `app/projects/[slug]/page.tsx`: layout artikel (prosa + subjudul + reading-time). SSG & `generateMetadata` dipertahankan; sumber data tetap `content/projects.ts`.
+- [x] Narasi Ankop lengkap (5 subjudul + intro) dalam sudut pandang orang pertama. `ownVsTeam` & `learned` masih `null` → **bloknya disembunyikan**, terverifikasi tidak muncul di HTML.
+- [x] Elemen cerita: "kenapa offline-first" & "kenapa NestJS/Prisma" dinarasikan penuh. ⚠️ **"Momen sulit" ditulis sebagai KENDALA terdokumentasi** (sinyal drop di pabrik), bukan anekdot personal — lihat PROGRESS_LOG.
+- [x] Bukti etis: `PROOF_ANKOP` masih kosong → "Evidence coming soon" + rencana buktinya; nol demo palsu.
+- [x] Anti double-count terverifikasi: badge SurabayaDev **hanya** muncul di case study Hotel, tidak di tempat lain.
+- [x] Reading-time dihitung dari teks yang benar-benar dirender (blok tersembunyi tidak ikut dihitung); "next project" berputar Ankop → Bisasinema → Tera → Hotel → Ankop.
 
 **Definition of Done:** minimal `ankop-trace` jadi artikel naratif utuh & jujur; angka berkonteks waktu; tak ada klaim karangan; build + SSG sukses.
 **Files:** `app/projects/[slug]/page.tsx`, `content/projects.ts`, komponen artikel (`components/projects/CaseStudyArticle.tsx`).
