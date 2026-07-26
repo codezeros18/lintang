@@ -21,8 +21,8 @@ export default function AboutPage() {
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
-          eyebrow="About"
-          title="Build what people use, then prove it works."
+          title="about"
+          description="Full-stack engineer and informatics student at UMN — building systems people actually use, then proving the impact with data."
         />
 
         <div className="mt-10 max-w-3xl space-y-6 leading-relaxed">

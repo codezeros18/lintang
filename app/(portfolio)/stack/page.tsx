@@ -16,9 +16,8 @@ export default function StackPage() {
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
-          eyebrow="Stack"
-          title="What I build with."
-          description="Every group points at the project where it was actually used — not a list of tools I once opened."
+          title="stack"
+          description="The tools I actually build with, grouped by role — every group points at the project where it was used, not a list of things I once opened."
         />
 
         <div className="mt-12">

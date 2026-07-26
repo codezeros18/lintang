@@ -1,23 +1,23 @@
 import { cn } from "@/lib/utils";
 
 /**
- * PageHeader — kepala halaman detail, dipakai SERAGAM di semua halaman
- * (Projects, Experience, Stack, Certifications, Education, Blog, Collabs, Log).
+ * PageHeader — kepala halaman, dipakai SERAGAM di semua rute detail.
  *
- * Bentuknya sengaja dibuat sesederhana mungkin: eyebrow mono kecil, judul,
- * lalu deskripsi — tanpa kartu/bingkai (keputusan Lintang 2026-07-27).
+ * Bentuknya diubah 2026-07-27 (keputusan Lintang): judul cukup **nama halaman
+ * huruf kecil** dalam Geist Pixel 24px, lalu satu paragraf deskripsi 15px —
+ * tidak ada lagi eyebrow + kalimat judul terpisah, karena itu membuat tiga
+ * tingkat teks untuk informasi yang sebenarnya cuma dua.
  *
- * SENGAJA tidak dibungkus `Reveal`: ia selalu berada di atas lipatan, dan aturan
+ * SENGAJA tidak dibungkus `Reveal`: selalu berada di atas lipatan, dan aturan
  * R2 melarang `opacity:0` di sana.
  */
 export function PageHeader({
-  eyebrow,
   title,
   description,
   className,
   as: Heading = "h1",
 }: {
-  eyebrow: string;
+  /** Nama halaman, huruf kecil — mis. `experience`, `certifications`. */
   title: string;
   description?: string;
   className?: string;
@@ -26,17 +26,11 @@ export function PageHeader({
 }) {
   return (
     <header className={cn("max-w-3xl", className)}>
-      <p className="mono text-n-500 text-[11px] tracking-[0.16em] uppercase">
-        {eyebrow}
-      </p>
-      {/* Judul lebih besar + jarak ke deskripsi dilonggarkan (permintaan Lintang,
-          menyamai proporsi referensi). Deskripsi 16px supaya tetap enak dibaca
-          sebagai kalimat pengantar, bukan caption. */}
-      <Heading className="mt-3 text-(length:--step-3) leading-tight font-semibold">
+      <Heading className="pixel text-ink text-[24px] leading-none">
         {title}
       </Heading>
       {description ? (
-        <p className="text-ink-muted mt-6 text-[16px] leading-relaxed">
+        <p className="text-ink-muted mt-6 text-[15px] leading-relaxed">
           {description}
         </p>
       ) : null}

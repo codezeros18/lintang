@@ -53,24 +53,24 @@ function readingMinutes(project: Project): number {
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mt-14 text-(length:--step-1) leading-snug font-semibold">
+    <h2 className="mono text-ink mt-14 text-[16px] leading-snug">
       {children}
     </h2>
   );
 }
 
 function Prose({ children }: { children: React.ReactNode }) {
-  return <p className="mt-5 leading-relaxed">{children}</p>;
+  return <p className="mt-5 text-[15px] leading-relaxed">{children}</p>;
 }
 
 function Bullets({ items }: { items: string[] }) {
   return (
     <ul className="mt-5 space-y-4">
       {items.map((item) => (
-        <li key={item} className="flex gap-3 leading-relaxed">
+        <li key={item} className="flex gap-3 text-[15px] leading-relaxed">
           <span
             aria-hidden="true"
-            className="bg-indigo-brand mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
+            className="bg-n-300 mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
           />
           <span>{item}</span>
         </li>
@@ -126,7 +126,7 @@ export function CaseStudyArticle({
   return (
     <Section className="pt-12 pb-24 md:pt-16 md:pb-32">
       <Link
-        href="/#projects"
+        href="/projects"
         className="text-ink-muted hover:text-ink text-sm underline-offset-4 hover:underline"
       >
         ← All projects
@@ -141,11 +141,14 @@ export function CaseStudyArticle({
             {project.award ? <Badge tone="coral">{project.award}</Badge> : null}
           </div>
 
-          <h1 className="mt-5 text-(length:--step-3) leading-tight font-semibold">
+          {/* Judul & tagline mengikuti sistem `PageHeader`: Geist Pixel 24px
+              lalu deskripsi 15px, supaya halaman detail tidak terasa dari
+              keluarga tipografi yang berbeda. */}
+          <h1 className="pixel text-ink mt-5 text-[24px] leading-none">
             {name}
           </h1>
 
-          <p className="text-ink-muted mt-5 text-(length:--step-1) leading-relaxed">
+          <p className="text-ink-muted mt-6 text-[15px] leading-relaxed">
             {project.tagline}
           </p>
 
@@ -169,7 +172,7 @@ export function CaseStudyArticle({
             {project.narrative.intro.map((paragraph) => (
               <p
                 key={paragraph}
-                className="mt-8 text-(length:--step-1) leading-relaxed first:mt-10"
+                className="mt-6 text-[15px] leading-relaxed first:mt-10"
               >
                 {paragraph}
               </p>

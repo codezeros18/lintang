@@ -7,6 +7,7 @@ import {
   displayName,
   featuredProjects,
   otherProjects,
+  type Project,
 } from "@/content/projects";
 import { buildMetadata } from "@/lib/seo";
 
@@ -17,46 +18,81 @@ export const metadata = buildMetadata({
   path: "/projects",
 });
 
+/**
+ * Kotak singkatan proyek — pengganti logo, karena belum ada aset logo untuk
+ * proyek-proyek ini dan menggambar logo tiruan sendiri lebih buruk daripada
+ * penanda huruf yang jujur.
+ */
+function ProjectMark({ short }: { short: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="border-border bg-secondary mono text-ink flex size-12 shrink-0 items-center justify-center rounded-(--radius-sm) border text-[11px] tracking-[0.04em]"
+    >
+      {short}
+    </span>
+  );
+}
+
+function FeaturedCard({ project }: { project: Project }) {
+  return (
+    <li className="border-border bg-card hover:border-n-300 relative rounded-(--radius) border p-6 transition-colors">
+      <div className="flex gap-4">
+        <ProjectMark short={project.short} />
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge mono tone="outline">
+              {project.honesty}
+            </Badge>
+            {project.award ? (
+              <Badge mono tone="outline">
+                {project.award}
+              </Badge>
+            ) : null}
+          </div>
+
+          {/* Judul mono seperti kartu referensi; seluruh kartu jadi target klik
+              lewat `after:inset-0`, tapi hanya judulnya yang jadi teks tautan. */}
+          <h2 className="mono text-ink mt-3 text-[16px] leading-snug">
+            <Link
+              href={`/projects/${project.slug}`}
+              className="focus-visible:ring-ring rounded-sm outline-none after:absolute after:inset-0 after:content-[''] focus-visible:ring-2 focus-visible:ring-offset-2"
+            >
+              {displayName(project)}
+            </Link>
+          </h2>
+
+          <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
+            {project.tagline}
+          </p>
+
+          <div className="border-border/70 mt-5 flex flex-wrap items-center gap-2 border-t pt-4">
+            {project.tech.slice(0, 5).map((tech) => (
+              <Badge key={tech} mono tone="outline">
+                {tech}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+}
+
 /** Indeks proyek. Hanya 4 hero yang punya case study; sekunder tanpa halaman. */
 export default function ProjectsPage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
-          eyebrow="Projects"
-          title="Systems people actually use."
-          description="Four case studies with the decisions behind them, plus smaller work."
+          title="projects"
+          description="Production systems and analysis work — offline-first coffee operations, live payments, multi-tenant SaaS, and a national data competition. Four case studies with the decisions behind them, plus smaller work."
         />
 
-        <ul className="mt-12">
+        <ul className="mt-14 grid gap-4">
           {featuredProjects.map((project) => (
-            <li key={project.slug} className="border-border border-t">
-              <Link
-                href={`/projects/${project.slug}`}
-                className="focus-visible:ring-ring hover:bg-secondary/50 group block rounded-sm py-6 outline-none transition-colors focus-visible:ring-2"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-                  <h2 className="text-ink text-[15px] font-medium">
-                    {displayName(project)}
-                  </h2>
-                  <span className="mono text-n-500 text-[12px]">
-                    {project.honesty}
-                  </span>
-                </div>
-
-                <p className="text-ink-muted mt-2 max-w-2xl text-[14px] leading-relaxed">
-                  {project.tagline}
-                </p>
-
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  {project.tech.slice(0, 5).map((tech) => (
-                    <Badge key={tech} mono tone="outline">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </Link>
-            </li>
+            <FeaturedCard key={project.slug} project={project} />
           ))}
         </ul>
 
@@ -70,23 +106,27 @@ export default function ProjectsPage() {
                 key={project.slug}
                 className="border-border bg-card rounded-(--radius) border p-5"
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-[15px] font-medium">
-                    {displayName(project)}
-                  </h3>
-                  <span className="mono text-n-500 text-[12px]">
-                    {project.honesty}
-                  </span>
-                </div>
-                <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
-                  {project.tagline}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <Badge key={tech} mono tone="outline">
-                      {tech}
+                <div className="flex gap-4">
+                  <ProjectMark short={project.short} />
+
+                  <div className="min-w-0 flex-1">
+                    <Badge mono tone="outline">
+                      {project.honesty}
                     </Badge>
-                  ))}
+                    <h3 className="mono text-ink mt-3 text-[15px] leading-snug">
+                      {displayName(project)}
+                    </h3>
+                    <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
+                      {project.tagline}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tech.map((tech) => (
+                        <Badge key={tech} mono tone="outline">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </li>
             ))}

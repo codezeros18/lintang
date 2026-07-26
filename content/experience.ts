@@ -10,6 +10,12 @@
 
 export type WorkItem = {
   org: string;
+  /**
+   * Singkatan 2–3 huruf untuk kotak penanda di timeline `/experience`.
+   * Ditulis eksplisit, bukan diturunkan otomatis, supaya hasilnya masuk akal
+   * ("PT Anugrah Kopi Nusantara (Ankop)" → `ANK`, bukan `PA`).
+   */
+  short: string;
   role: string;
   /** `null` = tidak ada di CV → tidak ditampilkan. */
   period: string | null;
@@ -103,6 +109,7 @@ export const education: EducationItem[] = [
 export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Kopi Nusantara (Ankop)",
+    short: "ANK",
     role: "Full-Stack Software Engineer",
     period: "Jun 2026–present",
     location: "Bandung",
@@ -113,6 +120,7 @@ export const workItems: WorkItem[] = [
   },
   {
     org: "Bisasinema",
+    short: "BI",
     role: "Tech Lead & Assistant Product Manager",
     period: "Mar 2026–present",
     location: "Tangerang",
@@ -123,6 +131,7 @@ export const workItems: WorkItem[] = [
   },
   {
     org: "Bank Sampah Digital",
+    short: "BSD",
     role: "Data Scientist Intern",
     period: "Jan 2026–Mar 2026",
     location: "Serang · virtual internship",
@@ -132,6 +141,7 @@ export const workItems: WorkItem[] = [
   },
   {
     org: "PT Anugrah Energi Indonesia",
+    short: "AEI",
     role: "Frontend Developer",
     period: "Jun 2023–Oct 2023",
     location: "Tangerang · vocational internship",

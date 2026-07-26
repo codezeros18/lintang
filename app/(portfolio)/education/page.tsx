@@ -17,9 +17,8 @@ export default function EducationPage() {
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
-          eyebrow="Education"
-          title="Where I learned it."
-          description="Formal study, plus the bootcamp that added the data side."
+          title="education"
+          description="Informatics at Universitas Multimedia Nusantara, a vocational software engineering background, and the bootcamp that added the data side."
         />
 
         <ul className="mt-12">

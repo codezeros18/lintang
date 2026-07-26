@@ -99,9 +99,8 @@ export default function CertificationsPage() {
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
-          eyebrow="Certifications"
-          title="Credentials I can show."
-          description="Issued and dated — each one verifiable at its source once the credential link or certificate scan is in."
+          title="certifications"
+          description="Credentials across data science and machine learning — a BNSP professional certification, a bootcamp, and coursework from IBM and the University of London via Coursera."
         />
 
         <div className="mt-14 space-y-12">

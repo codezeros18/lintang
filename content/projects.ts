@@ -28,6 +28,11 @@ export type ProofConfigKey =
 export type Project = {
   slug: string;
   name: string;
+  /**
+   * Singkatan 2–3 huruf untuk kotak penanda di kartu `/projects`.
+   * Ditulis eksplisit supaya hasilnya masuk akal, bukan diturunkan otomatis.
+   */
+  short: string;
   /** Nama pengganti bila penyebutan klien belum diizinkan (§0.1). */
   anonymousName?: string;
   tagline: string;
@@ -83,6 +88,7 @@ export const projects: Project[] = [
   {
     slug: "ankop-trace",
     name: "Ankop Trace",
+    short: "ANK",
     // Nama klien di CV: PT Anugrah Kopi Nusantara (Ankop).
     anonymousName: "A specialty coffee producer",
     tagline:
@@ -177,6 +183,7 @@ export const projects: Project[] = [
   {
     slug: "bisasinema",
     name: "Bisasinema",
+    short: "BI",
     anonymousName: "A film & education brand",
     tagline:
       "A learning-and-ticketing platform with live payments — a film brand's first digital presence.",
@@ -211,6 +218,7 @@ export const projects: Project[] = [
   {
     slug: "tera",
     name: "Tera",
+    short: "TER",
     tagline:
       "Multi-tenant SaaS for specialty-coffee export operations — data isolation enforced all the way down to the database.",
     role: "Full-Stack Engineer",
@@ -249,6 +257,7 @@ export const projects: Project[] = [
   {
     slug: "hotel-cancellation-analysis",
     name: "Hotel Cancellation Analysis",
+    short: "HCA",
     tagline:
       "Finding why a hotel loses revenue to cancellations — and turning that into recommendations.",
     role: "Data analyst",
@@ -283,6 +292,7 @@ export const projects: Project[] = [
   {
     slug: "kuali",
     name: "Kuali",
+    short: "KUA",
     tagline:
       "An AI ops assistant for WhatsApp-first culinary MSMEs — messy chats become structured orders.",
     role: "Team lead",
@@ -309,6 +319,7 @@ export const projects: Project[] = [
   {
     slug: "bank-sampah-digital",
     name: "Bank Sampah Digital",
+    short: "BSD",
     tagline:
       "Decision-ready dashboards for the CEO, built from raw sustainability and operations data.",
     role: "Data Scientist Intern",

@@ -1,17 +1,27 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
+import { CONFIG } from "@/content/config";
+
 /**
- * Apple touch icon — monogram yang sama dengan `app/icon.svg`, dirender 180×180
- * karena iOS tidak memakai favicon SVG.
- *
- * TODO(lintang): kalau nanti ada logo/mark personal, ganti monogram ini di dua tempat
- * (`app/icon.svg` dan file ini) supaya tetap seragam.
+ * Apple touch icon — versi 180×180 dari `app/icon.tsx` (foto, bukan monogram).
+ * iOS tidak memakai favicon SVG, jadi ikon ini dirender terpisah.
  */
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const photo = CONFIG.PHOTO_FILE;
+  if (!photo) {
+    return new ImageResponse(<div style={{ display: "flex" }} />, size);
+  }
+
+  const bytes = await readFile(join(process.cwd(), "public", "images", photo));
+  const src = `data:image/png;base64,${bytes.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -19,16 +29,20 @@ export default function AppleIcon() {
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "center",
+          alignItems: "flex-end",
           justifyContent: "center",
-          background: "#171717",
-          color: "#FAFAFA",
-          fontSize: 116,
-          fontWeight: 700,
-          fontFamily: "sans-serif",
+          background: "#E6E6E6",
+          overflow: "hidden",
         }}
       >
-        L
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt=""
+          width={180}
+          height={180}
+          style={{ objectFit: "cover" }}
+        />
       </div>
     ),
     size,

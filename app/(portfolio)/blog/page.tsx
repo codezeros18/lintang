@@ -33,9 +33,8 @@ export default async function BlogPage() {
             Lintang) — dan sengaja tidak dibungkus `Reveal` karena berada di atas
             lipatan; aturan R2 melarang `opacity:0` di sana. */}
         <PageHeader
-          eyebrow="Blog"
-          title="Notes from building things that run."
-          description="Mostly cross-posted from LinkedIn: what I learned shipping production systems, and what the data said afterwards."
+          title="blog"
+          description="Mostly cross-posted from LinkedIn — what I learned shipping production systems, and what the data said afterwards."
         />
 
         {tags.length > 0 ? (

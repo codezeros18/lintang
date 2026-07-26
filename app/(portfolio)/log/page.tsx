@@ -29,8 +29,7 @@ export default async function LogPage() {
         {/* `PageHeader` seragam dengan halaman detail lain (keputusan Lintang);
             tidak dibungkus `Reveal` karena berada di atas lipatan (aturan R2). */}
         <PageHeader
-          eyebrow="Log"
-          title="What I&rsquo;m working on."
+          title="log"
           description="Competitions, events, and projects — written plainly, including the ones that did not go my way."
         />
 

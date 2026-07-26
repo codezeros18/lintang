@@ -57,9 +57,8 @@ export default function CollabsPage() {
         {/* `PageHeader` seragam dengan halaman detail lain (keputusan Lintang);
             di atas lipatan → tanpa `Reveal` (aturan R2). */}
         <PageHeader
-          eyebrow="Collabs"
-          title="Things I've built with other people."
-          description="Competitions, teams, and the kind of work I'd like to do more of."
+          title="collabs"
+          description="Competitions and teams I've built with — a national win, a national podium, and an internal pitching day — plus the kind of work I'd like to do more of."
         />
 
         <div className="mt-10 max-w-3xl">
@@ -109,8 +108,7 @@ export default function CollabsPage() {
               `as="h2"` supaya bentuknya seragam tapi hierarki heading tetap benar. */}
           <PageHeader
             as="h2"
-            eyebrow="Work with me"
-            title="Invite me to build something."
+            title="work with me"
             description="Open to competitions, small-business projects, and things that ship to real users."
           />
         </Reveal>
