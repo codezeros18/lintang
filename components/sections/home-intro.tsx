@@ -70,7 +70,7 @@ export function HomeIntro() {
   const photo = CONFIG.PHOTO_FILE;
 
   return (
-    <section id="top" className="pt-10 pb-12 md:pt-14">
+    <section id="top">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center sm:gap-5">
         {isSet(photo) ? (
           <div className="order-first sm:order-0">
