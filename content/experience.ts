@@ -8,6 +8,8 @@
  * Yang masih `null` = memang tidak ada di CV (mis. tahun I/O Festival & CIMB Niaga).
  */
 
+import { emptyStory, type Story } from "@/content/story";
+
 export type WorkItem = {
   org: string;
   /**
@@ -32,11 +34,20 @@ export type EducationItem = {
   program: string;
   period: string;
   note?: string;
+  /**
+   * `null` = tidak punya halaman detail. Hanya UMN & Digital Skola yang punya
+   * (keputusan Lintang 2026-07-27) — SMKN 4 sengaja tetap satu baris.
+   */
+  slug: string | null;
+  /** Template cerita + foto. Lihat `content/story.ts`. */
+  story: Story;
   order: number;
 };
 
 export type Achievement = {
   medal: string;
+  /** Dipakai untuk URL `/collabs/<slug>`. */
+  slug: string;
   title: string;
   scope: string;
   /** `null` = tahun tidak tercantum di CV. */
@@ -46,6 +57,15 @@ export type Achievement = {
   /** Bila prestasinya sudah jadi case study, tunjuk ke sana alih-alih
    *  menceritakan ulang (anti double-count, §5.2). */
   projectSlug?: string;
+  /**
+   * Template cerita + foto untuk `/collabs/<slug>`.
+   *
+   * Untuk lomba yang pekerjaannya SUDAH diceritakan penuh sebagai case study
+   * proyek (`projectSlug` terisi), halaman ini tidak mengulang ceritanya —
+   * ia hanya memuat foto & konteks lomba, lalu menautkan ke case study-nya
+   * (anti double-count, §5.2).
+   */
+  story: Story;
   order: number;
 };
 
@@ -58,7 +78,7 @@ export type Certification = {
    * diturunkan dari apa yang tertulis di CV (sertifikasi profesi vs bootcamp vs
    * kursus), bukan kategori karangan.
    */
-  category: "Professional" | "Bootcamp" | "Coursework";
+  category: "Professional" | "Bootcamp" | "Coursework" | "Competition";
   /**
    * URL verifikasi resmi dari penerbit (mis. tautan kredensial Coursera).
    * `null` = tautan "Verify" TIDAK dirender — jangan pernah menampilkan tombol
@@ -66,9 +86,10 @@ export type Certification = {
    */
   credentialUrl: string | null;
   /**
-   * Alternatif bila penerbitnya tidak punya halaman verifikasi online:
-   * foto/scan sertifikat di `public/images/certification_course/`.
-   * Ditulis relatif dari `/images/`, mis. `certification_course/bnsp.jpg`.
+   * Foto/scan sertifikat — dibuka di modal lewat tombol "View".
+   * Ditulis relatif dari `/images/`, mis. `certification_course/bnsp.jpg`
+   * (sertifikat lomba: `certification_lomba/...`).
+   * `null` = tombol "View" tidak dirender.
    */
   credentialImage: string | null;
   order: number;
@@ -76,10 +97,14 @@ export type Certification = {
 
 export type OrganizationRole = {
   org: string;
+  /** Dipakai untuk URL `/experience/organizations/<slug>`. */
+  slug: string;
   role: string;
   period: string;
   /** Satu baris saja — §S5 melarang skill-dump di bagian organisasi. */
   summary: string;
+  /** Template cerita + foto. Lihat `content/story.ts`. */
+  story: Story;
   order: number;
 };
 
@@ -89,6 +114,9 @@ export const education: EducationItem[] = [
     program: "B.Sc. Informatics",
     period: "Aug 2024–present",
     note: "GPA 3.48",
+    slug: "universitas-multimedia-nusantara",
+    // TODO(lintang): tulis ceritanya + taruh foto di public/images/umn/
+    story: emptyStory,
     order: 1,
   },
   {
@@ -96,12 +124,17 @@ export const education: EducationItem[] = [
     program: "Data Science Bootcamp",
     period: "Jun 2025–Oct 2025",
     note: "Excellent Graduate",
+    slug: "digital-skola",
+    // TODO(lintang): tulis ceritanya + taruh foto di public/images/digital-skola/
+    story: emptyStory,
     order: 2,
   },
   {
     school: "SMKN 4 Kota Tangerang",
     program: "Software Engineering",
     period: "Jun 2021–Jul 2024",
+    slug: null, // sengaja tanpa halaman detail
+    story: emptyStory,
     order: 3,
   },
 ];
@@ -154,14 +187,19 @@ export const workItems: WorkItem[] = [
 export const achievements: Achievement[] = [
   {
     medal: "🥇",
+    slug: "io-festival",
     title: "1st Place, National — I/O Festival",
     scope: "National competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
     detail: "Built a B2B platform for the circular economy.",
+    // TODO(lintang): I/O Festival belum punya case study — tulis di sini,
+    // foto di public/images/io-festival/
+    story: emptyStory,
     order: 1,
   },
   {
     medal: "🥉",
+    slug: "surabayadev-developer-battle-2025",
     title: "3rd Place, National — SurabayaDev Developer Battle 2025",
     scope: "National data analysis competition",
     year: "2025",
@@ -169,15 +207,21 @@ export const achievements: Achievement[] = [
       "A national data analysis competition focused on hotel booking and cancellation patterns.",
     // Pekerjaannya sudah diceritakan penuh sebagai case study.
     projectSlug: "hotel-cancellation-analysis",
+    // Ceritanya sudah penuh di case study — halaman ini cuma foto + konteks.
+    // TODO(lintang): foto lomba di public/images/surabayadev/
+    story: emptyStory,
     order: 2,
   },
   {
     medal: "🥈",
+    slug: "cimb-niaga-pitching-day",
     title: "2nd Place, Internal — CIMB Niaga Pitching Day (UMN)",
     scope: "Internal competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
     detail:
       "Built a functional mobile app for digital account opening using React Native and Expo Go.",
+    // TODO(lintang): tulis ceritanya + foto di public/images/cimb-niaga/
+    story: emptyStory,
     order: 3,
   },
 ];
@@ -239,9 +283,16 @@ export const certifications: Certification[] = [
   },
 ];
 
-/** Urutan tampil grup di halaman `/certifications`. */
+/**
+ * Urutan tampil grup di halaman `/certifications`.
+ *
+ * "Competition" sudah disiapkan untuk sertifikat lomba yang jumlahnya akan
+ * banyak (fotonya di `public/images/certification_lomba/`). Grup yang belum
+ * punya isi TIDAK dirender, jadi menambah kategori di sini aman.
+ */
 export const certificationCategories: Certification["category"][] = [
   "Professional",
+  "Competition",
   "Bootcamp",
   "Coursework",
 ];
@@ -249,33 +300,45 @@ export const certificationCategories: Certification["category"][] = [
 export const organizationRoles: OrganizationRole[] = [
   {
     org: "UMN ECO",
+    slug: "umn-eco",
     role: "Coordinator, Website Division",
     period: "Jan 2026–present",
     summary: "Led development and maintenance of the organization's website.",
+    // TODO(lintang): tulis ceritanya + foto di public/images/umn-eco/
+    story: emptyStory,
     order: 1,
   },
   {
     org: "Duta Anti Narkoba UMN",
+    slug: "duta-anti-narkoba-umn",
     role: "Coordinator, Website Division",
     period: "Dec 2024–Nov 2025",
     summary:
       "Managed end-to-end website delivery, including event schedules and ticketing features.",
+    // TODO(lintang): tulis ceritanya + foto di public/images/duta-anti-narkoba-umn/
+    story: emptyStory,
     order: 2,
   },
   {
     org: "STARLIGHT",
+    slug: "starlight",
     role: "Website Division Member",
     period: "Oct 2024–Nov 2025",
     summary:
       "Built interactive division pages with a focus on usability and responsive design.",
+    // TODO(lintang): tulis ceritanya + foto di public/images/starlight/
+    story: emptyStory,
     order: 3,
   },
   {
     org: "AI Community",
+    slug: "ai-community",
     role: "Volunteer",
     period: "Mar 2025–May 2025",
     summary:
       "Delivered AI demonstrations and hands-on sessions at Open House events for students and parents.",
+    // TODO(lintang): tulis ceritanya + foto di public/images/ai-community/
+    story: emptyStory,
     order: 4,
   },
 ];

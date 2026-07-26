@@ -27,6 +27,30 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-27 04:20] — Di luar sprint — Halaman cerita (organisasi/pendidikan/lomba), modal foto, stack dirapikan
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Tujuh permintaan Lintang dalam satu pesan.
+**Selesai:**
+- **Stack** — baris `Used in: …` dihapus seluruhnya (proyeknya sudah mencantumkan stack masing-masing), judul grup → Geist Mono **11px uppercase**, item → **13px**, border pemisah antar grup dihapus, radius → `md`.
+- **Halaman cerita per organisasi** `/experience/organizations/<slug>` — 4 halaman (UMN ECO, Duta Anti Narkoba UMN, STARLIGHT, AI Community), ditautkan dari daftar Organizations di `/experience`.
+- **Halaman cerita pendidikan** `/education/<slug>` — **hanya UMN & Digital Skola** sesuai permintaan; SMKN 4 `slug: null` jadi tetap satu baris.
+- **Halaman cerita lomba** `/collabs/<slug>` — 3 halaman termasuk **I/O Festival** yang memang belum punya case study.
+- **`components/sections/story-body.tsx`** — satu renderer cerita dipakai ketiganya (intro → sections → galeri foto), jadi ketiganya terbaca sebagai satu keluarga.
+- **Modal foto** `components/ui/photo-gallery.tsx` — `PhotoGallery` (grid) & `PhotoLink` ("View" bergaris bawah). Tutup lewat klik di luar, tombol ×, atau Esc; focus-trap + kunci scroll + fokus kembali ke pemicu, sama seperti drawer sidebar.
+- **Certifications** — tombol "View" (foto sertifikat → modal) dan "Verify" (URL penerbit) keduanya bergaya garis-bawah, seragam dengan tautan halaman lain. Kategori **"Competition"** ditambahkan, siap menampung banyak sertifikat lomba dari `public/images/certification_lomba/`.
+- **Blog & Log disembunyikan** dari sidebar dan beranda. Rutenya sengaja TIDAK dihapus (masih 200 & masih di sitemap) — tinggal kembalikan barisnya di `nav-items.ts` dan blok `06` di `/home`.
+- **Nama lengkap** "Lintang Balakosa Ardhana" dipakai di semua teks yang terlihat pengguna; hanya wordmark sidebar dipendekkan jadi "Lintang Balakosa A." agar muat satu baris.
+- Sitemap menambahkan 9 rute detail baru. Total 40 halaman ter-prerender.
+**Gagal / skip / blocker (jujur):**
+- **Semua cerita & foto masih KOSONG.** `content/story.ts` hanya menyediakan template; halaman detailnya menampilkan satu baris jujur "Story and photos coming soon." Saya sengaja tidak mengarang narasi kolaborasi lintas divisi atau kegiatan kampus — itu hanya Lintang yang tahu.
+- Modal foto belum bisa saya uji dengan foto sungguhan karena belum ada satu pun file di folder-folder yang disiapkan; yang terverifikasi baru bahwa galeri kosong merender `null` (tanpa bingkai kosong) dan seluruh halaman build + 200.
+- Belum deploy — menunggu Lintang.
+**CONFIG/TODO yang masih menunggu Lintang:**
+- Isi `story` (intro, sections, photos) di `content/experience.ts` untuk 4 organisasi, 2 sekolah, dan 3 lomba; taruh fotonya di `public/images/<folder>/` sesuai `// TODO(lintang)` di tiap entri.
+- `credentialImage` / `credentialUrl` tiap sertifikat + entri baru berkategori `"Competition"`.
+- 5× `PROOF_*`, `IO_FESTIVAL_DATE`, `IO_FESTIVAL_STACK`, `WHATSAPP_NUMBER`, `CAL_COM_URL` (belum berubah).
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-26 10:30] — Di luar sprint — Restrukturisasi IA + palet netral + Geist Pixel
 **Status:** ✅ selesai & **LIVE** di https://lintang-sigma.vercel.app
 **Pemicu:** Arahan Lintang: hero terlalu besar ("sampe pusing"), tiap bagian portfolio harus punya halaman detail sendiri di sidebar, kontak di kaki sidebar, beranda jadi ringkasan bernomor, dan palet grey/white.

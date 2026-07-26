@@ -2,6 +2,7 @@ import { SiCoursera } from "react-icons/si";
 
 import { Section } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
+import { PhotoLink } from "@/components/ui/photo-gallery";
 import {
   certificationCategories,
   certifications,
@@ -54,13 +55,12 @@ function IssuerMark({ issuer }: { issuer: string }) {
 }
 
 function CertificationCard({ cert }: { cert: Certification }) {
-  // Verifikasi bisa lewat halaman resmi penerbit ATAU foto sertifikatnya.
-  // Kalau dua-duanya kosong, tautannya tidak dirender sama sekali.
-  const verifyHref =
-    cert.credentialUrl ??
-    (cert.credentialImage ? `/images/${cert.credentialImage}` : null);
-  const verifyIsExternal = Boolean(cert.credentialUrl);
-
+  // Dua jalur bukti, keduanya bergaya garis-bawah yang sama supaya seragam
+  // dengan tautan di halaman lain (keputusan Lintang 2026-07-27):
+  //   • "View"   → foto sertifikatnya, dibuka di modal.
+  //   • "Verify" → halaman verifikasi resmi penerbit.
+  // Yang datanya kosong tidak dirender — tidak ada tombol yang tak bisa
+  // dibuktikan.
   return (
     <li className="border-border bg-card hover:border-n-300 flex flex-col rounded-(--radius) border p-5 transition-colors">
       <IssuerMark issuer={cert.issuer} />
@@ -76,17 +76,27 @@ function CertificationCard({ cert }: { cert: Certification }) {
       <div className="border-border/70 mt-4 flex items-center justify-between gap-3 border-t pt-4">
         <span className="mono text-n-500 text-[12px]">{cert.date}</span>
 
-        {verifyHref ? (
-          <a
-            href={verifyHref}
-            target={verifyIsExternal ? "_blank" : undefined}
-            rel={verifyIsExternal ? "noopener noreferrer" : undefined}
-            className="mono text-ink-muted hover:text-ink focus-visible:ring-ring rounded-sm text-[12px] tracking-[0.08em] uppercase outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-          >
-            Verify
-            <span aria-hidden="true">&nbsp;→</span>
-          </a>
-        ) : null}
+        <div className="flex items-center gap-4">
+          {cert.credentialImage ? (
+            <PhotoLink
+              photo={{
+                src: cert.credentialImage,
+                alt: `${cert.name} — ${cert.issuer}`,
+              }}
+            />
+          ) : null}
+
+          {cert.credentialUrl ? (
+            <a
+              href={cert.credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono text-ink-muted decoration-border hover:text-ink hover:decoration-ink focus-visible:ring-ring rounded-sm text-[12px] underline underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            >
+              Verify
+            </a>
+          ) : null}
+        </div>
       </div>
     </li>
   );

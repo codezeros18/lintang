@@ -86,14 +86,26 @@ export default function CollabsPage() {
                     <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
                       {item.detail}
                     </p>
-                    {item.projectSlug ? (
+                    {/* Setiap lomba punya halaman sendiri (cerita + foto tim).
+                        Kalau pekerjaannya sudah jadi case study proyek, tautan
+                        keduanya ditampilkan — halaman lomba tidak mengulang
+                        ceritanya, ia menautkannya (anti double-count §5.2). */}
+                    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
                       <Link
-                        href={`/projects/${item.projectSlug}`}
-                        className="text-ink hover:text-coral-ink decoration-border hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
+                        href={`/collabs/${item.slug}`}
+                        className="mono text-ink decoration-border hover:decoration-ink rounded-sm text-[13px] underline underline-offset-4"
                       >
-                        See the case study
+                        Read the story <span aria-hidden="true">→</span>
                       </Link>
-                    ) : null}
+                      {item.projectSlug ? (
+                        <Link
+                          href={`/projects/${item.projectSlug}`}
+                          className="mono text-ink-muted decoration-border hover:text-ink hover:decoration-ink rounded-sm text-[13px] underline underline-offset-4"
+                        >
+                          See the case study
+                        </Link>
+                      ) : null}
+                    </div>
                   </div>
                 </Card>
               </StaggerItem>

@@ -36,7 +36,10 @@ function Wordmark({ onClick }: { onClick?: () => void }) {
       onClick={onClick}
       className="focus-visible:ring-ring text-ink pixel block rounded-sm text-[15px] leading-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     >
-      Lintang Balakosa
+      {/* Nama lengkap "Lintang Balakosa Ardhana" dipendekkan jadi "Lintang
+          Balakosa A." di sidebar supaya muat satu baris; di halaman lain
+          selalu ditulis penuh. */}
+      Lintang Balakosa A.
     </Link>
   );
 }

@@ -1,5 +1,10 @@
 import type { MetadataRoute } from "next";
 
+import {
+  achievements,
+  education,
+  organizationRoles,
+} from "@/content/experience";
 import { caseStudyProjects } from "@/content/projects";
 import { getBlogPosts, getLogPosts } from "@/lib/mdx";
 import { SITE_URL } from "@/lib/seo";
@@ -78,5 +83,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }),
     ),
+    // Halaman cerita per organisasi, per lomba, dan per sekolah (2026-07-27).
+    // Pendidikan hanya yang punya `slug` — SMKN 4 sengaja tanpa halaman detail.
+    ...organizationRoles.map((item) => ({
+      url: `${SITE_URL}/experience/organizations/${item.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    })),
+    ...achievements.map((item) => ({
+      url: `${SITE_URL}/collabs/${item.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    })),
+    ...education
+      .filter((item) => item.slug !== null)
+      .map((item) => ({
+        url: `${SITE_URL}/education/${item.slug}`,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority: 0.5,
+      })),
   ];
 }

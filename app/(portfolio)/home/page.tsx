@@ -14,12 +14,11 @@ import {
 import { displayName, featuredProjects } from "@/content/projects";
 import { skillGroups } from "@/content/skills";
 import { buildMetadata } from "@/lib/seo";
-import { getBlogPosts } from "@/lib/mdx";
 
 export const metadata = buildMetadata({
   title: "Home",
   description:
-    "A summary of Lintang Balakosa Ardhana's experience, projects, stack, certifications, education, collabs, and blog — each with a link to the full page.",
+    "A summary of Lintang Balakosa Ardhana's experience, projects, stack, certifications, education, and collabs — each with a link to the full page.",
   path: "/home",
 });
 
@@ -84,9 +83,7 @@ function Row({
   );
 }
 
-export default async function HomePage() {
-  const blogPosts = await getBlogPosts();
-
+export default function HomePage() {
   const sortedWork = [...workItems].sort((a, b) => a.order - b.order);
   const sortedCerts = [...certifications].sort((a, b) => a.order - b.order);
   const sortedEducation = [...education].sort((a, b) => a.order - b.order);
@@ -238,29 +235,10 @@ export default async function HomePage() {
             </ul>
           </NumberedSection>
 
-          <NumberedSection
-            index={6}
-            label="blog"
-            href="/blog"
-            linkLabel="All posts"
-          >
-            {blogPosts.length === 0 ? (
-              <p className="text-ink-muted text-sm leading-relaxed">
-                No posts published yet.
-              </p>
-            ) : (
-              <ul>
-                {blogPosts.slice(0, 3).map((post) => (
-                  <Row
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    primary={post.title}
-                    secondary={post.summary}
-                  />
-                ))}
-              </ul>
-            )}
-          </NumberedSection>
+          {/* Blok `06 — blog` SEMENTARA dihapus dari beranda (keputusan Lintang
+              2026-07-27) bareng item nav-nya, karena isinya belum jelas.
+              Rutenya `/blog` masih hidup — tinggal kembalikan blok ini kalau
+              sudah siap dipajang. */}
         </div>
       </Section>
     </main>

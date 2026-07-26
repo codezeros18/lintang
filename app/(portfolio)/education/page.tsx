@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Section } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { education } from "@/content/experience";
@@ -34,6 +36,16 @@ export default function EducationPage() {
                 {item.program}
                 {item.note ? ` · ${item.note}` : null}
               </p>
+              {/* Hanya UMN & Digital Skola yang punya halaman cerita
+                  (keputusan Lintang 2026-07-27). */}
+              {item.slug ? (
+                <Link
+                  href={`/education/${item.slug}`}
+                  className="mono text-ink decoration-border hover:decoration-ink focus-visible:ring-ring mt-3 inline-block rounded-sm text-[13px] underline underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                >
+                  Read the story <span aria-hidden="true">→</span>
+                </Link>
+              ) : null}
             </li>
           ))}
         </ul>

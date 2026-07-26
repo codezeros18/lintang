@@ -109,6 +109,15 @@ export default function ExperiencePage() {
                   <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
                     {item.summary}
                   </p>
+                  {/* Tiap organisasi punya halaman detailnya sendiri — di sana
+                      ceritanya lebih panjang (kolaborasi lintas divisi) plus
+                      foto-fotonya. */}
+                  <Link
+                    href={`/experience/organizations/${item.slug}`}
+                    className="mono text-ink decoration-border hover:decoration-ink focus-visible:ring-ring mt-3 inline-block rounded-sm text-[13px] underline underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                  >
+                    Read the story <span aria-hidden="true">→</span>
+                  </Link>
                 </li>
               ))}
             </ul>

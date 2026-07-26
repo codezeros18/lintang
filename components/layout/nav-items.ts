@@ -2,10 +2,8 @@ import {
   Award,
   Braces,
   BriefcaseBusiness,
-  FileText,
   FolderGit2,
   GraduationCap,
-  Handshake,
   Home,
   type LucideIcon,
   User,
@@ -40,9 +38,13 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Home", href: "/home", icon: Home },
       { label: "About", href: "/about", icon: User },
-      { label: "Blog", href: "/blog", icon: FileText },
       { label: "Collabs", href: "/collabs", icon: Users },
-      { label: "Log", href: "/log", icon: Handshake },
+      // Blog & Log SEMENTARA disembunyikan dari nav (keputusan Lintang
+      // 2026-07-27) sampai isinya jelas. Rutenya sengaja TIDAK dihapus —
+      // `/blog` & `/log` masih hidup dan masih di sitemap, hanya tidak
+      // dipajang. Kembalikan barisnya di sini untuk menampilkannya lagi:
+      //   { label: "Blog", href: "/blog", icon: FileText },
+      //   { label: "Log", href: "/log", icon: Handshake },
     ],
   },
   {
