@@ -18,6 +18,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 1,
     },
+    // /home = "portfolio lengkap" bersidebar, dituju dari splash "/" (struktur
+    // baru 2026-07-26).
+    {
+      url: `${SITE_URL}/home`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...caseStudyProjects.map((project) => ({
       url: `${SITE_URL}/projects/${project.slug}`,
       lastModified,

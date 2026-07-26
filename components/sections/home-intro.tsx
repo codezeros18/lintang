@@ -2,17 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CountUp } from "@/components/motion/count-up";
+import { SmoothLink } from "@/components/layout/smooth-link";
 import { CONFIG, CONTACT, isSet } from "@/content/config";
 import { getHookStats } from "@/content/hook-stats";
 
 /**
- * HomeIntro — pembuka beranda: foto + bio dengan tautan inline + strip angka.
+ * HomeIntro — konten splash `/`: foto + bio dengan tautan inline + strip angka.
  *
  * Bio ditulis mengikuti gaya leerob.com: tautan diselipkan LANGSUNG di dalam
- * kalimat dan digarisbawahi, bukan dikumpulkan jadi baris ikon terpisah seperti
- * versi sebelumnya. Ditutup satu tautan "Know me more ↓" yang membawa pembaca
- * turun ke bagian pertama daftar bernomor (`#experience`) — jembatan ke isi
- * portfolio yang sudah ada, bukan halaman baru.
+ * kalimat dan digarisbawahi, bukan dikumpulkan jadi baris ikon terpisah.
+ * Ditutup satu tautan **"Know me more →"** yang membawa pembaca ke `/home` —
+ * "portfolio lengkap" bersidebar (keputusan Lintang 2026-07-26). Splash ini
+ * sendiri TIDAK memakai sidebar; lihat `app/page.tsx` vs `app/(portfolio)/`.
+ *
+ * Navigasi ke `/home` memakai `SmoothLink` (cross-fade via View Transition API,
+ * dipicu klik — aman untuk LCP karena tidak menyentuh render server).
  *
  * Layout foto:teks tetap 50:50 (`grid-cols-2`), tanpa bingkai/border di foto.
  * Ukuran teks: 15px bio, 18px angka strip, 11px label strip, judul Geist Pixel
@@ -131,14 +135,22 @@ export function HomeIntro() {
             </p>
           </div>
 
-          {/* Jembatan ke daftar bernomor di bawah (Experience, Projects, dst). */}
-          <a
-            href="#experience"
-            className="mono text-ink-muted hover:text-ink focus-visible:ring-ring mt-6 inline-flex items-center gap-1.5 rounded-sm text-[13px] tracking-[0.04em] outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          {/* Pintu masuk ke /home (portfolio lengkap bersidebar) — bukan tombol,
+              melainkan tautan yang menyatu dengan nada bio: santai, digarisbawahi,
+              dengan panah yang "meloncat" pelan saat di-hover (bukan makna
+              fungsional, murni sentuhan playful sesuai permintaan Lintang). */}
+          <SmoothLink
+            href="/home"
+            className="group text-ink decoration-border hover:decoration-ink mt-6 inline-flex items-center gap-1 text-[15px] italic underline underline-offset-4"
           >
             Know me more
-            <span aria-hidden="true">↓</span>
-          </a>
+            <span
+              aria-hidden="true"
+              className="not-italic transition-transform duration-200 group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </SmoothLink>
         </div>
       </div>
 

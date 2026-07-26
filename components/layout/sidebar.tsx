@@ -32,7 +32,7 @@ function isActiveHref(pathname: string, href: string) {
 function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
     <Link
-      href="/"
+      href="/home"
       onClick={onClick}
       className="focus-visible:ring-ring text-ink pixel block rounded-sm text-[15px] leading-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     >

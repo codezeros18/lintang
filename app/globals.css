@@ -171,6 +171,15 @@
   transform: none;
 }
 
+/* Cross-fade untuk navigasi via SmoothLink (splash → /home). Hanya berjalan
+   lewat document.startViewTransition (dipicu klik, pasca-hidrasi) — tidak
+   pernah memengaruhi HTML server atau cat pertama halaman mana pun. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* Aksesibilitas — §3.4: hormati prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,
