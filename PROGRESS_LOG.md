@@ -27,6 +27,83 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-26 08:45] — Fase 2 · Sprint R6 — Polish · a11y · SEO/OG · redeploy
+**Status:** 🟡 **jalan — SENGAJA belum ✅.** Semua yang bisa dikerjakan agen sudah selesai dan **redesign sudah LIVE**, tapi gate performa belum dibuktikan. Instruksi R6 melarang menutupnya sebelum Lintang mengonfirmasi Lighthouse.
+**URL live (redesign):** **https://lintang-sigma.vercel.app**
+**🔧 Perbaikan a11y terbesar: `Reveal`/`Stagger` ditulis ulang**
+- Masalah yang dicatat di R5: HTML server memuat `opacity:0`, `useReducedMotion` tidak berlaku saat SSR, dan konten bisa tidak pernah muncul bila observer gagal.
+- Polanya sekarang dibalik — sama seperti perbaikan `CountUp` di R1: **default terlihat**, penyembunyian hanya dilakukan di client setelah dipastikan animasinya bisa jalan. Elemen yang sudah berada di viewport saat mount **tidak pernah disembunyikan sama sekali**.
+- Framer Motion dilepas dari `Reveal`, `Stagger`, dan `HoverLift`; ketiganya kini murni CSS + satu `IntersectionObserver`. `prefers-reduced-motion` ditangani di CSS sehingga **berlaku sejak paint pertama, tanpa menunggu JavaScript**.
+- Pengaman `<noscript>` dari S2 dihapus karena tidak ada lagi yang perlu diselamatkan.
+- **Hasil terukur: `opacity:0` di HTML server = 0** pada `/`, `/blog`, `/collabs`, `/log`, dan case study — sebelumnya 14 di `/collabs` saja. Terverifikasi juga di produksi.
+- Efek samping yang bagus: screenshot verifikasi akhirnya bisa menangkap seluruh halaman, sesuatu yang gagal sejak R1.
+**Selesai:**
+- **OG image per-tipe** lewat satu renderer bersama `lib/og.tsx`: beranda (dengan hook strip), `/blog`, `/collabs`, dan **4 case study** (`/projects/[slug]/opengraph-image` — `params` async, breaking change Next 16). Semuanya 200 `image/png`; hasil render case study Ankop sudah diperiksa mata.
+- `sitemap.ts` & `robots.ts` mencakup semua rute baru; draft blog tidak pernah masuk.
+- **`app/ui-demo` dihapus** (utang fase 1) — 404 di produksi.
+- **Audit kontras diulang untuk 8 pasangan warna yang benar-benar dipakai: semua lolos AA** (ink/paper 17.58 · ink-muted/paper 7.06 · ink-muted/card 7.37 · ink-muted/secondary 6.46 · putih/indigo 5.13 · indigo/paper 4.92 · coral-ink/paper 5.12 · coral-ink/card 5.34).
+- Semantic & fokus: `<main id="main">` di **semua** halaman, skip-link, focus ring indigo, drawer `role="dialog"` + `aria-modal` + focus-trap + Esc.
+- **Cek broken link menyeluruh** di 6 halaman: 19 tautan internal + aset **semua 200**, GitHub **200**, LinkedIn **999**.
+- `NEXT_PUBLIC_SITE_URL` aktif → canonical & OG **resolve** ke URL hidup (diverifikasi di produksi: `https://lintang-sigma.vercel.app/collabs`).
+- Deploy produksi: `/` `/blog` `/collabs` `/log` `/projects/*` `/blog/rss.xml` `/sitemap.xml` `/robots.txt` + 4 OG **semua 200**; `/ui-demo` 404.
+- `npm run build` ✅ (24 halaman) · `npm run lint` ✅.
+
+---
+
+## ⛔ TIGA HAL YANG HANYA BISA DIKERJAKAN LINTANG
+
+Agen tidak punya browser sungguhan maupun HP. Tanpa ketiganya, R6 tetap 🟡.
+
+### 1. Audit Lighthouse mobile (gate performa — WAJIB)
+1. Buka **Chrome** di laptop → `https://lintang-sigma.vercel.app`
+2. Tekan **F12** → tab **Lighthouse**
+3. Setel: **Mode** = Navigation · **Device** = **Mobile** · centang **Performance**, **Accessibility**, **Best Practices**, **SEO**
+4. Klik **Analyze page load**
+5. Ulangi untuk **dua halaman terberat**:
+   - `https://lintang-sigma.vercel.app/blog`
+   - `https://lintang-sigma.vercel.app/projects/ankop-trace`
+6. Catat **Performance ≥90** dan **LCP <2s** (LCP ada di bagian "Metrics")
+7. **Kirim angkanya** — saya catat di log ini dan baru menutup R6 ✅. Kalau ada yang di bawah target, kirim juga daftar "Opportunities"-nya supaya bisa saya perbaiki.
+> Tips: jalankan di **jendela Incognito** tanpa extension — extension bisa menurunkan skor secara palsu.
+
+### 2. Registrasi & pasang custom domain
+1. Beli **`lintangbalakosa.dev`** (mis. Niagahoster / Cloudflare Registrar / Porkbun). Domain `.dev` **wajib HTTPS** — otomatis aman.
+2. Buka **vercel.com** → project **lintang** → **Settings → Domains** → **Add** → ketik `lintangbalakosa.dev`
+3. Vercel menampilkan record DNS. Di panel registrar, tambahkan:
+   - `A` record `@` → `76.76.21.21`, **atau** ikuti nameserver yang Vercel tunjukkan
+   - `CNAME` `www` → `cname.vercel-dns.com`
+4. Tunggu propagasi (biasanya menit–jam). Vercel menerbitkan sertifikat HTTPS otomatis.
+5. **Setelah domain hidup:** buka **Settings → Environment Variables**, **hapus** `NEXT_PUBLIC_SITE_URL`, lalu redeploy. Canonical/OG/sitemap otomatis kembali memakai `CONFIG.DOMAIN` (`lintangbalakosa.dev`).
+
+### 3. Tes di HP asli
+1. Buka `https://lintang-sigma.vercel.app` di HP (idealnya sekali di Android/Chrome dan sekali di iPhone/Safari).
+2. Periksa satu per satu:
+   - Tombol **hamburger** membuka drawer; tombol **×** dan tap di luar menutupnya
+   - Semua item nav bisa ditekan dengan nyaman (target ≥40px)
+   - **Tidak ada scroll ke samping** di halaman mana pun
+   - Hook strip terbaca: `Rp20M+ · 5,000+ kg · 6` (**bukan 0**)
+   - Tombol **Download CV** benar-benar mengunduh PDF
+   - Halaman `/projects/ankop-trace` enak dibaca (ukuran teks, panjang baris)
+3. Bonus: nyalakan **Reduce Motion** di setelan HP lalu muat ulang — konten harus **langsung tampil** tanpa animasi.
+4. Laporkan apa pun yang aneh; saya perbaiki.
+
+---
+
+**Gagal / skip / blocker (jujur):**
+- ⛔ **Lighthouse belum dijalankan** — tidak ada browser sungguhan di lingkungan ini. Target ≥90 & LCP <2s **belum terbukti**, dan saya tidak akan mengarang angkanya. Ini satu-satunya alasan R6 masih 🟡.
+- ⛔ **Custom domain belum terpasang** — `lintangbalakosa.dev` belum diregistrasi. Situs hidup di subdomain Vercel (HTTPS aktif).
+- ⛔ **Belum diuji di HP asli.**
+- ⚠️ **Interaksi drawer & scroll-spy tetap belum diuji di sesi browser sungguhan** (headless tidak bisa klik/gulir). Terverifikasi hanya di tingkat kode + atribut ARIA di HTML. Masuk daftar tes HP di atas.
+- ⚠️ **Alt text belum relevan** — situs masih nol gambar (`PHOTO_FILE` kosong). Begitu foto masuk, alt text wajib ditambahkan.
+- 🔴 **Repo GitHub masih belum ada** (utang sejak R0). Deploy masih manual; janji "push = deploy" di alur blog belum berlaku.
+- 🔴 **Belum layak disebarkan:** 5 token `PROOF_*` kosong (semua case study "Evidence coming soon"), `ownVsTeam`/`learned` kosong, `PHOTO_FILE` kosong, blog kosong.
+**ANTI-CLONE CHECK (docs/DESIGN_LANGUAGE.md §3.3) — terhadap diff R6:**
+- ✅ Nol hex baru: OG memakai konstanta warna yang identik dengan token §2.1.
+- ✅ Nol font baru · nol aset.
+- ✅ Situs referensi tidak dibuka selama R6.
+**Commit:** `R6: polish, a11y, seo/og, redesign redeploy`
+**Berikutnya:** menunggu **angka Lighthouse dari Lintang** → baru R6 ditutup ✅.
+
 ### [2026-07-26 07:55] — Fase 2 · Sprint R5 — Collabs + Open-to-help
 **Status:** ✅ selesai
 **Keputusan Lintang (ditanyakan lebih dulu, sesuai instruksi R5):**

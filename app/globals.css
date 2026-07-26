@@ -131,6 +131,24 @@
   font-family: var(--font-code), ui-monospace, monospace;
 }
 
+/* Reveal-on-scroll (R6) — digerakkan CSS, bukan JS.
+   Elemen TERLIHAT secara default; `data-reveal-state="hidden"` hanya dipasang
+   client-side bila animasinya memang bisa dijalankan. Artinya konten tetap
+   terbaca saat JS gagal, saat observer tidak memicu, dan sebelum hidrasi. */
+[data-reveal] {
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal][data-reveal-state="hidden"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+[data-reveal][data-reveal-state="shown"] {
+  opacity: 1;
+  transform: none;
+}
+
 /* Aksesibilitas — §3.4: hormati prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -140,5 +158,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  /* Berlaku sejak paint pertama — tidak menunggu JavaScript. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

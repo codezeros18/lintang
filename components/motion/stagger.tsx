@@ -1,86 +1,81 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { Children, isValidElement } from "react";
 
+import { useRevealOnScroll } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 
-const containerVariants: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+/**
+ * Stagger — grid/daftar yang anaknya muncul berurutan (BLUEPRINT §3.4, 0.08s).
+ *
+ * Ditulis ulang di R6 dengan alasan yang sama seperti `Reveal`: **default terlihat**,
+ * penyembunyian hanya terjadi di client bila animasinya memang bisa berjalan.
+ * Tidak ada `opacity:0` di HTML server, jadi konten selalu terbaca walau JS gagal.
+ *
+ * Urutan tampil diatur lewat `delay` per anak, bukan orkestrasi Framer Motion —
+ * lebih ringan dan tidak menambah JS di jalur render.
+ */
 
 export type StaggerProps = {
   children: React.ReactNode;
   className?: string;
 };
 
-/**
- * Stagger — pembungkus grid kartu; anak-anaknya muncul berurutan 0.08s (§3.4).
- * Bungkus tiap anak dengan `<StaggerItem>`.
- *
- * `prefers-reduced-motion: reduce` → render biasa tanpa animasi (final state).
- */
+const STEP_SECONDS = 0.08;
+
 export function Stagger({ children, className }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  if (shouldReduceMotion) {
-    return <div className={cn(className)}>{children}</div>;
-  }
+  // Wadahnya sendiri tidak dianimasikan; tiap anak yang mengatur jedanya.
+  const items = Children.toArray(children);
 
   return (
-    <motion.div
-      data-reveal
-      className={cn(className)}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-10%" }}
-    >
-      {children}
-    </motion.div>
+    <div className={cn(className)}>
+      {items.map((child, index) =>
+        isValidElement<{ delayIndex?: number }>(child)
+          ? // `delayIndex` disuntikkan supaya `StaggerItem` tahu urutannya tanpa
+            // perlu context atau state global.
+            withDelayIndex(child, index)
+          : child,
+      )}
+    </div>
   );
 }
 
-export function StaggerItem({ children, className }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
+function withDelayIndex(
+  child: React.ReactElement<{ delayIndex?: number }>,
+  index: number,
+) {
+  if (child.props.delayIndex !== undefined) return child;
+  return { ...child, props: { ...child.props, delayIndex: index } };
+}
 
-  if (shouldReduceMotion) {
-    return <div className={cn(className)}>{children}</div>;
-  }
+export function StaggerItem({
+  children,
+  className,
+  delayIndex = 0,
+}: StaggerProps & { delayIndex?: number }) {
+  const ref = useRevealOnScroll(delayIndex * STEP_SECONDS);
 
   return (
-    <motion.div data-reveal className={cn(className)} variants={itemVariants}>
+    <div ref={ref} data-reveal className={cn(className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 /**
- * HoverLift — kartu terangkat 4px saat hover (§3.4). Dimatikan saat reduced-motion.
+ * HoverLift — kartu terangkat 4px saat hover (§3.4).
+ * Kini murni CSS: transisinya otomatis dimatikan oleh aturan global
+ * `prefers-reduced-motion` di `globals.css`, dan nol JavaScript.
  */
 export function HoverLift({ children, className }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  if (shouldReduceMotion) {
-    return <div className={cn(className)}>{children}</div>;
-  }
-
   return (
-    <motion.div
-      className={cn(className)}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+    <div
+      className={cn(
+        "transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1",
+        className,
+      )}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

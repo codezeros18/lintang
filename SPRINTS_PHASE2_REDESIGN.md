@@ -38,7 +38,7 @@ Redesign menumpuk di atas fondasi. Beberapa blocker fase-1 harus diberesi dulu a
 | **R3** | Case study naratif (feel leerob) | Ubah case study jadi cerita panjang problem→akhir; template baru | ✅ |
 | **R4** | Blog (MDX/SSG, cross-post LinkedIn) | `/blog`, list, tag, RSS; nol backend | ✅ |
 | **R5** | Collabs + Consulting/Help | `/collabs` (lomba/kerja + CTA ajak collab) · section Help (Cal.com link) | ✅ |
-| **R6** | Polish · a11y · perf · SEO/OG · **Re-deploy (REDESIGN LIVE)** | Gate performa, OG per-tipe, domain, retest HP | 🔲 |
+| **R6** | Polish · a11y · perf · SEO/OG · **Re-deploy (REDESIGN LIVE)** | Gate performa, OG per-tipe, domain, retest HP | 🟡 |
 
 Legenda: 🔲 belum · 🟡 jalan · ✅ selesai.
 Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sprint: centang task + status ✅ + tulis `PROGRESS_LOG.md` (terbaru di atas, jujur) + `git commit`.
@@ -153,14 +153,14 @@ Default agen: **berhenti di akhir tiap sprint**, tunggu instruksi. Tiap akhir sp
 **Goal:** redesign live, lolos gate performa, semua route baru ter-SEO.
 
 **Tasks:**
-- [ ] OG image per-tipe (home / project / blog / collabs) via `next/og`.
-- [ ] Update `sitemap.ts` + `robots.ts` untuk route baru (`/blog`, `/collabs`, blog slugs).
-- [ ] **Gate performa (WAJIB, hanya Lintang):** Lighthouse mobile ≥90 & LCP <2s pada halaman terberat (blog list & case study naratif). Jangan tutup R6 tanpa ini.
-- [ ] A11y AA: kontras, alt text (begitu ada gambar), semantic, focus, skip-link, drawer focus-trap.
-- [ ] Hapus `app/ui-demo` (dev-only) sebelum launch (backlog fase 1).
-- [ ] Set `NEXT_PUBLIC_SITE_URL` ke domain final; canonical/OG resolve.
-- [ ] Custom domain + HTTPS; **tes di HP asli**.
-- [ ] Cek broken link (khusus LinkedIn setelah `LINKEDIN_URL` terisi).
+- [x] OG image per-tipe via `next/og`: home (dengan hook strip), `/blog`, `/collabs`, dan **4 case study** — semuanya lewat satu renderer bersama `lib/og.tsx`.
+- [x] `sitemap.ts` memuat `/`, 4 case study, `/log` + post, `/blog` + post terbit, `/collabs`. `robots.ts` allow-all + menunjuk sitemap. Draft tidak pernah masuk.
+- [ ] ⛔ **Gate performa — MENUNGGU LINTANG.** Lighthouse mobile ≥90 & LCP <2s. Instruksi langkah-demi-langkah ada di PROGRESS_LOG. **R6 tidak boleh ✅ sebelum ini dibuktikan.**
+- [x] A11y AA: 8 pasangan warna diukur ulang — **semua lolos**; `<main id="main">` di tiap halaman; skip-link; focus ring indigo; drawer `role="dialog"` + `aria-modal` + focus-trap + Esc. **Plus perbaikan besar reduced-motion** (lihat PROGRESS_LOG).
+- [x] `app/ui-demo` dihapus — terverifikasi 404 di produksi.
+- [x] `NEXT_PUBLIC_SITE_URL` menunjuk URL Vercel yang hidup; canonical/OG **resolve** (terverifikasi di produksi). ⚠️ Ganti ke domain final begitu terdaftar.
+- [ ] ⛔ **Custom domain + tes HP asli — MENUNGGU LINTANG.** HTTPS sudah aktif di `lintang-sigma.vercel.app`. Langkah pemasangan domain ada di PROGRESS_LOG.
+- [x] Cek broken link menyeluruh: **19 tautan internal + aset semuanya 200**, GitHub 200, LinkedIn balas **999** (perilaku anti-bot LinkedIn untuk permintaan otomatis, bukan link mati — tetap perlu klik-tes manual sekali).
 
 **Definition of Done:** redesign LIVE di `DOMAIN`; Lighthouse mobile ≥90 & LCP <2s (dibuktikan Lintang); OG per-tipe ter-render; a11y AA; tak ada token bocor/link mati; diuji di HP asli.
 **Files:** `app/opengraph-image.tsx` (+ per-route), `app/sitemap.ts`, `app/robots.ts`.

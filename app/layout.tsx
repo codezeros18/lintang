@@ -19,16 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
-      <head>
-        {/*
-          Framer Motion merender state awal (opacity 0) di HTML server. Tanpa JS,
-          konten ber-`data-reveal` akan tetap tersembunyi — pengaman ini membuatnya
-          terlihat penuh untuk pengunjung tanpa JavaScript.
-        */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
-      </head>
+      {/*
+        Pengaman `<noscript>` dari S2 DIHAPUS di R6: sejak `Reveal`/`Stagger`
+        ditulis ulang, HTML server tidak lagi memuat `opacity:0` sama sekali,
+        jadi tidak ada yang perlu diselamatkan untuk pengunjung tanpa JS.
+      */}
       <body className="flex min-h-full flex-col">
         {/* Skip-link — a11y AA (§9): target pertama Tab, tersembunyi sampai difokus. */}
         <a
