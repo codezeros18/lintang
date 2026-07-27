@@ -35,6 +35,31 @@
      nilainya tidak perlu ditebak saat menyetel kontras. */
   --overlay: rgba(23, 23, 23, 0.86); /* = --n-900 @ 86% */
 
+  /* =====================================================================
+     AKSEN — hijau kopi/eco (keputusan Lintang 2026-07-27).
+     Dasarnya tetap grey/white; hijau ini dipakai HEMAT: angka index, kartu
+     yang sedang disorot, tautan verifikasi, titik kontribusi GitHub.
+
+     Kenapa hijau: menyambung ke pekerjaan Lintang yang memang di situ —
+     produsen kopi (Ankop), Bank Sampah Digital, UMN ECO, PulangKeMerek.
+     Nilainya diturunkan sendiri, TIDAK diambil dari referensi mana pun
+     (ANTI-CLONE §3.1 tetap berlaku penuh untuk warna).
+
+     Kontras diukur, bukan dikira-kira (skrip luminansi relatif, lihat
+     PROGRESS_LOG):
+       accent        #1B6B47 di --paper = 6.21:1  ✅ AA teks normal
+       accent-strong #17603F di --paper = 7.23:1  ✅ dipakai untuk HOVER
+                     (hover MENGGELAP, jadi kontras naik, bukan turun)
+       accent-fill   #2E8B5F di --paper = 4.04:1  ❌ GAGAL AA sebagai teks
+                     → khusus isian/titik, JANGAN dipakai untuk teks
+       putih di atas accent = 6.48:1              ✅
+       ink di atas accent-wash = 15.66:1          ✅
+     ===================================================================== */
+  --accent: #1b6b47;
+  --accent-strong: #17603f;
+  --accent-fill: #2e8b5f;
+  --accent-wash: #e8f2ec;
+
   /* Nama token lama dipertahankan supaya seluruh komponen tidak perlu diubah. */
   --paper: var(--n-50); /* background */
   --ink: var(--n-900); /* teks utama */
@@ -117,6 +142,10 @@
   --color-n-500: var(--n-500);
   --color-n-900: var(--n-900);
   --color-overlay: var(--overlay);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-wash: var(--accent-wash);
 
   /* Fonts — paket `geist` memakai nama variabelnya sendiri, dipetakan di sini. */
   --font-sans: var(--font-geist-sans);

@@ -33,7 +33,9 @@ export function NumberedSection({
     <section id={id} className={cn("border-border scroll-mt-6 border-t pt-7", className)}>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="mono text-ink text-[13px] tracking-[0.08em]">
-          <span className="text-n-500">{number}</span>
+          {/* Angkanya pakai hijau aksen — satu-satunya warna di halaman ini,
+              jadi mata langsung menangkap urutan bacanya. */}
+          <span className="text-accent">{number}</span>
           <span className="text-n-500"> — </span>
           {label}
         </h2>

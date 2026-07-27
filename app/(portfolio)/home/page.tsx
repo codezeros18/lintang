@@ -1,93 +1,94 @@
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 
+import { CertificationCards } from "@/components/home/certification-cards";
+import { GithubGraph } from "@/components/home/github-graph";
 import { NumberedSection } from "@/components/home/numbered-section";
+import { ProjectDeck } from "@/components/home/project-deck";
 import { HomeIntro } from "@/components/sections/home-intro";
-import { Badge } from "@/components/ui/badge";
 import { Section } from "@/components/ui/container";
+import { CONTACT } from "@/content/config";
 import {
   achievements,
-  certifications,
   education,
+  featuredCertifications,
   workItems,
 } from "@/content/experience";
-import { displayName, featuredProjects } from "@/content/projects";
+import { featuredProjects } from "@/content/projects";
 import { skillGroups } from "@/content/skills";
+import { getContributionCalendar, githubUsername } from "@/lib/github";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Home",
   description:
-    "A summary of Lintang Balakosa Ardhana's experience, projects, stack, certifications, education, and collabs — each with a link to the full page.",
+    "A summary of Lintang Balakosa Ardhana's experience, stack, projects, certifications, education, and collabs — each with a link to the full page.",
   path: "/home",
 });
 
 /**
- * /home — "portfolio lengkap" bersidebar, dimasuki dari splash `/` lewat
- * tautan "Know me more", TAPI juga bisa dituju langsung (mis. lewat sidebar).
+ * /home — "portfolio lengkap", dimasuki dari splash `/` lewat "Know me more",
+ * tapi juga bisa dituju langsung lewat wordmark di header.
  *
- * Karena itu foto + headline + strip KPI (`HomeIntro`) TETAP ditampilkan di
- * sini juga — Lintang meminta itu tidak boleh hilang dari `/home` (2026-07-26),
- * hanya saja tautan "Know me more"-nya disembunyikan (`showKnowMore={false}`)
- * karena menunjuk ke halaman yang sedang dibuka sendiri.
+ * Urutan blok (keputusan Lintang 2026-07-27):
+ *   01 experience  ← stack menempel DI SINI, bukan di bawah projects
+ *   02 projects    ← tumpukan kartu dikipas
+ *   03 certifications
+ *   04 education
+ *   05 collabs
+ *   06 github
  *
- * Di bawahnya: enam blok bernomor `01 — experience`, `02 — projects`, … yang
- * masing-masing hanya memuat cuplikan dan mengantar ke halaman detailnya.
- * Stack sengaja TIDAK jadi blok bernomor sendiri — ia menempel di bawah
- * projects, karena tools-nya memang milik proyek-proyek itu.
+ * Stack dipindah ke bawah experience karena tools itu lahir dari tempat kerja,
+ * bukan dari daftar proyeknya. Nomornya tetap 01–05 seperti index di header,
+ * dan stack tetap TANPA nomor sendiri.
  */
 
-function Row({
-  href,
-  primary,
-  secondary,
-  meta,
+/** Baris experience: tahun di kiri, peran di tengah, organisasi di kanan. */
+function ExperienceRow({
+  year,
+  role,
+  org,
 }: {
-  href?: string;
-  primary: string;
-  secondary?: string;
-  meta?: string;
+  year: string | null;
+  role: string;
+  org: string;
 }) {
-  const content = (
-    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-      <span className="text-ink text-[15px] font-medium">{primary}</span>
-      {meta ? (
-        <span className="mono text-n-500 text-[12px]">{meta}</span>
-      ) : null}
-    </div>
-  );
-
-  const body = secondary ? (
-    <p className="text-ink-muted mt-1.5 text-[14px] leading-relaxed">
-      {secondary}
-    </p>
-  ) : null;
-
   return (
-    <li className="border-border/70 border-b py-5 first:pt-0 last:border-b-0 last:pb-0">
-      {href ? (
-        <Link
-          href={href}
-          className="focus-visible:ring-ring hover:bg-secondary/40 -mx-3 block rounded-(--radius-sm) px-3 py-1 outline-none transition-colors focus-visible:ring-2"
-        >
-          {content}
-          {body}
-        </Link>
-      ) : (
-        <>
-          {content}
-          {body}
-        </>
-      )}
+    <li className="border-border/70 grid grid-cols-[3.5rem_1fr] items-baseline gap-x-4 gap-y-1 border-b py-4 last:border-b-0 md:grid-cols-[4.5rem_1fr_auto]">
+      <span className="mono text-n-500 text-[12px] tabular-nums">
+        {year ?? ""}
+      </span>
+      <span className="text-ink text-[15px] font-medium">{role}</span>
+      {/* Di mobile organisasi turun ke bawah peran (kolom kedua), di ≥768px ia
+          duduk rata kanan sebaris — jadi tidak pernah bertabrakan. */}
+      <span className="text-ink-muted col-start-2 text-[14px] md:col-start-3 md:text-right">
+        {org}
+      </span>
     </li>
   );
 }
 
-export default function HomePage() {
+/** Ambil tahun mulai dari string periode CV, mis. "Jun 2026–present" → "2026". */
+function startYear(period: string | null) {
+  return period?.match(/\d{4}/)?.[0] ?? null;
+}
+
+const MAX_STACK_CHIPS = 11;
+
+export default async function HomePage() {
   const sortedWork = [...workItems].sort((a, b) => a.order - b.order);
-  const sortedCerts = [...certifications].sort((a, b) => a.order - b.order);
   const sortedEducation = [...education].sort((a, b) => a.order - b.order);
   const sortedAchievements = [...achievements].sort((a, b) => a.order - b.order);
+
+  // Chip stack diratakan dari semua grup lalu dipotong — sisanya jadi "+ more"
+  // yang mengantar ke /stack, bukan disembunyikan diam-diam.
+  const allSkills = skillGroups.flatMap((group) =>
+    group.items.map((item) => item.name),
+  );
+  const shownSkills = allSkills.slice(0, MAX_STACK_CHIPS);
+  const hiddenSkillCount = allSkills.length - shownSkills.length;
+
+  const calendar = await getContributionCalendar();
 
   return (
     <main id="main">
@@ -99,41 +100,22 @@ export default function HomePage() {
             index={1}
             label="experience"
             href="/experience"
-            linkLabel="All experience"
+            linkLabel="Full history"
           >
             <ul>
-              {sortedWork.slice(0, 3).map((item) => (
-                <Row
+              {sortedWork.map((item) => (
+                <ExperienceRow
                   key={item.org}
-                  primary={item.role}
-                  secondary={item.org}
-                  meta={item.period ?? undefined}
-                />
-              ))}
-            </ul>
-          </NumberedSection>
-
-          <NumberedSection
-            index={2}
-            label="projects"
-            href="/projects"
-            linkLabel="All projects"
-          >
-            <ul>
-              {featuredProjects.map((project) => (
-                <Row
-                  key={project.slug}
-                  href={`/projects/${project.slug}`}
-                  primary={displayName(project)}
-                  secondary={project.tagline}
-                  meta={project.honesty}
+                  year={startYear(item.period)}
+                  role={item.role}
+                  org={item.org}
                 />
               ))}
             </ul>
 
-            {/* Stack menempel di bawah projects, bukan blok bernomor sendiri
-                (keputusan Lintang) — tools-nya memang milik proyek-proyek di atas. */}
-            <div className="border-border/70 mt-6 border-t pt-5">
+            {/* Stack menempel di bawah experience (keputusan Lintang
+                2026-07-27) — tools ini tumbuh dari tempat-tempat kerja di atas. */}
+            <div className="border-border/70 mt-8 border-t pt-6">
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <p className="mono text-n-500 text-[11px] tracking-[0.16em] uppercase">
                   Stack
@@ -142,23 +124,40 @@ export default function HomePage() {
                   href="/stack"
                   className="mono text-ink-muted hover:text-ink focus-visible:ring-ring rounded-sm text-[12px] tracking-[0.08em] uppercase outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 >
-                  Full stack
+                  View all
                   <span aria-hidden="true">&nbsp;→</span>
                 </Link>
               </div>
 
               <ul className="mt-4 flex flex-wrap gap-2">
-                {skillGroups.flatMap((group) =>
-                  group.items.slice(0, 3).map((item) => (
-                    <li key={`${group.title}-${item.name}`}>
-                      <Badge mono tone="outline">
-                        {item.name}
-                      </Badge>
-                    </li>
-                  )),
-                )}
+                {shownSkills.map((name) => (
+                  <li key={name}>
+                    <span className="border-border bg-card text-ink mono inline-flex items-center rounded-md border px-2.5 py-1 text-[13px]">
+                      {name}
+                    </span>
+                  </li>
+                ))}
+                {hiddenSkillCount > 0 ? (
+                  <li>
+                    <Link
+                      href="/stack"
+                      className="border-border text-n-500 hover:border-accent/40 hover:text-accent focus-visible:ring-ring mono inline-flex items-center rounded-md border border-dashed px-2.5 py-1 text-[13px] outline-none transition-colors focus-visible:ring-2"
+                    >
+                      + {hiddenSkillCount} more
+                    </Link>
+                  </li>
+                ) : null}
               </ul>
             </div>
+          </NumberedSection>
+
+          <NumberedSection
+            index={2}
+            label="projects"
+            href="/projects"
+            linkLabel="All projects"
+          >
+            <ProjectDeck projects={featuredProjects} />
           </NumberedSection>
 
           <NumberedSection
@@ -167,16 +166,7 @@ export default function HomePage() {
             href="/certifications"
             linkLabel="All certifications"
           >
-            <ul>
-              {sortedCerts.slice(0, 3).map((cert) => (
-                <Row
-                  key={cert.name}
-                  primary={cert.name}
-                  secondary={cert.issuer}
-                  meta={cert.date ?? undefined}
-                />
-              ))}
-            </ul>
+            <CertificationCards items={featuredCertifications} />
           </NumberedSection>
 
           <NumberedSection
@@ -187,11 +177,11 @@ export default function HomePage() {
           >
             <ul>
               {sortedEducation.map((item) => (
-                <Row
+                <ExperienceRow
                   key={item.school}
-                  primary={item.school}
-                  secondary={item.program}
-                  meta={item.period}
+                  year={startYear(item.period)}
+                  role={item.school}
+                  org={item.program}
                 />
               ))}
             </ul>
@@ -212,13 +202,16 @@ export default function HomePage() {
                   <div className="flex items-start gap-3">
                     <Trophy
                       aria-hidden="true"
-                      className="text-n-500 mt-0.5 size-4 shrink-0"
+                      className="text-accent mt-0.5 size-4 shrink-0"
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                        <span className="text-ink text-[15px] font-medium">
+                        <Link
+                          href={`/collabs/${item.slug}`}
+                          className="text-ink hover:text-accent focus-visible:ring-ring rounded-sm text-[15px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
+                        >
                           {item.title}
-                        </span>
+                        </Link>
                         {item.year ? (
                           <span className="mono text-n-500 text-[12px]">
                             {item.year}
@@ -235,10 +228,36 @@ export default function HomePage() {
             </ul>
           </NumberedSection>
 
-          {/* Blok `06 — blog` SEMENTARA dihapus dari beranda (keputusan Lintang
-              2026-07-27) bareng item nav-nya, karena isinya belum jelas.
-              Rutenya `/blog` masih hidup — tinggal kembalikan blok ini kalau
-              sudah siap dipajang. */}
+          {/* 06 — github. Grid titiknya hanya muncul kalau datanya BENAR-BENAR
+              terambil dari GitHub saat build (butuh `GITHUB_TOKEN`, lihat
+              `lib/github.ts`). Tanpa itu, yang tersisa hanya tautan profil —
+              tidak ada grafik hiasan atau jumlah kontribusi karangan. */}
+          <section className="border-border scroll-mt-6 border-t pt-7">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 className="mono text-ink text-[13px] tracking-[0.08em]">
+                <span className="text-accent">06</span>
+                <span className="text-n-500"> — </span>
+                github
+              </h2>
+              <a
+                href={CONTACT.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mono text-ink-muted hover:text-ink focus-visible:ring-ring rounded-sm text-[12px] tracking-[0.08em] uppercase outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              >
+                @{githubUsername()}
+                <span aria-hidden="true">&nbsp;↗</span>
+              </a>
+            </div>
+
+            {calendar ? (
+              <GithubGraph calendar={calendar} />
+            ) : (
+              <p className="mono text-n-500 mt-5 text-[12px]">
+                Contribution graph not connected yet.
+              </p>
+            )}
+          </section>
         </div>
       </Section>
     </main>

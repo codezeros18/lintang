@@ -4,6 +4,7 @@ import {
   achievements,
   education,
   organizationRoles,
+  workItems,
 } from "@/content/experience";
 import { caseStudyProjects } from "@/content/projects";
 import { getBlogPosts, getLogPosts } from "@/lib/mdx";
@@ -83,6 +84,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }),
     ),
+    // Halaman peran per pekerjaan (2026-07-27).
+    ...workItems.map((item) => ({
+      url: `${SITE_URL}/experience/${item.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     // Halaman cerita per organisasi, per lomba, dan per sekolah (2026-07-27).
     // Pendidikan hanya yang punya `slug` — SMKN 4 sengaja tanpa halaman detail.
     ...organizationRoles.map((item) => ({

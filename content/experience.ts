@@ -34,9 +34,20 @@ export type WorkItem = {
    * ("PT Anugrah Kopi Nusantara (Ankop)" → `ANK`, bukan `PA`).
    */
   short: string;
+  /** Dipakai untuk URL `/experience/<slug>`. */
+  slug: string;
   /** Logo perusahaan; `null` = jatuh ke `short`. */
   logo: OrgLogo | null;
   role: string;
+  /** Apa adanya dari CV: "Full-time", "Internship", "Virtual internship". */
+  employmentType: string;
+  /**
+   * Tools yang benar-benar dipakai DI PERAN INI — bukan seluruh stack Lintang.
+   * Diambil dari `approach`/`tech` proyeknya dan ringkasan CV.
+   */
+  skills: string[];
+  /** Cerita panjang + foto untuk `/experience/<slug>`. Lihat `content/story.ts`. */
+  story: Story;
   /** `null` = tidak ada di CV → tidak ditampilkan. */
   period: string | null;
   location: string | null;
@@ -188,7 +199,33 @@ export const education: EducationItem[] = [
 export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Kopi Nusantara (Ankop)",
+    slug: "ankop",
     short: "ANK",
+    employmentType: "Full-time",
+    skills: [
+      "Next.js",
+      "NestJS",
+      "Prisma",
+      "MySQL",
+      "Docker",
+      "Railway",
+      "Offline-first",
+    ],
+    story: {
+      intro:
+        "Ankop is a specialty coffee producer in Pangalengan. I joined in June 2026 as their full-stack engineer, and the brief covered the whole operation — from the moment cherry arrives at the gate to the moment a supplier gets paid.",
+      sections: [
+        {
+          heading: "What the business needed",
+          body: "Everything ran on paper and spreadsheets, and the signal at the factory is genuinely unreliable. That combination is expensive in a specific way: the kilograms recorded at intake are what a supplier eventually gets paid for, so a lost or re-typed number is not an inconvenience — it is somebody's money and, over time, their trust.",
+        },
+        {
+          heading: "What I actually did here",
+          body: "I built and shipped Ankop Trace, the system that runs the operation end to end. The engineering decisions behind it — why offline-first, why NestJS and Prisma — are written up on the product page rather than repeated here.\n\nThe part that belongs to the job rather than the product: this was work done on site, walking the drying beds and reading the handwritten batch cards that the software was going to replace.",
+        },
+      ],
+      photos: [],
+    },
     logo: {
       src: "ankop/logo.png",
       // Logo menuliskan "CV. Anugrah Kopi Nusantara — Pangalengan", sedangkan CV
@@ -206,7 +243,31 @@ export const workItems: WorkItem[] = [
   },
   {
     org: "Bisasinema",
+    slug: "bisasinema",
     short: "BI",
+    employmentType: "Full-time",
+    skills: [
+      "React",
+      "Tailwind CSS",
+      "Express.js",
+      "Midtrans",
+      "Technical SEO",
+    ],
+    story: {
+      intro:
+        "Bisasinema is a film brand. I joined in March 2026 as tech lead and assistant product manager, which in practice meant being the person responsible for their first product platform existing at all.",
+      sections: [
+        {
+          heading: "What the business needed",
+          body: "A film brand with an audience but no product surface: no way to sell a class, no way to sell a ticket, no way to see what was selling. Everything a viewer could do with the brand happened somewhere else, on somebody else's platform.",
+        },
+        {
+          heading: "What the role involved beyond code",
+          body: "Tech lead and assistant product manager are two jobs, and the second one is the one that does not show up in a commit history: deciding what shipped first, and saying no to the rest until it did.\n\nThe build itself — Coursera-style classes, digital ticketing with live payments, the internal monitoring dashboard, and the technical SEO — is written up on the product page.",
+        },
+      ],
+      photos: [],
+    },
     logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
     role: "Tech Lead & Assistant Product Manager",
     period: "Mar 2026–present",
@@ -218,22 +279,67 @@ export const workItems: WorkItem[] = [
   },
   {
     org: "Bank Sampah Digital",
+    slug: "bank-sampah-digital",
     short: "BSD",
+    employmentType: "Virtual internship",
+    skills: [
+      "Python",
+      "Pandas",
+      "EDA",
+      "Feature engineering",
+      "Looker Studio",
+    ],
+    story: {
+      intro:
+        "A six-week intensive internship run by Digital Skola together with Bank Sampah Digital, from 23 January to 28 February 2026. I worked on the data side: preparing it, then building what the CEO actually looked at.",
+      sections: [
+        {
+          heading: "What the work was",
+          body: "Exploration, cleaning, anomaly handling and feature engineering first — then CEO-facing monitoring dashboards on top of the result. The order matters: a dashboard built on unexamined data is a confident-looking way to be wrong.",
+        },
+        {
+          heading: "How it ended",
+          body: 'The programme certificate records an "excellent grade", citing initiative, active participation in discussions, and the data analysis work on the dataset in Google Data Studio. That is the certificate\'s wording — the fuller story is still to be written.',
+        },
+      ],
+      photos: [
+        {
+          src: "bsd/certificate.jpg",
+          alt: "Certificate of appreciation from Bank Sampah Digital and Digital Skola for the six-week intensive internship, completed with an excellent grade",
+        },
+      ],
+    },
     logo: { src: "bsd/logo.png", alt: "Bank Sampah Digital logo" },
     role: "Data Scientist Intern",
     period: "Jan 2026–Mar 2026",
-    location: "Serang · virtual internship",
+    // Jenis kerjanya sudah di `employmentType`, jadi lokasi cukup kotanya saja.
+    location: "Serang",
     summary:
       "Built CEO-facing monitoring dashboards and prepared the data behind them — exploration, cleaning, anomaly handling, and feature engineering.",
     order: 3,
   },
   {
     org: "PT Anugrah Energi Indonesia",
+    slug: "anugrah-energi-indonesia",
     short: "AEI",
+    employmentType: "Vocational internship",
+    skills: ["React", "Tailwind CSS", "Responsive design"],
+    story: {
+      intro:
+        "My vocational-school internship, and the first time I wrote frontend code that other people depended on rather than code only I would ever run.",
+      sections: [
+        {
+          heading: "What I did",
+          body: "Built responsive, scalable web interfaces with React and Tailwind CSS in a production environment.",
+        },
+      ],
+      photos: [],
+    },
     logo: { src: "aei/logo.png", alt: "Anugrah Energi Indonesia logo" },
     role: "Frontend Developer",
     period: "Jun 2023–Oct 2023",
-    location: "Tangerang · vocational internship",
+    // Jenis kerjanya sudah di `employmentType`, jadi lokasi cukup kotanya saja.
+    location: "Tangerang",
     summary:
       "Vocational-school internship: built responsive, scalable web interfaces with React and Tailwind CSS in a production environment.",
     order: 4,
@@ -481,6 +587,26 @@ export const certifications: Certification[] = [
  * banyak (fotonya di `public/images/certification_lomba/`). Grup yang belum
  * punya isi TIDAK dirender, jadi menambah kategori di sini aman.
  */
+/**
+ * Tiga kartu sertifikat yang dipajang di beranda (permintaan Lintang
+ * 2026-07-27: "fokusin ke BNSP dan course yang paling menarik, 3 saja").
+ *
+ * Dipilih eksplisit, bukan `slice(0, 3)`, supaya urutannya tidak berubah
+ * sendiri saat ada sertifikat baru: BNSP karena itu satu-satunya sertifikasi
+ * profesi, lalu dua coursework dengan penerbit paling dikenal (IBM dan
+ * University of London).
+ */
+export const featuredCertificationNames = [
+  "Associate Data Scientist (Competent)",
+  "Exploratory Data Analysis for Machine Learning",
+  "Data Science Capstone Project: Predicting Bicycle Rental",
+];
+
+export const featuredCertifications: Certification[] =
+  featuredCertificationNames.flatMap(
+    (name) => certifications.find((cert) => cert.name === name) ?? [],
+  );
+
 export const certificationCategories: Certification["category"][] = [
   "Professional",
   "Competition",

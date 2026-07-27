@@ -27,6 +27,33 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-28 02:10] — Di luar sprint — Warna aksen, tata letak beranda baru, halaman peran, GitHub
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Beberapa permintaan Lintang berturut-turut: pindahkan stack ke bawah experience, kartu sertifikat miring, kipas kartu proyek, grafik GitHub, satu warna khas, dan — yang paling penting — kebingungan "kenapa read case study malah ke /projects".
+
+**1. Warna aksen: hijau kopi/eco.** `--accent #1B6B47`, `--accent-strong #17603F`, `--accent-fill #2E8B5F`, `--accent-wash #E8F2EC`. Dipilih Lintang dari 4 opsi. Kontras DIUKUR, bukan dikira: accent di `--paper` **6.21:1** ✅ AA; accent-strong **7.23:1** (dipakai untuk hover, jadi hover MENGGELAP dan kontras naik); accent-fill **4.04:1** ❌ gagal AA sebagai teks → dipakai khusus isian/titik, tidak pernah untuk teks; putih di atas accent 6.48:1 ✅. Nilainya diturunkan sendiri, tidak diambil dari referensi.
+
+**2. Beranda ditata ulang.** Stack pindah ke bawah **experience** (bukan projects) — tools itu lahir dari tempat kerja. Baris experience jadi `tahun | peran | organisasi`. Chip stack dipotong 11 lalu "+ 26 more" mengantar ke `/stack`. Nomor 01–05 tetap cocok dengan index di header.
+
+**3. Kipas kartu proyek & tumpukan miring sertifikat.** Dua-duanya CSS murni, tanpa JS: kartu tengah tegak & disorot hijau, sisi kiri-kanan miring dan maju saat disentuh; kartu sertifikat miring berpola lalu meluruskan diri saat kursor masuk. Rotasi berpola, BUKAN acak — acak berubah tiap render dan memicu hydration mismatch. Di bawah `md`/`sm` kipas & miringnya dilepas jadi tumpukan lurus.
+
+**4. Blok `06 — github` + `lib/github.ts`.** Kalender kontribusi diambil **saat build** lewat GitHub GraphQL API (`codezeros18`, dibaca dari `CONTACT.github`). **Tanpa `GITHUB_TOKEN`, grid-nya TIDAK dirender sama sekali** — hanya tautan profil dan satu baris "Contribution graph not connected yet." Tidak ada grid hiasan atau jumlah kontribusi karangan. Cara mengaktifkan ditulis lengkap di header `lib/github.ts`: token classic **tanpa scope apa pun** (kalender publik sudah terbaca tanpa scope), simpan sebagai `GITHUB_TOKEN` di `.env.local` dan di Vercel. Tokennya tidak pernah sampai ke browser.
+
+**5. Keputusan arsitektur — "kenapa read case study ke /projects".** Ini keluhan yang benar: Ankop & Bisasinema di CV memang **pekerjaan**, bukan proyek sampingan. Sekarang dipisah begini dan saling menautkan:
+- **`/experience/<slug>` = TEMPAT KERJANYA.** Apa yang bisnisnya butuhkan, peran Lintang di sana, apa yang berubah, foto lapangan. Baru: 4 halaman (ankop, bisasinema, bank-sampah-digital, anugrah-energi-indonesia).
+- **`/projects/<slug>` = PRODUKNYA.** Bagaimana dibangun, keputusan teknis, stack, layar.
+Keduanya **tidak mengulang** isi satu sama lain — halaman peran sengaja menyerahkan pembahasan teknis ke halaman produk, dan menutup dengan tautan "The product this role produced →". Tautan di `/experience` berubah dari "Read the case study" jadi **"Read the role"**, jadi pembaca tahu persis ia akan ke mana. `WorkItem` dapat `slug`, `employmentType`, `skills[]`, dan `story`.
+- **Data Scientist Intern akhirnya punya halaman detail** — itu yang ditanyakan Lintang.
+- Chip skill di halaman peran memakai border & radius yang PERSIS sama dengan chip stack di beranda, sesuai permintaan.
+
+**Gagal / skip / blocker (jujur):**
+- **Grafik GitHub belum bisa saya buktikan tampil** — tanpa token, yang terlihat baru jalur "belum tersambung". Kodenya sudah jadi tapi jalur suksesnya belum pernah dijalankan sekali pun.
+- `bsd/dom1.jpg` yang Lintang kira dokumentasi Bank Sampah Digital **isinya prize giving Developer Battle 2025** (nama tim CALON MANTU terbaca di layar Zoom, dan tanggalnya Agustus–Oktober 2025 sementara magang BSD Januari–Februari 2026). Jadi halaman peran BSD isinya sertifikat + cerita, belum ada foto kegiatannya.
+- Cerita `intro`/`sections` untuk 4 organisasi, UMN, dan 3 lomba masih kosong. Yang saya tulis di halaman peran (Ankop, Bisasinema, BSD, AEI) semuanya bersumber CV/sertifikat — tidak ada anekdot karangan.
+- Screenshot produk masih nol untuk semua proyek.
+- Belum deploy; Lighthouse belum diulang setelah perubahan besar ini.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-27 07:30] — Di luar sprint — Batch gambar kedua: logo AEI, 5 sertifikat lomba, dokumentasi baru
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Lintang melampirkan batch file kedua dan minta semua folder `public/images/` dicek ulang lalu dipasang.

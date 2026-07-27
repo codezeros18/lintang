@@ -68,14 +68,34 @@ export default function ExperiencePage() {
                     {item.summary}
                   </p>
 
-                  {item.projectSlug ? (
-                    <Link
-                      href={`/projects/${item.projectSlug}`}
-                      className="mono text-ink hover:text-ink-muted focus-visible:ring-ring mt-3 inline-block rounded-sm text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                    >
-                      Read the case study <span aria-hidden="true">→</span>
-                    </Link>
+                  {item.skills.length > 0 ? (
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {item.skills.slice(0, 3).map((skill) => (
+                        <li key={skill}>
+                          <span className="border-border bg-card text-ink mono inline-flex items-center rounded-md border px-2.5 py-1 text-[13px]">
+                            {skill}
+                          </span>
+                        </li>
+                      ))}
+                      {item.skills.length > 3 ? (
+                        <li>
+                          <span className="border-border text-n-500 mono inline-flex items-center rounded-md border border-dashed px-2.5 py-1 text-[13px]">
+                            + {item.skills.length - 3} skills
+                          </span>
+                        </li>
+                      ) : null}
+                    </ul>
                   ) : null}
+
+                  {/* Menunjuk ke halaman PERAN, bukan langsung ke produknya —
+                      itu yang dulu membingungkan ("kenapa read case study malah
+                      ke project"). Tautan ke produknya ada di dalam sana. */}
+                  <Link
+                    href={`/experience/${item.slug}`}
+                    className="mono text-accent hover:text-accent-strong focus-visible:ring-ring mt-4 inline-block rounded-sm text-[13px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
+                  >
+                    Read the role <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </li>
             );
