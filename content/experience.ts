@@ -224,7 +224,20 @@ export const workItems: WorkItem[] = [
           body: "I built and shipped Ankop Trace, the system that runs the operation end to end. The engineering decisions behind it — why offline-first, why NestJS and Prisma — are written up on the product page rather than repeated here.\n\nThe part that belongs to the job rather than the product: this was work done on site, walking the drying beds and reading the handwritten batch cards that the software was going to replace.",
         },
       ],
-      photos: [],
+      photos: [
+        {
+          src: "ankop/dom4.jpeg",
+          alt: "A drying bed labelled by hand — batch number, date and temperature written on a card — the paper process the system replaced",
+        },
+        {
+          src: "ankop/dom1.jpeg",
+          alt: "Site visit to the drying greenhouse, walking the beds with the producer",
+        },
+        {
+          src: "ankop/dom3.jpeg",
+          alt: "Working on site at the processing facility, laptop open beside the fermentation tanks",
+        },
+      ],
     },
     logo: {
       src: "ankop/logo.png",
@@ -266,7 +279,16 @@ export const workItems: WorkItem[] = [
           body: "Tech lead and assistant product manager are two jobs, and the second one is the one that does not show up in a commit history: deciding what shipped first, and saying no to the rest until it did.\n\nThe build itself — Coursera-style classes, digital ticketing with live payments, the internal monitoring dashboard, and the technical SEO — is written up on the product page.",
         },
       ],
-      photos: [],
+      photos: [
+        {
+          src: "bisasinema/dom1.jpeg",
+          alt: "The Bisasinema team around the work table, a class recording open on the monitor behind them",
+        },
+        {
+          src: "bisasinema/dom2.jpeg",
+          alt: "Working session at the Bisasinema studio, holding up the brand sticker",
+        },
+      ],
     },
     logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
     role: "Tech Lead & Assistant Product Manager",

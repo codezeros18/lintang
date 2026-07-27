@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
 import { PhotoGallery } from "@/components/ui/photo-gallery";
+import { workItems } from "@/content/experience";
 import {
   displayName,
   honestyTone,
@@ -124,6 +125,8 @@ export function CaseStudyArticle({
 }) {
   const name = displayName(project);
   const minutes = readingMinutes(project);
+  // Peran yang melahirkan produk ini, kalau memang lahir dari sebuah pekerjaan.
+  const role = workItems.find((item) => item.projectSlug === project.slug);
 
   return (
     <Section className="pt-12 pb-24 md:pt-16 md:pb-32">
@@ -242,6 +245,24 @@ export function CaseStudyArticle({
               photos={project.gallery.documentation.slice(0, MAX_GALLERY_ITEMS)}
               className="mt-4 sm:grid-cols-3 lg:grid-cols-3"
             />
+          </section>
+        ) : role ? (
+          // Produk yang lahir dari sebuah pekerjaan: foto lapangannya tinggal di
+          // halaman perannya, dan halaman ini MENAUTKAN — bukan menyalin —
+          // supaya satu foto tidak muncul di dua tempat (§5.2).
+          <section>
+            <Heading>On site</Heading>
+            <Prose>
+              The photographs from this work — the site visits, the team, the
+              paper process it replaced — sit with the job rather than the
+              product.
+            </Prose>
+            <Link
+              href={`/experience/${role.slug}`}
+              className="mono text-accent hover:text-accent-strong focus-visible:ring-ring mt-3 inline-block rounded-sm text-[13px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
+            >
+              {role.role} at {role.org} <span aria-hidden="true">→</span>
+            </Link>
           </section>
         ) : null}
 

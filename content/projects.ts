@@ -123,20 +123,10 @@ export const projects: Project[] = [
     gallery: {
       // TODO(lintang): tangkapan layar produknya belum ada — maksimum 3.
       screenshots: [],
-      documentation: [
-        {
-          src: "ankop/dom4.jpeg",
-          alt: "A drying bed labelled by hand — batch number, date and temperature written on a card — the paper process the system replaced",
-        },
-        {
-          src: "ankop/dom1.jpeg",
-          alt: "Site visit to the drying greenhouse, walking the beds with the producer",
-        },
-        {
-          src: "ankop/dom3.jpeg",
-          alt: "Working on site at the processing facility, laptop open beside the fermentation tanks",
-        },
-      ],
+      // Foto lapangannya pindah ke halaman PERAN `/experience/ankop`
+      // (keputusan Lintang 2026-07-28) — isinya cerita tempat kerja, bukan
+      // cerita produk. Case study ini menautkannya, tidak menyalinnya.
+      documentation: [],
     },
     // Nama klien di CV: PT Anugrah Kopi Nusantara (Ankop).
     anonymousName: "A specialty coffee producer",
@@ -237,16 +227,8 @@ export const projects: Project[] = [
     gallery: {
       // TODO(lintang): tangkapan layar platformnya belum ada — maksimum 3.
       screenshots: [],
-      documentation: [
-        {
-          src: "bisasinema/dom1.jpeg",
-          alt: "The Bisasinema team around the work table, a class recording open on the monitor behind them",
-        },
-        {
-          src: "bisasinema/dom2.jpeg",
-          alt: "Working session at the Bisasinema studio, holding up the brand sticker",
-        },
-      ],
+      // Idem: foto studio & tim ada di `/experience/bisasinema`.
+      documentation: [],
     },
     anonymousName: "A film & education brand",
     tagline:

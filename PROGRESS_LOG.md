@@ -27,6 +27,21 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-28 03:05] — Di luar sprint — Foto dibagi menurut isinya: proses ke peran, layar ke produk
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Lintang: "di experience gada dokum atau foto dashboard websitenya dong padahal itu menarik, apa samain aja?"
+**Keputusan (dan alasan menolak "samain aja"):** foto TIDAK diduplikat ke dua halaman. Menyalin foto yang sama ke `/experience/<slug>` dan `/projects/<slug>` mengembalikan persis kebingungan yang baru saja kita hilangkan — pembaca tidak tahu halaman mana yang "asli". Dibagi menurut isi fotonya:
+- **Foto proses** (survei lapangan, kerja di pabrik, tim di studio) → **halaman peran**. Itu cerita tempat kerja.
+- **Screenshot produk** (dashboard, company profile, app) → **halaman produk**. Itu hasil kerjanya.
+**Selesai:**
+- Foto lapangan Ankop (3) pindah dari `/projects/ankop-trace` ke `/experience/ankop`; foto studio Bisasinema (2) pindah ke `/experience/bisasinema`.
+- Case study produk sekarang **menautkan** ke fotonya alih-alih menyalin: blok "On site" berisi satu kalimat + tautan ke perannya. Jadi tidak ada halaman yang mendadak kosong.
+- `ProjectGallery.documentation` tetap ada di tipe — proyek yang BUKAN lahir dari pekerjaan (Tera, Hotel, Kuali) masih boleh punya foto prosesnya sendiri di halaman produk.
+**Gagal / skip / blocker (jujur):**
+- **Screenshot dashboard yang Lintang sebut "menarik" itu belum ada filenya sama sekali.** Laci `screenshots` sudah siap (maks 3 per proyek) tapi masih kosong untuk SEMUA proyek — jadi bagian yang paling ingin ia pamerkan justru yang belum bisa saya pasang. Taruh filenya di `public/images/<folder>/` dan sebutkan, langsung saya pasang.
+- Grafik GitHub masih menunggu `GITHUB_TOKEN`; jalur suksesnya masih belum pernah dijalankan.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-28 02:10] — Di luar sprint — Warna aksen, tata letak beranda baru, halaman peran, GitHub
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Beberapa permintaan Lintang berturut-turut: pindahkan stack ke bawah experience, kartu sertifikat miring, kipas kartu proyek, grafik GitHub, satu warna khas, dan — yang paling penting — kebingungan "kenapa read case study malah ke /projects".
