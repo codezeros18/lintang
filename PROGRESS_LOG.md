@@ -27,6 +27,29 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-27 06:40] — Di luar sprint — Logo organisasi, galeri dokumentasi proyek, foto & sertifikat nyata
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Lintang melampirkan file di `public/images/` (3 logo, 2 sertifikat, 13 foto dokumentasi) dan minta template dokumentasi proyek + pemakaian foto yang sudah ada.
+**Selesai:**
+- **`OrgMark`** (`components/ui/org-mark.tsx`) menggantikan kotak singkatan ANK/BI/BSD di `/experience` dan `/projects`. Kotak persegi + `object-contain`, responsif 40px → 44px di ≥768px; entri tanpa file logo (AEI dan proyek lain) tetap jatuh ke huruf, bukan logo tiruan.
+- **Template dokumentasi proyek** — `ProjectGallery` di `content/projects.ts`: dua laci terpisah `screenshots` (tampilan produk) dan `documentation` (foto proses), **maks 3 masing-masing**, dipaksakan lewat `.slice(0, MAX_GALLERY_ITEMS)` saat render supaya tidak jebol diam-diam. Laci kosong tidak dirender. Muncul di case study sebagai blok "Screens" dan "On site".
+- **Foto yang sudah ada dipasang:** Ankop (3 dari 4), Bisasinema (2) → dokumentasi proyek; I/O Festival (5), CIMB (2, termasuk sertifikatnya) → halaman collabs; AI Community (3), STARLIGHT (2) → halaman organisasi. Semua `alt` ditulis dari isi fotonya, bukan tebakan.
+- **2 sertifikat baru** dengan foto: CIMB Niaga Pitching Day (kategori baru **Competition**) dan Bank Sampah Digital × Digital Skola (kategori baru **Internship**). `Certification.date` jadi nullable karena sertifikat CIMB memang tidak mencantumkan tanggal.
+- **Bug nyata yang ketemu & diperbaiki:** `text-n-400` di `TopIndex` menunjuk warna yang **tidak ada** di tangga netral `globals.css` (ramp-nya lompat 300 → 500), jadi angka index diam-diam tidak pernah lebih muda. Diganti `text-n-500`.
+- Latar modal foto dipindah ke token `--overlay` (`bg-overlay`) supaya nilainya punya satu sumber dan mudah disetel.
+**Gagal / skip / blocker (jujur):**
+- **Screenshot produk masih kosong untuk SEMUA proyek** — memang belum ada filenya. Laci `screenshots` sudah siap tinggal diisi.
+- **`ankop/dom2.jpeg` tidak terpakai.** Batas 3 foto dokumentasi memaksa memilih; saya buang yang paling sedikit bercerita soal pekerjaannya (ceri kopi di telapak tangan) dan menyimpan dom1/dom3/dom4. Tukar sendiri kalau pilihannya beda.
+- **Sempat salah baca bug.** Modal foto terlihat "latar gelapnya tidak muncul" saat diuji lewat iframe headless. Saya sudah menulis komentar di `globals.css` yang menuduh `color-mix(... in oklab ...)` salah lukis. Setelah diuji langsung tanpa iframe (dengan sementara memaksa modal terbuka lalu direvert), **overlay-nya benar** — gelap, teks putih, caption terbaca. Jadi itu artefak kompositing headless-di-dalam-iframe, bukan bug; komentarnya sudah dikoreksi. Catatan: `--window-size` kecil DAN iframe cross-origin dua-duanya menyesatkan di alat ini.
+- Belum deploy; Lighthouse belum dijalankan ulang.
+**Temuan yang perlu keputusan Lintang (TIDAK saya ubah sendiri):**
+1. **"CV." vs "PT".** Logo Ankop menulis *CV. Anugrah Kopi Nusantara — Pangalengan*, sedangkan CV-mu menulis *PT Anugrah Kopi Nusantara*. Teks situs masih ikut CV. Mana yang benar?
+2. **Periode magang BSD.** Sertifikatnya menyebut 23 Jan–28 Feb 2026 (6 minggu); `content/experience.ts` menulis "Jan 2026–Mar 2026" mengikuti CV. Belum saya samakan.
+3. **Tahun I/O Festival.** Layar panggung di `iofest/dom3.jpeg` menulis **I/O FESTIVAL 2026**, dan slide di `dom4.jpeg` menyebut produknya **PulangKeMerek** (tim "Kasih Tau Mama", UMN). `year` dan `IO_FESTIVAL_STACK` masih `null` — konfirmasi dulu sebelum saya isi, karena ini kesimpulan dari foto, bukan dari CV.
+4. **Logo Bank Sampah Digital** berbentuk wordmark memanjang, jadi di kotak 44px ia terbaca kecil. Kalau ada versi ikon persegi, itu akan jauh lebih terbaca.
+**CONFIG/TODO yang masih menunggu Lintang:** 5× `PROOF_*`, `IO_FESTIVAL_DATE`, `IO_FESTIVAL_STACK`, `WHATSAPP_NUMBER`, `CAL_COM_URL`; seluruh `intro`/`sections` cerita organisasi, pendidikan, dan lomba; screenshot produk tiap proyek.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-27 05:10] — Di luar sprint — Sidebar dihapus, navigasi jadi index bernomor sticky
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Lintang minta tanpa sidebar + konten rata tengah, lalu bertanya navigasinya sebaiknya ditaruh di mana. Saya tawarkan 4 opsi; **dipilih "index bernomor sticky di atas"**.

@@ -173,7 +173,7 @@ export default function HomePage() {
                   key={cert.name}
                   primary={cert.name}
                   secondary={cert.issuer}
-                  meta={cert.date}
+                  meta={cert.date ?? undefined}
                 />
               ))}
             </ul>

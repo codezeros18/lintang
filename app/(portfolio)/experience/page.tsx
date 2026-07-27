@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Section } from "@/components/ui/container";
+import { OrgMark } from "@/components/ui/org-mark";
 import { PageHeader } from "@/components/ui/page-header";
 import { organizationRoles, workItems } from "@/content/experience";
 import { buildMetadata } from "@/lib/seo";
@@ -40,12 +41,7 @@ export default function ExperiencePage() {
                     berikutnya. Garisnya tidak digambar di entri terakhir supaya
                     tidak menggantung. */}
                 <div className="flex flex-col items-center">
-                  <span
-                    aria-hidden="true"
-                    className="border-border bg-card mono text-ink flex size-11 shrink-0 items-center justify-center rounded-(--radius-sm) border text-[11px] tracking-[0.04em]"
-                  >
-                    {item.short}
-                  </span>
+                  <OrgMark logo={item.logo} short={item.short} />
                   {!isLast ? (
                     <span aria-hidden="true" className="bg-border w-px flex-1" />
                   ) : null}

@@ -17,6 +17,32 @@
  */
 
 import { CONFIG, isSet } from "@/content/config";
+import type { OrgLogo } from "@/content/experience";
+import type { StoryPhoto } from "@/content/story";
+
+/**
+ * Dokumentasi visual sebuah proyek (permintaan Lintang 2026-07-27).
+ *
+ * Dua laci terpisah, karena keduanya menjawab pertanyaan berbeda:
+ * - `screenshots`  — tampilan produknya sendiri (dashboard, company profile, app).
+ * - `documentation`— foto proses kerjanya (survei lapangan, rapat, foto bersama).
+ *
+ * **Maksimum 3 masing-masing.** Batas ini juga dipaksakan saat render
+ * (`.slice(0, MAX_GALLERY_ITEMS)`), jadi kalau nanti terisi lebih, layoutnya
+ * tidak jebol diam-diam. Laci yang kosong tidak dirender sama sekali.
+ */
+export const MAX_GALLERY_ITEMS = 3;
+
+export type ProjectGallery = {
+  screenshots: StoryPhoto[];
+  documentation: StoryPhoto[];
+};
+
+/** Template kosong untuk proyek yang belum punya foto apa pun. */
+export const emptyGallery: ProjectGallery = {
+  screenshots: [],
+  documentation: [],
+};
 
 export type ProofConfigKey =
   | "PROOF_ANKOP"
@@ -33,6 +59,10 @@ export type Project = {
    * Ditulis eksplisit supaya hasilnya masuk akal, bukan diturunkan otomatis.
    */
   short: string;
+  /** Logo klien/produk; `null` = jatuh ke kotak singkatan `short`. */
+  logo: OrgLogo | null;
+  /** Screenshot produk + foto proses. Lihat `ProjectGallery`. */
+  gallery: ProjectGallery;
   /** Nama pengganti bila penyebutan klien belum diizinkan (§0.1). */
   anonymousName?: string;
   tagline: string;
@@ -89,6 +119,25 @@ export const projects: Project[] = [
     slug: "ankop-trace",
     name: "Ankop Trace",
     short: "ANK",
+    logo: { src: "ankop/logo.png", alt: "Anugrah Kopi Nusantara logo" },
+    gallery: {
+      // TODO(lintang): tangkapan layar produknya belum ada — maksimum 3.
+      screenshots: [],
+      documentation: [
+        {
+          src: "ankop/dom4.jpeg",
+          alt: "A drying bed labelled by hand — batch number, date and temperature written on a card — the paper process the system replaced",
+        },
+        {
+          src: "ankop/dom1.jpeg",
+          alt: "Site visit to the drying greenhouse, walking the beds with the producer",
+        },
+        {
+          src: "ankop/dom3.jpeg",
+          alt: "Working on site at the processing facility, laptop open beside the fermentation tanks",
+        },
+      ],
+    },
     // Nama klien di CV: PT Anugrah Kopi Nusantara (Ankop).
     anonymousName: "A specialty coffee producer",
     tagline:
@@ -184,6 +233,21 @@ export const projects: Project[] = [
     slug: "bisasinema",
     name: "Bisasinema",
     short: "BI",
+    logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
+    gallery: {
+      // TODO(lintang): tangkapan layar platformnya belum ada — maksimum 3.
+      screenshots: [],
+      documentation: [
+        {
+          src: "bisasinema/dom1.jpeg",
+          alt: "The Bisasinema team around the work table, a class recording open on the monitor behind them",
+        },
+        {
+          src: "bisasinema/dom2.jpeg",
+          alt: "Working session at the Bisasinema studio, holding up the brand sticker",
+        },
+      ],
+    },
     anonymousName: "A film & education brand",
     tagline:
       "A learning-and-ticketing platform with live payments — a film brand's first digital presence.",
@@ -219,6 +283,8 @@ export const projects: Project[] = [
     slug: "tera",
     name: "Tera",
     short: "TER",
+    logo: null, // TODO(lintang): belum ada file logo di public/images/
+    gallery: emptyGallery, // TODO(lintang): maks 3 screenshot + 3 foto dokumentasi
     tagline:
       "Multi-tenant SaaS for specialty-coffee export operations — data isolation enforced all the way down to the database.",
     role: "Full-Stack Engineer",
@@ -258,6 +324,8 @@ export const projects: Project[] = [
     slug: "hotel-cancellation-analysis",
     name: "Hotel Cancellation Analysis",
     short: "HCA",
+    logo: null, // TODO(lintang): belum ada file logo di public/images/
+    gallery: emptyGallery, // TODO(lintang): maks 3 screenshot + 3 foto dokumentasi
     tagline:
       "Finding why a hotel loses revenue to cancellations — and turning that into recommendations.",
     role: "Data analyst",
@@ -293,6 +361,8 @@ export const projects: Project[] = [
     slug: "kuali",
     name: "Kuali",
     short: "KUA",
+    logo: null, // TODO(lintang): belum ada file logo di public/images/
+    gallery: emptyGallery, // TODO(lintang): maks 3 screenshot + 3 foto dokumentasi
     tagline:
       "An AI ops assistant for WhatsApp-first culinary MSMEs — messy chats become structured orders.",
     role: "Team lead",
@@ -320,6 +390,8 @@ export const projects: Project[] = [
     slug: "bank-sampah-digital",
     name: "Bank Sampah Digital",
     short: "BSD",
+    logo: null, // TODO(lintang): belum ada file logo di public/images/
+    gallery: emptyGallery, // TODO(lintang): maks 3 screenshot + 3 foto dokumentasi
     tagline:
       "Decision-ready dashboards for the CEO, built from raw sustainability and operations data.",
     role: "Data Scientist Intern",

@@ -10,6 +10,22 @@
 
 import { emptyStory, type Story } from "@/content/story";
 
+/**
+ * Logo organisasi di `public/images/<folder>/logo.png`.
+ *
+ * Dipakai menggantikan kotak singkatan (ANK/BI/BSD) di timeline `/experience`
+ * dan kartu `/projects` (permintaan Lintang 2026-07-27). Yang belum punya file
+ * logo tetap `null` dan jatuh ke singkatan huruf — bukan logo tiruan buatan
+ * sendiri.
+ */
+export type OrgLogo = {
+  /** Path relatif dari `/images/`, mis. `ankop/logo.png`. */
+  src: string;
+  /** Rasio asli berbeda-beda (Ankop bulat, BSD wordmark memanjang), jadi
+   *  penampilnya memakai `object-contain` — lihat `components/ui/org-mark.tsx`. */
+  alt: string;
+};
+
 export type WorkItem = {
   org: string;
   /**
@@ -18,6 +34,8 @@ export type WorkItem = {
    * ("PT Anugrah Kopi Nusantara (Ankop)" → `ANK`, bukan `PA`).
    */
   short: string;
+  /** Logo perusahaan; `null` = jatuh ke `short`. */
+  logo: OrgLogo | null;
   role: string;
   /** `null` = tidak ada di CV → tidak ditampilkan. */
   period: string | null;
@@ -72,13 +90,19 @@ export type Achievement = {
 export type Certification = {
   name: string;
   issuer: string;
-  date: string;
+  /** `null` = tanggalnya memang tidak tercantum di sertifikat → tidak ditampilkan. */
+  date: string | null;
   /**
    * Pengelompokan di halaman `/certifications`. Ini label jenis kredensialnya —
-   * diturunkan dari apa yang tertulis di CV (sertifikasi profesi vs bootcamp vs
-   * kursus), bukan kategori karangan.
+   * diturunkan dari apa yang tertulis di CV/sertifikatnya (sertifikasi profesi vs
+   * magang vs lomba vs bootcamp vs kursus), bukan kategori karangan.
    */
-  category: "Professional" | "Bootcamp" | "Coursework" | "Competition";
+  category:
+    | "Professional"
+    | "Competition"
+    | "Internship"
+    | "Bootcamp"
+    | "Coursework";
   /**
    * URL verifikasi resmi dari penerbit (mis. tautan kredensial Coursera).
    * `null` = tautan "Verify" TIDAK dirender — jangan pernah menampilkan tombol
@@ -143,6 +167,13 @@ export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Kopi Nusantara (Ankop)",
     short: "ANK",
+    logo: {
+      src: "ankop/logo.png",
+      // Logo menuliskan "CV. Anugrah Kopi Nusantara — Pangalengan", sedangkan CV
+      // Lintang menulis "PT". Nama di teks tetap mengikuti CV; lihat catatan di
+      // PROGRESS_LOG. TODO(lintang): pastikan CV atau PT yang benar.
+      alt: "Anugrah Kopi Nusantara logo",
+    },
     role: "Full-Stack Software Engineer",
     period: "Jun 2026–present",
     location: "Bandung",
@@ -154,6 +185,7 @@ export const workItems: WorkItem[] = [
   {
     org: "Bisasinema",
     short: "BI",
+    logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
     role: "Tech Lead & Assistant Product Manager",
     period: "Mar 2026–present",
     location: "Tangerang",
@@ -165,6 +197,7 @@ export const workItems: WorkItem[] = [
   {
     org: "Bank Sampah Digital",
     short: "BSD",
+    logo: { src: "bsd/logo.png", alt: "Bank Sampah Digital logo" },
     role: "Data Scientist Intern",
     period: "Jan 2026–Mar 2026",
     location: "Serang · virtual internship",
@@ -175,6 +208,7 @@ export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Energi Indonesia",
     short: "AEI",
+    logo: null, // TODO(lintang): belum ada file logo di public/images/
     role: "Frontend Developer",
     period: "Jun 2023–Oct 2023",
     location: "Tangerang · vocational internship",
@@ -192,9 +226,33 @@ export const achievements: Achievement[] = [
     scope: "National competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
     detail: "Built a B2B platform for the circular economy.",
-    // TODO(lintang): I/O Festival belum punya case study — tulis di sini,
-    // foto di public/images/io-festival/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          src: "iofest/dom4.jpeg",
+          alt: "Pitching on stage at the I/O Festival — the slide reads PulangKeMerek, “mengubah sampah menjadi data, memberikan tanggung jawab kembali ke penciptanya”",
+        },
+        {
+          src: "iofest/dom2.jpeg",
+          alt: "The platform's dashboard on the projector during the pitch, showing recovery rate, cost per unit, and difficulty score per material",
+        },
+        {
+          src: "iofest/dom1.jpeg",
+          alt: "Lintang Balakosa Ardhana presenting with a teammate on the I/O Festival stage",
+        },
+        {
+          src: "iofest/dom3.jpeg",
+          alt: "Winners lined up on stage during the I/O Festival 2026 awarding session",
+        },
+        {
+          src: "iofest/dom5.jpeg",
+          alt: "Group photo of all I/O Festival winners with the committee, trophies and certificates in hand",
+        },
+      ],
+    },
     order: 1,
   },
   {
@@ -220,8 +278,21 @@ export const achievements: Achievement[] = [
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
     detail:
       "Built a functional mobile app for digital account opening using React Native and Expo Go.",
-    // TODO(lintang): tulis ceritanya + foto di public/images/cimb-niaga/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          src: "cimb/dom1.jpeg",
+          alt: "The four-person team holding the 2nd place cheque at the UMN × CIMB Niaga Pitching Day",
+        },
+        {
+          src: "cimb/certificate.jpg",
+          alt: "2nd place certificate for Pitching Day: From Classroom to Boardroom, naming Lintang Balakosa Ardhana and his three teammates",
+        },
+      ],
+    },
     order: 3,
   },
 ];
@@ -237,13 +308,37 @@ export const certifications: Certification[] = [
     order: 1,
   },
   {
+    // Disalin apa adanya dari foto sertifikat di public/images/cimb/certificate.jpg:
+    // "PITCHING DAY — From Classroom to Boardroom: Solving Real World Problems",
+    // 2nd Place, ditandatangani Dekan Fakultas Teknik & Informatika UMN.
+    name: "2nd Place — Pitching Day: From Classroom to Boardroom",
+    issuer: "UMN feat. CIMB Niaga",
+    date: null, // Sertifikatnya tidak mencantumkan tanggal. TODO(lintang): isi bila ingat.
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "cimb/certificate.jpg",
+    order: 2,
+  },
+  {
+    // Disalin dari public/images/bsd/certificate.jpg. Sertifikatnya menyebut
+    // magang 6 minggu, 23 Jan–28 Feb 2026, "excellent grade", diselenggarakan
+    // Digital Skola & Bank Sampah Digital.
+    name: "Internship Program (Excellent Grade)",
+    issuer: "Bank Sampah Digital & Digital Skola",
+    date: "May 2026", // tanggal terbit di sertifikat: 16 Mei 2026
+    category: "Internship",
+    credentialUrl: null,
+    credentialImage: "bsd/certificate.jpg",
+    order: 3,
+  },
+  {
     name: "Data Science Bootcamp (Excellent Graduate)",
     issuer: "Digital Skola",
     date: "Nov 2025",
     category: "Bootcamp",
     credentialUrl: null, // TODO(lintang): URL sertifikat Digital Skola bila ada
     credentialImage: null, // TODO(lintang): atau foto sertifikat di public/images/certification_course/
-    order: 2,
+    order: 4,
   },
   {
     name: "Exploratory Data Analysis for Machine Learning",
@@ -252,7 +347,7 @@ export const certifications: Certification[] = [
     category: "Coursework",
     credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
     credentialImage: null,
-    order: 3,
+    order: 5,
   },
   {
     name: "Supervised Machine Learning: Regression",
@@ -261,7 +356,7 @@ export const certifications: Certification[] = [
     category: "Coursework",
     credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
     credentialImage: null,
-    order: 4,
+    order: 6,
   },
   {
     name: "Data Science Capstone Project: Predicting Bicycle Rental",
@@ -270,7 +365,7 @@ export const certifications: Certification[] = [
     category: "Coursework",
     credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
     credentialImage: null,
-    order: 5,
+    order: 7,
   },
   {
     name: "Python for Data Science, AI & Development",
@@ -279,7 +374,7 @@ export const certifications: Certification[] = [
     category: "Coursework",
     credentialUrl: null, // TODO(lintang): tempel URL kredensial Coursera
     credentialImage: null,
-    order: 6,
+    order: 8,
   },
 ];
 
@@ -293,6 +388,7 @@ export const certifications: Certification[] = [
 export const certificationCategories: Certification["category"][] = [
   "Professional",
   "Competition",
+  "Internship",
   "Bootcamp",
   "Coursework",
 ];
@@ -326,8 +422,21 @@ export const organizationRoles: OrganizationRole[] = [
     period: "Oct 2024–Nov 2025",
     summary:
       "Built interactive division pages with a focus on usability and responsive design.",
-    // TODO(lintang): tulis ceritanya + foto di public/images/starlight/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          src: "starlight/dom1.jpeg",
+          alt: "The STARLIGHT committee in matching event shirts on stage in front of the event backdrop",
+        },
+        {
+          src: "starlight/dom2.jpeg",
+          alt: "Full group photo of the STARLIGHT participants and committee filling the hall",
+        },
+      ],
+    },
     order: 3,
   },
   {
@@ -337,8 +446,25 @@ export const organizationRoles: OrganizationRole[] = [
     period: "Mar 2025–May 2025",
     summary:
       "Delivered AI demonstrations and hands-on sessions at Open House events for students and parents.",
-    // TODO(lintang): tulis ceritanya + foto di public/images/ai-community/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          src: "aicom/dom2.jpeg",
+          alt: "A room full of visiting students after an AI demonstration session, the demo still open on the projector",
+        },
+        {
+          src: "aicom/dom1.jpeg",
+          alt: "The AI Community volunteers with guests on the auditorium stage after a session",
+        },
+        {
+          src: "aicom/dom3.jpeg",
+          alt: "Lintang Balakosa Ardhana with two fellow volunteers in the lab, presentation slides on the screen behind them",
+        },
+      ],
+    },
     order: 4,
   },
 ];

@@ -13,7 +13,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Certifications",
   description:
-    "Certifications held by Lintang Balakosa Ardhana — BNSP Associate Data Scientist, Digital Skola, and IBM/University of London via Coursera.",
+    "Certifications held by Lintang Balakosa Ardhana — BNSP Associate Data Scientist, a competition and an internship certificate, Digital Skola, and IBM/University of London via Coursera.",
   path: "/certifications",
 });
 
@@ -74,7 +74,9 @@ function CertificationCard({ cert }: { cert: Certification }) {
       </p>
 
       <div className="border-border/70 mt-4 flex items-center justify-between gap-3 border-t pt-4">
-        <span className="mono text-n-500 text-[12px]">{cert.date}</span>
+        {/* Tanggal tidak selalu tercantum di sertifikatnya (mis. CIMB Niaga
+            Pitching Day) — kalau `null`, baris ini kosong, bukan menebak. */}
+        <span className="mono text-n-500 text-[12px]">{cert.date ?? ""}</span>
 
         <div className="flex items-center gap-4">
           {cert.credentialImage ? (
@@ -110,7 +112,7 @@ export default function CertificationsPage() {
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
           title="certifications"
-          description="Credentials across data science and machine learning — a BNSP professional certification, a bootcamp, and coursework from IBM and the University of London via Coursera."
+          description="A BNSP professional certification, a competition certificate, an internship certificate, a bootcamp, and coursework from IBM and the University of London via Coursera."
         />
 
         <div className="mt-14 space-y-12">

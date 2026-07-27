@@ -84,10 +84,7 @@ function Lightbox({ photo, onClose }: { photo: Photo; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
       {/* Klik di area gelap menutup modal. */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-[color-mix(in_oklab,var(--n-900),transparent_15%)]"
-      />
+      <div onClick={onClose} className="bg-overlay absolute inset-0" />
 
       <div
         ref={panelRef}

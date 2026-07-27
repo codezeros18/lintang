@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Section } from "@/components/ui/container";
+import { OrgMark } from "@/components/ui/org-mark";
 import { PageHeader } from "@/components/ui/page-header";
 import {
   displayName,
@@ -18,27 +19,11 @@ export const metadata = buildMetadata({
   path: "/projects",
 });
 
-/**
- * Kotak singkatan proyek — pengganti logo, karena belum ada aset logo untuk
- * proyek-proyek ini dan menggambar logo tiruan sendiri lebih buruk daripada
- * penanda huruf yang jujur.
- */
-function ProjectMark({ short }: { short: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="border-border bg-secondary mono text-ink flex size-12 shrink-0 items-center justify-center rounded-(--radius-sm) border text-[11px] tracking-[0.04em]"
-    >
-      {short}
-    </span>
-  );
-}
-
 function FeaturedCard({ project }: { project: Project }) {
   return (
     <li className="border-border bg-card hover:border-n-300 relative rounded-(--radius) border p-6 transition-colors">
       <div className="flex gap-4">
-        <ProjectMark short={project.short} />
+        <OrgMark logo={project.logo} short={project.short} />
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -107,7 +92,7 @@ export default function ProjectsPage() {
                 className="border-border bg-card rounded-(--radius) border p-5"
               >
                 <div className="flex gap-4">
-                  <ProjectMark short={project.short} />
+                  <OrgMark logo={project.logo} short={project.short} />
 
                   <div className="min-w-0 flex-1">
                     <Badge mono tone="outline">

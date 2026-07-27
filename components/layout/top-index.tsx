@@ -59,8 +59,10 @@ function IndexLink({
         <span
           aria-hidden="true"
           className={cn(
+            // `n-400` tidak ada di tangga netral globals.css — sempat terpakai
+            // di sini dan diam-diam tidak berefek. Pakai n-500 yang memang ada.
             "text-[11px] tabular-nums",
-            active ? "text-ink" : "text-n-400",
+            active ? "text-ink" : "text-n-500",
           )}
         >
           {indexLabel(position)}

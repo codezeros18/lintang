@@ -3,9 +3,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
+import { PhotoGallery } from "@/components/ui/photo-gallery";
 import {
   displayName,
   honestyTone,
+  MAX_GALLERY_ITEMS,
   resolveProof,
   type Project,
 } from "@/content/projects";
@@ -217,6 +219,29 @@ export function CaseStudyArticle({
           <section>
             <Heading>One lesson</Heading>
             <Prose>{project.learned}</Prose>
+          </section>
+        ) : null}
+
+        {/* Screenshot produk & foto proses. Masing-masing dibatasi 3
+            (`MAX_GALLERY_ITEMS`) dan laci yang kosong tidak dirender —
+            tidak ada bingkai kosong menunggu diisi. */}
+        {project.gallery.screenshots.length > 0 ? (
+          <section>
+            <Heading>Screens</Heading>
+            <PhotoGallery
+              photos={project.gallery.screenshots.slice(0, MAX_GALLERY_ITEMS)}
+              className="mt-4 sm:grid-cols-3 lg:grid-cols-3"
+            />
+          </section>
+        ) : null}
+
+        {project.gallery.documentation.length > 0 ? (
+          <section>
+            <Heading>On site</Heading>
+            <PhotoGallery
+              photos={project.gallery.documentation.slice(0, MAX_GALLERY_ITEMS)}
+              className="mt-4 sm:grid-cols-3 lg:grid-cols-3"
+            />
           </section>
         ) : null}
 

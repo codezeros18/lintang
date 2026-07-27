@@ -29,6 +29,12 @@
   --n-800: #2b2b2b;
   --n-900: #171717;
 
+  /* Latar gelap di belakang modal foto — satu token, dipakai `bg-overlay`.
+     Sebelumnya ditulis inline sebagai `color-mix(in oklab, var(--n-900),
+     transparent 15%)`; hasilnya sama saja, tapi rgba() lebih mudah dibaca dan
+     nilainya tidak perlu ditebak saat menyetel kontras. */
+  --overlay: rgba(23, 23, 23, 0.86); /* = --n-900 @ 86% */
+
   /* Nama token lama dipertahankan supaya seluruh komponen tidak perlu diubah. */
   --paper: var(--n-50); /* background */
   --ink: var(--n-900); /* teks utama */
@@ -110,6 +116,7 @@
   --color-n-300: var(--n-300);
   --color-n-500: var(--n-500);
   --color-n-900: var(--n-900);
+  --color-overlay: var(--overlay);
 
   /* Fonts — paket `geist` memakai nama variabelnya sendiri, dipetakan di sini. */
   --font-sans: var(--font-geist-sans);
