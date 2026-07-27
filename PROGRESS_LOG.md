@@ -27,6 +27,32 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-27 07:30] — Di luar sprint — Batch gambar kedua: logo AEI, 5 sertifikat lomba, dokumentasi baru
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Lintang melampirkan batch file kedua dan minta semua folder `public/images/` dicek ulang lalu dipasang.
+**Selesai:**
+- **Logo AEI** terpasang — sekarang keempat entri `/experience` pakai logo, tidak ada lagi yang jatuh ke huruf.
+- **5 sertifikat lomba baru** di `/certifications` (kategori Competition, semua dengan tombol View):
+  - Juara 3 SurabayaDev Developer Battle 2025 (tim CALON MANTU, Okt 2025)
+  - Peserta Web Development Nasional — I/O Festival 2026 (BEM FTI UNTAR, 4–5 Juni 2026)
+  - Peserta Gunadarma Code Week 2026 Hackathon (20 Juni 2026)
+  - Peserta Garuda Hacks 7.0 (tanpa tanggal di dokumennya)
+  - Peserta Gelar Rasa 2025 — UPN "Veteran" Jawa Timur (1 & 30 Nov 2025)
+- **Dokumentasi baru terpasang:** prize giving Developer Battle + sertifikatnya → halaman collabs SurabayaDev; sesi Zoom Digital Skola + sertifikat magang → halaman `/education/digital-skola`; foto angkatan → halaman organisasi Duta Anti Narkoba UMN.
+- **Tahun I/O Festival diisi "2026"** — bukan tebakan: sertifikat pesertanya menulis "I/O FESTIVAL 2026 … 4-5 Juni 2026" dan layar panggung di `dom3.jpeg` juga menulis 2026. Sudah ditandai `TODO(lintang)` untuk dikoreksi kalau keliru.
+- Perbaikan kecil: inisial penerbit membuang tanda baca, jadi `UPN "Veteran" Jawa Timur` → "UV", bukan `U"`.
+**Keputusan editorial yang perlu diketahui:**
+- **Empat sertifikat itu tertulis "Peserta"/"Participation", jadi judulnya saya tulis "Participant — …" apa adanya.** Ikut lomba bukan menang, dan menyamarkannya jadi terbaca seperti prestasi = memalsukan. Kalau ada sertifikat juara untuk lomba-lomba itu, kirim dan judulnya saya ganti.
+- **Dua file tertukar foldernya, saya tempatkan menurut ISI, bukan nama folder:**
+  - `bsd/dom1.jpg` isinya prize giving ceremony Developer Battle 2025 (nama "Lintang_CALON MANTU_Universitas Multimedia Nusantara" terbaca di layar) → dipakai di halaman SurabayaDev.
+  - `surabayadev/dom1.jpg` isinya sesi Zoom Digital Skola (branding Digital Skola + Desty Eka Putri Sari, CEO Bank Sampah Digital, orang yang sama yang menandatangani sertifikat magang) → dipakai di halaman Digital Skola.
+  Filenya TIDAK saya pindahkan — path-nya tetap seperti aslinya dan diberi komentar di `content/experience.ts`. Tinggal bilang kalau mau saya tukar foldernya.
+**Perlu klarifikasi Lintang:**
+- **Sertifikat juara 1 I/O Festival belum ada di antara file yang dikirim.** Yang ada sertifikat PESERTA kategori Web Development, sementara foto panggungnya menampilkan pitch produk *PulangKeMerek* (circular economy) — dua hal yang kelihatannya beda kategori. Klaim "1st Place, National" masih berdiri di atas CV saja, belum ada dokumennya.
+- Tiga temuan lama masih terbuka: "CV." vs "PT" Ankop, periode magang BSD (sertifikat 23 Jan–28 Feb 2026 vs CV Jan–Mar 2026), dan logo BSD yang berbentuk wordmark memanjang.
+**CONFIG/TODO yang masih menunggu Lintang:** 5× `PROOF_*`, `IO_FESTIVAL_DATE`, `IO_FESTIVAL_STACK`, `WHATSAPP_NUMBER`, `CAL_COM_URL`; seluruh `intro`/`sections` cerita; screenshot produk tiap proyek.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-27 06:40] — Di luar sprint — Logo organisasi, galeri dokumentasi proyek, foto & sertifikat nyata
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Lintang melampirkan file di `public/images/` (3 logo, 2 sertifikat, 13 foto dokumentasi) dan minta template dokumentasi proyek + pemakaian foto yang sudah ada.

@@ -29,6 +29,9 @@ export const metadata = buildMetadata({
 function issuerInitials(issuer: string) {
   return issuer
     .replace(/\(.*?\)/g, "")
+    // Buang tanda kutip dsb. supaya `UPN "Veteran" Jawa Timur` jadi "UV",
+    // bukan `U"`.
+    .replace(/[^\p{L}\s]/gu, " ")
     .trim()
     .split(/\s+/)
     .slice(0, 2)
@@ -112,7 +115,7 @@ export default function CertificationsPage() {
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
           title="certifications"
-          description="A BNSP professional certification, a competition certificate, an internship certificate, a bootcamp, and coursework from IBM and the University of London via Coursera."
+          description="A BNSP professional certification, competition certificates — placements and participation, labelled as they are — an internship certificate, a bootcamp, and coursework from IBM and the University of London via Coursera."
         />
 
         <div className="mt-14 space-y-12">

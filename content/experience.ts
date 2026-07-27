@@ -149,8 +149,30 @@ export const education: EducationItem[] = [
     period: "Jun 2025–Oct 2025",
     note: "Excellent Graduate",
     slug: "digital-skola",
-    // TODO(lintang): tulis ceritanya + taruh foto di public/images/digital-skola/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya.
+      intro: null,
+      sections: [
+        {
+          heading: "The internship that came with it",
+          body: 'The certificate for the internship reads: a six-week intensive programme from 23 January to 28 February 2026, run by Digital Skola together with Bank Sampah Digital, completed with an "excellent grade" for initiative, participation in discussions, and data analysis work on the dataset in Google Data Studio.\n\nThat is the certificate\'s wording, not mine — the story of what the weeks were actually like is still to be written.',
+        },
+      ],
+      photos: [
+        {
+          // ⚠️ File ini ada di folder `surabayadev/`, tapi ISINYA sesi Zoom
+          // Digital Skola (branding Digital Skola + Desty Eka Putri Sari, CEO
+          // Bank Sampah Digital — sama dengan penanda tangan sertifikat magang).
+          // Ditempatkan menurut isi, bukan nama foldernya. Lihat PROGRESS_LOG.
+          src: "surabayadev/dom1.jpg",
+          alt: "Online session with the Digital Skola cohort and mentors on Zoom",
+        },
+        {
+          src: "bsd/certificate.jpg",
+          alt: "Certificate of appreciation from Bank Sampah Digital and Digital Skola for the six-week intensive internship, completed with an excellent grade",
+        },
+      ],
+    },
     order: 2,
   },
   {
@@ -208,7 +230,7 @@ export const workItems: WorkItem[] = [
   {
     org: "PT Anugrah Energi Indonesia",
     short: "AEI",
-    logo: null, // TODO(lintang): belum ada file logo di public/images/
+    logo: { src: "aei/logo.png", alt: "Anugrah Energi Indonesia logo" },
     role: "Frontend Developer",
     period: "Jun 2023–Oct 2023",
     location: "Tangerang · vocational internship",
@@ -224,7 +246,11 @@ export const achievements: Achievement[] = [
     slug: "io-festival",
     title: "1st Place, National — I/O Festival",
     scope: "National competition",
-    year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.
+    // CV tidak menyebut tahun, tapi sertifikat pesertanya
+    // (`iofest/certificate.png`) menulis "I/O FESTIVAL 2026 … 4-5 Juni 2026",
+    // dan layar panggung di `iofest/dom3.jpeg` juga menulis 2026. Diisi dari
+    // dokumen itu, bukan tebakan. TODO(lintang): koreksi kalau keliru.
+    year: "2026",
     detail: "Built a B2B platform for the circular economy.",
     story: {
       // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
@@ -266,8 +292,25 @@ export const achievements: Achievement[] = [
     // Pekerjaannya sudah diceritakan penuh sebagai case study.
     projectSlug: "hotel-cancellation-analysis",
     // Ceritanya sudah penuh di case study — halaman ini cuma foto + konteks.
-    // TODO(lintang): foto lomba di public/images/surabayadev/
-    story: emptyStory,
+    story: {
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          // ⚠️ File ini ada di folder `bsd/`, tapi ISINYA prize giving ceremony
+          // Developer Battle 2025 (nama peserta "Lintang_CALON MANTU_Universitas
+          // Multimedia Nusantara" terbaca jelas — tim yang sama dengan yang
+          // tertulis di sertifikatnya). Ditempatkan menurut isi, bukan nama
+          // foldernya. Lihat PROGRESS_LOG.
+          src: "bsd/dom1.jpg",
+          alt: "The Developer Battle 2025 prize giving ceremony on Zoom, with the finalist teams on screen",
+        },
+        {
+          src: "surabayadev/certificate.jpg",
+          alt: "3rd place certificate for SurabayaDev Developer Battle 2025, awarded to Lintang Balakosa Ardhana of team CALON MANTU",
+        },
+      ],
+    },
     order: 2,
   },
   {
@@ -330,6 +373,59 @@ export const certifications: Certification[] = [
     credentialUrl: null,
     credentialImage: "bsd/certificate.jpg",
     order: 3,
+  },
+  {
+    // `surabayadev/certificate.jpg`: "Sertifikat Penghargaan — Developer Battle
+    // 2025 … JUARA 3", tim CALON MANTU, 20 Agustus–18 Oktober 2025.
+    name: "3rd Place — SurabayaDev Developer Battle 2025",
+    issuer: "SurabayaDev",
+    date: "Oct 2025",
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "surabayadev/certificate.jpg",
+    order: 9,
+  },
+  // ——— Sertifikat PARTISIPASI ———
+  // Keempat berikut tertulis jelas "Peserta"/"Participation" di dokumennya, jadi
+  // judulnya ditulis apa adanya sebagai partisipasi. Ikut lomba memang bukan
+  // menang, dan menyamarkannya jadi seolah-olah prestasi = memalsukan.
+  {
+    // `iofest/certificate.png` — perhatikan: ini sertifikat PESERTA kategori
+    // Web Development, BUKAN sertifikat juara 1 yang ada di daftar collabs.
+    name: "Participant — Web Development (National), I/O Festival 2026",
+    issuer: "BEM FTI Universitas Tarumanagara",
+    date: "Jun 2026",
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "iofest/certificate.png",
+    order: 10,
+  },
+  {
+    name: "Participant — Gunadarma Code Week 2026 Hackathon",
+    issuer: "Gunadarma Code Week & Google Developer Group",
+    date: "Jun 2026",
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "certification_lomba/codeweek.jpg",
+    order: 11,
+  },
+  {
+    name: "Participant — Garuda Hacks 7.0",
+    issuer: "Garuda Hacks",
+    date: null, // Sertifikatnya tidak mencantumkan tanggal.
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "certification_lomba/garudahacks.jpg",
+    order: 12,
+  },
+  {
+    name: "Participant — Gelar Rasa 2025",
+    issuer: 'UPN "Veteran" Jawa Timur',
+    date: "Nov 2025",
+    category: "Competition",
+    credentialUrl: null,
+    credentialImage: "certification_lomba/gelarrasa.png",
+    order: 13,
   },
   {
     name: "Data Science Bootcamp (Excellent Graduate)",
@@ -411,8 +507,17 @@ export const organizationRoles: OrganizationRole[] = [
     period: "Dec 2024–Nov 2025",
     summary:
       "Managed end-to-end website delivery, including event schedules and ticketing features.",
-    // TODO(lintang): tulis ceritanya + foto di public/images/duta-anti-narkoba-umn/
-    story: emptyStory,
+    story: {
+      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
+      intro: null,
+      sections: [],
+      photos: [
+        {
+          src: "dan/dom1.jpg",
+          alt: "The Duta Anti Narkoba UMN cohort filling the auditorium for a group photo",
+        },
+      ],
+    },
     order: 2,
   },
   {
