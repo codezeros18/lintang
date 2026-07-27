@@ -46,8 +46,9 @@
   --maxw: 880px; /* dikecilkan dari 1120px atas permintaan Lintang */
 
   /* Layout shell — dikunci di docs/DESIGN_LANGUAGE.md §2.4 (R0).
-     Keduanya UKURAN, bukan warna/font: kelipatan skala 4px §3.3. */
-  --sidebar-w: 264px;
+     Keduanya UKURAN, bukan warna/font: kelipatan skala 4px §3.3.
+     `--sidebar-w` DIHAPUS 2026-07-27: sidebar diganti index bernomor sticky
+     di puncak halaman, jadi tidak ada lagi kolom navigasi. */
   --nav-item-h: 36px;
   --topbar-h: 56px;
 

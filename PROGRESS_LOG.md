@@ -27,6 +27,25 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-27 05:10] — Di luar sprint — Sidebar dihapus, navigasi jadi index bernomor sticky
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Lintang minta tanpa sidebar + konten rata tengah, lalu bertanya navigasinya sebaiknya ditaruh di mana. Saya tawarkan 4 opsi; **dipilih "index bernomor sticky di atas"**.
+**Selesai:**
+- **`components/layout/sidebar.tsx` DIHAPUS.** `AppShell` sekarang satu kolom: `TopIndex` → konten → `SiteFooter`, dibungkus `min-h-dvh flex flex-col` supaya footer tidak menggantung di halaman pendek.
+- **Konten benar-benar rata tengah** tanpa penambahan apa pun: `Container` memang sudah `mx-auto`, yang selama ini menggesernya ke kiri hanyalah kolom grid sidebar.
+- **`TopIndex`** — nama di kiri, lalu `01 experience  02 projects  03 certifications  04 education  05 collabs │ about  stack`. Angkanya **sengaja sama persis** dengan blok bernomor di `/home`, jadi header terbaca sebagai daftar isi, bukan menu generik. Item aktif jadi `text-ink` + garis bawah, angkanya ikut menyala.
+- **Stack & About tanpa nomor** — konsisten dengan keputusan lama bahwa Stack menempel di bawah Projects dan bukan blok bernomor sendiri.
+- **Tanpa drawer/hamburger.** Di layar kecil barisnya membungkus (3 baris di 360px) sehingga semua tautan tetap terlihat; tidak ada focus-trap, kunci scroll, atau state buka/tutup baru yang harus dijaga.
+- **`SiteFooter`** — blok kontak "For work, collabs & everything else…" pindah ke kaki halaman, tidak dihapus.
+- `--sidebar-w` dihapus dari `globals.css`; `docs/DESIGN_LANGUAGE.md` §5 dicatat bahwa §1.1 (spesifikasi sidebar) kini historis.
+**Catatan anti-clone:** kedua referensi (bryllim & leerob) sama-sama memakai nav kiri/atas konvensional. Index bernomor ini bukan diambil dari salah satunya — ia tumbuh dari penomoran `01 — experience` yang sudah lebih dulu ada di beranda kita.
+**Gagal / skip / blocker (jujur):**
+- Screenshot headless di lebar 420px sempat terlihat terpotong. Saya cek ulang lewat iframe 360px sungguhan: `scrollWidth` tidak melebihi viewport, nav membungkus rapi — itu artefak clamp `--window-size` Chrome headless yang sama seperti sebelumnya, **bukan overflow**.
+- Belum diuji di HP sungguhan dan Lighthouse belum dijalankan ulang setelah perubahan shell.
+- Belum deploy — menunggu Lintang.
+**CONFIG/TODO yang masih menunggu Lintang:** tidak berubah dari entri sebelumnya.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-27 04:20] — Di luar sprint — Halaman cerita (organisasi/pendidikan/lomba), modal foto, stack dirapikan
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Tujuh permintaan Lintang dalam satu pesan.

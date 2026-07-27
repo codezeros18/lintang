@@ -1,23 +1,29 @@
-import { Sidebar } from "@/components/layout/sidebar";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { TopIndex } from "@/components/layout/top-index";
 
 /**
- * AppShell — kerangka `[sidebar | content]` (`SPRINTS_PHASE2_REDESIGN.md` R1).
+ * AppShell — kerangka satu kolom rata tengah (keputusan Lintang 2026-07-27).
  *
- * Di ≥768px sidebar jadi kolom grid selebar `--sidebar-w`; di bawahnya sidebar
- * berubah jadi top bar + drawer, dan halaman kembali satu kolom penuh.
+ * Sebelumnya `[sidebar | content]`, yang membuat seluruh isi halaman terdorong
+ * ke kanan sidebar dan tidak pernah benar-benar di tengah layar. Sidebar
+ * diganti `TopIndex` (daftar isi bernomor yang sticky), sehingga `Container`
+ * yang memang sudah `mx-auto` langsung memusatkan konten tanpa penyeimbang
+ * buatan.
  *
- * `min-w-0` pada kolom konten wajib: tanpa itu, isi yang lebar (tabel/kode)
- * memaksa kolom grid melebar dan memunculkan scroll horizontal di layar kecil.
+ * Blok kontak yang dulu di kaki sidebar pindah ke `SiteFooter` — bukan hilang.
  *
- * Ritme vertikal (`py-20 md:py-28`) dan lebar `--maxw` tetap dipegang
- * `Section`/`Container` di tiap halaman, bukan di shell — supaya halaman yang
- * butuh ritme berbeda (mis. artikel case study) tidak perlu melawan shell.
+ * `flex-1` pada konten + `min-h-dvh` pada pembungkus menjaga footer tetap di
+ * bawah pada halaman pendek, alih-alih menggantung di tengah layar.
+ *
+ * Ritme vertikal dan lebar `--maxw` tetap dipegang `Section`/`Container` di
+ * tiap halaman, bukan di shell.
  */
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="md:grid md:grid-cols-[var(--sidebar-w)_1fr] md:items-start">
-      <Sidebar />
-      <div className="min-w-0">{children}</div>
+    <div className="flex min-h-dvh flex-col">
+      <TopIndex />
+      <div className="min-w-0 flex-1">{children}</div>
+      <SiteFooter />
     </div>
   );
 }
