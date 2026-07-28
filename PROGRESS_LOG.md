@@ -27,6 +27,20 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-28 04:20] — Di luar sprint — Mockup produk terpasang + GitHub AKHIRNYA tersambung
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Selesai:**
+- **`ScreenshotStrip`** (`components/ui/photo-gallery.tsx`) — mockup selebar kolom, satu per baris, diklik membuka gambar utuh di modal yang sama dengan galeri foto.
+- Terpasang: `ankop/mock1.png` di `/projects/ankop-trace`; `bisasinema/mock1.png` + `mock2.png` di `/projects/bisasinema`.
+- **PNG-nya transparan** (dicek dengan merendernya di atas latar magenta), jadi tidak diberi latar, bingkai, atau bayangan — mockup-nya sudah membawa bayangan sendiri dan akan bertabrakan kalau ditumpuk lagi.
+- **`GITHUB_TOKEN` sudah diisi Lintang dan grafiknya TERBUKTI TAMPIL**: blok `06 — github` merender grid titik asli + "507 contributions in the last year". Ini pertama kalinya jalur sukses `lib/github.ts` benar-benar dijalankan — sebelumnya cuma jalur "belum tersambung" yang pernah terlihat.
+**Keputusan tata letak (dan alasan tidak pakai 2 kolom):** Lintang menawarkan opsi "1 foto full kiri–kanan" atau "2 kolom". Dipilih **satu per baris, penuh selebar kolom**. Alasannya: tiap file mockup ITU SENDIRI sudah berisi dua jendela browser miring berdampingan; menaruh dua file seperti itu bersebelahan membuat tiap jendela tinggal ~200px dan teks di dalamnya tidak terbaca sama sekali. Kalau tetap mau 2 kolom, tinggal ganti `space-y-4` jadi grid dua kolom di `ScreenshotStrip` — satu baris.
+**Catatan teknis:** dipangkas `aspect-video` + `object-cover`. Sempat dicoba `2/1`, tapi mockup Bisasinema yang komposisinya paling tinggi (`mock2`) mulai terpotong di atas; 16/9 menyisakan 75% tinggi asli dan aman. Versi tanpa pangkas tetap bisa dilihat lewat modal.
+**Gagal / skip / blocker (jujur):**
+- Dua screenshot iframe headless sempat saya baca sebagai "grafik GitHub tidak muncul" — ternyata offset iframe-nya yang salah, bukan halamannya. Terbukti setelah screenshot halaman penuh: grafiknya ada. Ini pengingat ketiga bahwa iframe di headless tidak bisa dipercaya untuk menilai tampilan.
+- Tera, Hotel, dan Kuali masih tanpa screenshot.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-28 03:05] — Di luar sprint — Foto dibagi menurut isinya: proses ke peran, layar ke produk
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Lintang: "di experience gada dokum atau foto dashboard websitenya dong padahal itu menarik, apa samain aja?"

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
-import { PhotoGallery } from "@/components/ui/photo-gallery";
+import { PhotoGallery, ScreenshotStrip } from "@/components/ui/photo-gallery";
 import { workItems } from "@/content/experience";
 import {
   displayName,
@@ -56,9 +56,7 @@ function readingMinutes(project: Project): number {
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mono text-ink mt-14 text-[16px] leading-snug">
-      {children}
-    </h2>
+    <h2 className="mono text-ink mt-14 text-[16px] leading-snug">{children}</h2>
   );
 }
 
@@ -231,9 +229,12 @@ export function CaseStudyArticle({
         {project.gallery.screenshots.length > 0 ? (
           <section>
             <Heading>Screens</Heading>
-            <PhotoGallery
-              photos={project.gallery.screenshots.slice(0, MAX_GALLERY_ITEMS)}
-              className="mt-4 sm:grid-cols-3 lg:grid-cols-3"
+            <ScreenshotStrip
+              screenshots={project.gallery.screenshots.slice(
+                0,
+                MAX_GALLERY_ITEMS,
+              )}
+              className="mt-4"
             />
           </section>
         ) : null}

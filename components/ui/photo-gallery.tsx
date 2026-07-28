@@ -169,6 +169,67 @@ export function PhotoGallery({
   );
 }
 
+/**
+ * ScreenshotStrip — mockup produk selebar kolom, satu per baris.
+ *
+ * Beda dari `PhotoGallery` yang thumbnail kecil: mockup ini komposisi lebar
+ * (dua jendela browser miring berdampingan), jadi kalau dipaksa dua kolom
+ * isinya jadi terlalu kecil untuk dibaca. Karena itu satu per baris, penuh dari
+ * kiri ke kanan kolom.
+ *
+ * File-nya PNG transparan, jadi TIDAK diberi latar, bingkai, atau bayangan —
+ * mockup-nya sudah membawa bayangannya sendiri dan akan bertabrakan kalau
+ * ditumpuk lagi.
+ *
+ * `aspect-video` (16/9) + `object-cover` memangkas pita kosong di atas–bawah PNG
+ * 4:3-nya (menyisakan 75% tinggi asli); isinya di tengah, jadi yang terpangkas
+ * memang cuma ruang kosong. Sempat dicoba `2/1`, tapi mockup yang komposisinya
+ * paling tinggi mulai terpotong — 16/9 memberi margin aman.
+ * Diklik → membuka gambar utuh (tanpa pangkas) di modal yang sama.
+ */
+export function ScreenshotStrip({
+  screenshots,
+  className,
+}: {
+  screenshots: Photo[];
+  className?: string;
+}) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const close = useCallback(() => setOpenIndex(null), []);
+
+  if (screenshots.length === 0) return null;
+
+  const active = openIndex === null ? null : screenshots[openIndex];
+
+  return (
+    <>
+      <ul className={cn("space-y-4", className)}>
+        {screenshots.map((shot, index) => (
+          <li key={shot.src}>
+            <button
+              type="button"
+              onClick={() => setOpenIndex(index)}
+              aria-label={`Open screenshot: ${shot.alt}`}
+              className="focus-visible:ring-ring block w-full cursor-zoom-in rounded-(--radius) outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+            >
+              <Image
+                src={`/images/${shot.src}`}
+                alt={shot.alt}
+                width={1920}
+                height={1440}
+                sizes="(max-width: 900px) 100vw, 880px"
+                className="aspect-video w-full object-cover"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {active ? <Lightbox photo={active} onClose={close} /> : null}
+    </>
+  );
+}
+
 /** Tautan teks "View" yang membuka satu foto di modal. */
 export function PhotoLink({
   photo,

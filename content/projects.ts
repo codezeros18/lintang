@@ -121,8 +121,12 @@ export const projects: Project[] = [
     short: "ANK",
     logo: { src: "ankop/logo.png", alt: "Anugrah Kopi Nusantara logo" },
     gallery: {
-      // TODO(lintang): tangkapan layar produknya belum ada — maksimum 3.
-      screenshots: [],
+      screenshots: [
+        {
+          src: "ankop/mock1.png",
+          alt: "Ankop Trace operations dashboard and the batch management screen, showing cherry intake through to warehouse across each batch's stages",
+        },
+      ],
       // Foto lapangannya pindah ke halaman PERAN `/experience/ankop`
       // (keputusan Lintang 2026-07-28) — isinya cerita tempat kerja, bukan
       // cerita produk. Case study ini menautkannya, tidak menyalinnya.
@@ -225,8 +229,16 @@ export const projects: Project[] = [
     short: "BI",
     logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
     gallery: {
-      // TODO(lintang): tangkapan layar platformnya belum ada — maksimum 3.
-      screenshots: [],
+      screenshots: [
+        {
+          src: "bisasinema/mock1.png",
+          alt: "The Bisasinema admin dashboard — users, revenue per product line and payment status — beside the course player a student sees",
+        },
+        {
+          src: "bisasinema/mock2.png",
+          alt: "The public Bisasinema site: the landing page and the three class formats — E-Course, Masterclass and Learning Lab",
+        },
+      ],
       // Idem: foto studio & tim ada di `/experience/bisasinema`.
       documentation: [],
     },
