@@ -11,9 +11,14 @@
  *
  * Deviasi dari skema §5.1 (disengaja, dicatat di PROGRESS_LOG):
  * - `ownVsTeam` & `learned` → `string | null` supaya bisa disembunyikan saat belum diisi.
- * - Tambahan `tech[]` (untuk tech chip di kartu), `award` (medali), `anonymousName`
- *   (dipakai bila `CLIENT_NAME_PERMISSION === false`), dan `proof.configKey` +
- *   `proof.pendingNote` supaya bukti tersambung ke token `PROOF_*`.
+ * - Tambahan `tech[]` (untuk tech chip di kartu), `award` (medali), dan
+ *   `anonymousName` (dipakai bila `CLIENT_NAME_PERMISSION === false`).
+ *
+ * Blok "Evidence" DIHAPUS 2026-07-28 (keputusan Lintang): angka di dashboard
+ * Ankop & Bisasinema rahasia perusahaan dan disensor bahkan di mockup-nya,
+ * jadi bukti publik memang tidak akan pernah ada. Menyimpan janji "bukti
+ * menyusul" untuk sesuatu yang tidak akan menyusul lebih buruk daripada tidak
+ * menjanjikannya sama sekali. Token `PROOF_*` ikut dihapus dari `config.ts`.
  */
 
 import { CONFIG, isSet } from "@/content/config";
@@ -43,13 +48,6 @@ export const emptyGallery: ProjectGallery = {
   screenshots: [],
   documentation: [],
 };
-
-export type ProofConfigKey =
-  | "PROOF_ANKOP"
-  | "PROOF_BISASINEMA"
-  | "PROOF_TERA"
-  | "PROOF_HOTEL"
-  | "PROOF_BANKSAMPAH";
 
 export type Project = {
   slug: string;
@@ -93,13 +91,6 @@ export type Project = {
   narrative?: {
     intro: string[];
     sections: { heading: string; paragraphs: string[] }[];
-  };
-  /** Belum semua proyek punya token bukti sendiri di §0.1 (mis. Kuali). */
-  proof?: {
-    /** Token CONFIG yang menentukan bukti apa yang boleh ditampilkan. */
-    configKey: ProofConfigKey;
-    /** Rencana bukti — ditampilkan sebagai "bukti menyusul" selama token kosong. */
-    pendingNote: string;
   };
   honesty:
     | "production"
@@ -213,11 +204,6 @@ export const projects: Project[] = [
         },
       ],
     },
-    proof: {
-      configKey: "PROOF_ANKOP",
-      pendingNote:
-        "Planned evidence: annotated screenshots + a Loom walkthrough. The system is internal, so it needs client approval before anything is opened up.",
-    },
     honesty: "production",
     lane: "fullstack",
     featured: true,
@@ -263,11 +249,6 @@ export const projects: Project[] = [
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik dari membangun & meluncurkan ini
     tech: ["React", "Tailwind CSS", "Express.js", "Midtrans", "Technical SEO"],
-    proof: {
-      configKey: "PROOF_BISASINEMA",
-      pendingNote:
-        "Planned evidence: the live URL if it can be shared, or annotated screenshots. Awaiting client approval.",
-    },
     honesty: "production",
     lane: "fullstack",
     featured: true,
@@ -303,11 +284,6 @@ export const projects: Project[] = [
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik
     tech: ["Next.js 14", "FastAPI", "PostgreSQL 16", "Supabase", "RLS"],
-    proof: {
-      configKey: "PROOF_TERA",
-      pendingNote:
-        "Planned evidence: a written case study + a diagram of the layered access control. Until a public demo exists, no demo is linked.",
-    },
     // §5.2: selama belum ada tenant berbayar, labelnya "production-ready" — bukan klaim produksi penuh.
     honesty: "production-ready",
     lane: "fullstack",
@@ -339,11 +315,6 @@ export const projects: Project[] = [
     learned: null, // TODO(lintang): 1 pelajaran spesifik
     tech: ["Python", "Looker Studio", "Google Colab", "Figma"],
     award: "🥉 3rd Place, National — SurabayaDev 2025",
-    proof: {
-      configKey: "PROOF_HOTEL",
-      pendingNote:
-        "Planned evidence: a view-only Looker dashboard + the analysis notebook + the presentation deck.",
-    },
     honesty: "competition",
     lane: "data",
     featured: true,
@@ -401,10 +372,6 @@ export const projects: Project[] = [
     results: [],
     learned: null, // TODO(lintang): 1 pelajaran spesifik
     tech: ["Python", "Looker Studio", "Data Storytelling"],
-    proof: {
-      configKey: "PROOF_BANKSAMPAH",
-      pendingNote: "Planned evidence: screenshots of the CEO dashboard.",
-    },
     honesty: "bootcamp",
     lane: "data",
     featured: false,
@@ -442,55 +409,6 @@ export function displayName(project: Project): string {
     return project.anonymousName;
   }
   return project.name;
-}
-
-export type ProofState =
-  | { status: "pending"; note: string }
-  | { status: "available"; label: string; url?: string };
-
-/**
- * Bukti hanya ditampilkan bila tokennya sudah diisi. Selama kosong → "bukti menyusul".
- * Tidak pernah merender demo palsu atau link mati (§9).
- */
-export function resolveProof(project: Project): ProofState | null {
-  if (!project.proof) return null;
-
-  const pending: ProofState = {
-    status: "pending",
-    note: project.proof.pendingNote,
-  };
-
-  switch (project.proof.configKey) {
-    case "PROOF_ANKOP": {
-      const value = CONFIG.PROOF_ANKOP;
-      return isSet(value) ? { status: "available", label: value } : pending;
-    }
-    case "PROOF_BISASINEMA": {
-      const value = CONFIG.PROOF_BISASINEMA;
-      if (!isSet(value)) return pending;
-      return {
-        status: "available",
-        label: value.kind,
-        url: value.url ?? undefined,
-      };
-    }
-    case "PROOF_TERA": {
-      const value = CONFIG.PROOF_TERA;
-      return isSet(value) ? { status: "available", label: value } : pending;
-    }
-    case "PROOF_HOTEL": {
-      const value = CONFIG.PROOF_HOTEL;
-      return isSet(value)
-        ? { status: "available", label: "Dashboard & notebook", url: value }
-        : pending;
-    }
-    case "PROOF_BANKSAMPAH": {
-      const value = CONFIG.PROOF_BANKSAMPAH;
-      return isSet(value)
-        ? { status: "available", label: "Dashboard screenshots", url: value }
-        : pending;
-    }
-  }
 }
 
 /** Label kejujuran → nada badge. */

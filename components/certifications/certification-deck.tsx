@@ -10,8 +10,13 @@ import { cn } from "@/lib/utils";
  *
  * Cara kerjanya: tiap kartu diberi rotasi & pergeseran vertikal kecil yang
  * BERPOLA (bukan acak — hasil acak berubah tiap render dan bikin hydration
- * mismatch). Saat kursor masuk ke deretnya, semua kartu ikut lurus dan sedikit
- * merapat; kartu yang benar-benar disentuh naik paling depan.
+ * mismatch). **Hanya kartu yang benar-benar disentuh** yang meluruskan diri,
+ * naik sedikit, dan maju ke depan.
+ *
+ * Sempat dibuat satu deret ikut lurus semua begitu kursor masuk
+ * (`group-hover/deck`), tapi itu salah: menyenggol satu kartu membuat seluruh
+ * baris bergerak, jadi mata kehilangan kartu yang sedang dituju. Sekarang
+ * reaksinya lokal — satu kartu, satu respons.
  *
  * Catatan anti-clone (docs/DESIGN_LANGUAGE.md §3.1): tumpukan miring ini bentuk
  * yang juga dipakai referensi. Yang diambil hanya idenya — sudut, jarak,
@@ -50,13 +55,11 @@ function DeckCard({ cert, tilt }: { cert: Certification; tilt: string }) {
     <li
       className={cn(
         "bg-card border-border hover:border-accent/40 relative flex flex-col items-center rounded-(--radius) border px-5 py-7 text-center",
-        "transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "transition-[transform,box-shadow,border-color] duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
         "sm:shadow-soft",
         tilt,
-        // Kursor masuk ke deret → semua lurus & merapat; kartu yang disentuh
-        // naik ke depan.
-        "sm:group-hover/deck:translate-y-0 sm:group-hover/deck:rotate-0",
-        "sm:hover:z-10 sm:hover:-translate-y-1.5",
+        // Hanya kartu ini yang bereaksi: lurus, naik sedikit, naik ke depan.
+        "sm:hover:z-10 sm:hover:-translate-y-1.5 sm:hover:rotate-0",
       )}
     >
       <span
@@ -114,7 +117,7 @@ export function CertificationDeck({ items }: { items: Certification[] }) {
   if (items.length === 0) return null;
 
   return (
-    <ul className="group/deck mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((cert, index) => (
         <DeckCard
           key={cert.name}

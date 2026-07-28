@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -81,7 +82,13 @@ function Lightbox({ photo, onClose }: { photo: Photo; onClose: () => void }) {
     };
   }, [onClose]);
 
-  return (
+  // DIPORTAL KE `document.body`, dan itu wajib — bukan kerapian belaka.
+  // Elemen `position: fixed` berpatokan pada leluhur ber-`transform` terdekat,
+  // bukan pada layar. Pemicunya duduk di dalam kartu yang memang di-`rotate`
+  // (kartu sertifikat, kipas kartu proyek), jadi tanpa portal modalnya
+  // terkurung di dalam kartu itu — persis bug yang dilaporkan Lintang
+  // 2026-07-28. Portal membuatnya selalu menutup satu layar penuh.
+  const modal = (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
       {/* Klik di area gelap menutup modal. */}
       <div onClick={onClose} className="bg-overlay absolute inset-0" />
@@ -119,6 +126,8 @@ function Lightbox({ photo, onClose }: { photo: Photo; onClose: () => void }) {
       </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
 
 export function PhotoGallery({

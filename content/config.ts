@@ -11,8 +11,6 @@
  */
 
 /** Jenis bukti yang boleh ditampilkan (etis — tidak ada demo palsu). */
-export type ProofKind = "live" | "repo" | "screenshot" | "loom" | "writeup";
-
 export type Config = {
   /**
    * Semua link LinkedIn (hero, contact, footer, README).
@@ -26,24 +24,6 @@ export type Config = {
 
   /** Apakah "5.000+ kg" kumulatif sejak live? Menentukan kalimat hasil. */
   ANKOP_KG_CUMULATIVE: boolean | null;
-
-  /** Jenis bukti Ankop Trace. Butuh izin penyebutan nama klien juga. */
-  PROOF_ANKOP: ProofKind | null;
-
-  /** Jenis bukti Bisasinema + URL live bila ada. Butuh izin nama klien. */
-  PROOF_BISASINEMA: { kind: ProofKind; url: string | null } | null;
-
-  /**
-   * Bukti Tera. Bila belum ada tenant bayar → case study memakai label
-   * "produksi (production-ready)", bukan klaim demo publik.
-   */
-  PROOF_TERA: Extract<ProofKind, "live" | "screenshot" | "writeup"> | null;
-
-  /** Link Looker view-only / notebook GitHub untuk Analisis Pembatalan Hotel. */
-  PROOF_HOTEL: string | null;
-
-  /** Screenshot dashboard CEO (virtual internship Bank Sampah Digital). */
-  PROOF_BANKSAMPAH: string | null;
 
   /**
    * Boleh sebut nama klien Bisasinema / Ankop?
@@ -90,11 +70,6 @@ export const CONFIG: Config = {
   // — jadi angkanya memang akumulasi sepanjang rentang itu.
   ANKOP_MONTHS: 2,
   ANKOP_KG_CUMULATIVE: true,
-  PROOF_ANKOP: null, // TODO(lintang): jenis bukti Ankop + izin sebut nama klien
-  PROOF_BISASINEMA: null, // TODO(lintang): jenis bukti Bisasinema + URL live bila ada
-  PROOF_TERA: null, // TODO(lintang): bukti Tera — jangan klaim demo bila belum ada
-  PROOF_HOTEL: null, // TODO(lintang): link Looker view-only / notebook GitHub
-  PROOF_BANKSAMPAH: null, // TODO(lintang): screenshot dashboard CEO
   // ✅ Dikonfirmasi Lintang 2026-07-26: nama klien boleh disebut.
   CLIENT_NAME_PERMISSION: true,
   CV_FILE: "Lintang-Balakosa-Ardhana-CV.pdf", // ✅ ada di public/cv/

@@ -8,8 +8,15 @@ import { cn } from "@/lib/utils";
  * ProjectDeck — tiga proyek sebagai tumpukan kartu yang dikipas.
  *
  * Bentuknya diminta Lintang (2026-07-27): kartu tengah tegak dan disorot,
- * kiri–kanan miring di belakangnya; saat kursor menyentuh salah satu sisi,
- * kartu itu maju dan yang tengah sedikit mundur.
+ * kiri–kanan miring di belakangnya; kartu yang disentuh maju ke depan.
+ *
+ * Gerakannya dibuat ulang 2026-07-28 karena terasa kaku. Dua sebabnya:
+ * (1) seluruh kipas ikut bergeser begitu kursor masuk ke areanya
+ *     (`group-hover/deck`), jadi menyenggol satu kartu menggerakkan tiga —
+ *     sekarang hanya kartu yang disentuh yang bereaksi;
+ * (2) hover-nya memakai `!important` untuk melawan kelas dasarnya, yang
+ *     membuat dua aturan saling rebut dan transisinya patah — sekarang
+ *     nilainya cukup ditimpa biasa karena `hover:` memang lebih spesifik.
  *
  * Catatan anti-clone (docs/DESIGN_LANGUAGE.md §3.1): tumpukan kartu dikipas
  * adalah bentuk yang juga dipakai referensi. Yang dipinjam hanya **idenya**;
@@ -18,7 +25,7 @@ import { cn } from "@/lib/utils";
  * app store, ini memajang label kejujuran (`production` / `competition`) yang
  * memang jadi aturan portfolio ini.
  *
- * Semua gerakan CSS (`group-hover` + `transition`), tanpa JS. Aturan global
+ * Semua gerakan CSS murni, tanpa JS. Aturan global
  * `prefers-reduced-motion` di `globals.css` mematikan transisinya, dan karena
  * tata letaknya tidak bergantung pada gerakan, tanpa animasi pun tetap terbaca.
  *
@@ -30,11 +37,10 @@ type Slot = "left" | "center" | "right";
 
 /** Kartu tengah paling menonjol; sisi kiri/kanan lebih kecil dan miring. */
 const SLOT_STYLES: Record<Slot, string> = {
-  left: "md:z-10 md:-rotate-[7deg] md:-translate-x-[62%] md:translate-y-3 md:scale-[0.93] md:group-hover/deck:-translate-x-[70%] md:hover:!-translate-x-[76%] md:hover:!rotate-[-4deg] md:hover:!scale-[0.99] md:hover:!z-30",
-  center:
-    "md:z-20 md:group-hover/deck:scale-[0.97] md:hover:!scale-100 md:hover:!z-30",
+  left: "md:z-10 md:-rotate-[7deg] md:-translate-x-[62%] md:translate-y-3 md:scale-[0.93] md:hover:z-30 md:hover:-translate-x-[74%] md:hover:translate-y-0 md:hover:-rotate-[3deg] md:hover:scale-[0.99]",
+  center: "md:z-20 md:hover:z-30 md:hover:-translate-y-1.5",
   right:
-    "md:z-10 md:rotate-[7deg] md:translate-x-[62%] md:translate-y-3 md:scale-[0.93] md:group-hover/deck:translate-x-[70%] md:hover:!translate-x-[76%] md:hover:!rotate-[4deg] md:hover:!scale-[0.99] md:hover:!z-30",
+    "md:z-10 md:rotate-[7deg] md:translate-x-[62%] md:translate-y-3 md:scale-[0.93] md:hover:z-30 md:hover:translate-x-[74%] md:hover:translate-y-0 md:hover:rotate-[3deg] md:hover:scale-[0.99]",
 };
 
 function DeckCard({ project, slot }: { project: Project; slot: Slot }) {
@@ -44,7 +50,11 @@ function DeckCard({ project, slot }: { project: Project; slot: Slot }) {
     <article
       className={cn(
         "bg-card relative rounded-(--radius) border p-6",
-        "transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        // Durasi panjang + easing yang mengendur di ujung membuat kartunya
+        // "mendarat" alih-alih berhenti mendadak. `will-change-transform`
+        // memberi tahu browser untuk menyiapkan layernya lebih dulu, jadi
+        // gerakan pertama tidak tersendat.
+        "transition-[transform,box-shadow,border-color] duration-650 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
         "md:absolute md:w-[19rem] md:origin-bottom",
         highlighted
           ? "border-accent/35 shadow-soft"
@@ -90,7 +100,7 @@ export function ProjectDeck({ projects }: { projects: Project[] }) {
   if (!center) return null;
 
   return (
-    <div className="group/deck relative mt-6 flex flex-col gap-4 md:mt-10 md:h-[19rem] md:flex-row md:items-center md:justify-center md:gap-0">
+    <div className="relative mt-6 flex flex-col gap-4 md:mt-10 md:h-[19rem] md:flex-row md:items-center md:justify-center md:gap-0">
       {left ? <DeckCard project={left} slot="left" /> : null}
       <DeckCard project={center} slot="center" />
       {right ? <DeckCard project={right} slot="right" /> : null}

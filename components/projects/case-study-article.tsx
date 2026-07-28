@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/container";
 import { PhotoGallery, ScreenshotStrip } from "@/components/ui/photo-gallery";
 import { workItems } from "@/content/experience";
@@ -9,7 +8,6 @@ import {
   displayName,
   honestyTone,
   MAX_GALLERY_ITEMS,
-  resolveProof,
   type Project,
 } from "@/content/projects";
 
@@ -77,40 +75,6 @@ function Bullets({ items }: { items: string[] }) {
         </li>
       ))}
     </ul>
-  );
-}
-
-function Evidence({ project }: { project: Project }) {
-  const proof = resolveProof(project);
-  if (!proof) return null;
-
-  // Token PROOF_* kosong → "Evidence coming soon" + rencananya.
-  // TIDAK pernah merender demo palsu atau tautan mati (BLUEPRINT §9).
-  if (proof.status === "pending") {
-    return (
-      <Card padding="sm" elevation="flat" className="bg-secondary/50 mt-5">
-        <p className="font-medium">Evidence coming soon.</p>
-        <p className="text-ink-muted mt-2 text-sm leading-relaxed">
-          {proof.note}
-        </p>
-      </Card>
-    );
-  }
-
-  return (
-    <Card padding="sm" elevation="flat" className="mt-5">
-      <p className="font-medium">{proof.label}</p>
-      {proof.url ? (
-        <a
-          href={proof.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-ink decoration-border hover:text-coral-ink hover:decoration-coral-ink mt-2 inline-block text-sm underline underline-offset-4"
-        >
-          View evidence
-        </a>
-      ) : null}
-    </Card>
   );
 }
 
@@ -266,11 +230,6 @@ export function CaseStudyArticle({
             </Link>
           </section>
         ) : null}
-
-        <section>
-          <Heading>Evidence</Heading>
-          <Evidence project={project} />
-        </section>
 
         <section>
           <Heading>Project status</Heading>

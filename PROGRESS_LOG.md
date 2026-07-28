@@ -27,6 +27,23 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-28 06:00] — Di luar sprint — Evidence dihapus, kartu proyek dirombak, tiga bug hover/modal
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+
+**1. Blok "Evidence" DIHAPUS beserta seluruh pipanya.** Alasan Lintang: angka di dashboard Ankop & Bisasinema rahasia perusahaan — di mockup pun ia sensor — jadi bukti publik memang tidak akan pernah ada. Menyimpan janji "Evidence coming soon" untuk sesuatu yang tidak akan menyusul lebih buruk daripada tidak menjanjikannya. Yang ikut dihapus supaya tidak meninggalkan kode mati: `Project.proof`, `ProofConfigKey`, `ProofState`, `resolveProof()`, komponen `<Evidence>`, tipe `ProofKind`, dan **5 token `PROOF_*` di `content/config.ts`**.
+**⚠️ Konsekuensi yang perlu Lintang sadari:** case study masih memuat klaim angka (Rp20M+, 15+ pemasok, ~80% acceptance rate, 5.000 kg). Dulu ada blok yang setidaknya mengakui bukti belum ada; sekarang tidak ada lagi. Klaim itu kini berdiri **sepenuhnya di atas kata-kata Lintang**. Itu wajar untuk portfolio, tapi harus disadari — bukan diam-diam.
+
+**2. Kartu `/projects` dirombak** — sebelumnya tidak responsif dan datar.
+- Kartu hero jadi dua kolom: **mockup produk di kiri, teks di kanan**; satu kolom (mockup di atas) di bawah `md`. Diverifikasi di 360px asli lewat iframe: tidak ada scroll mendatar.
+- Yang membuatnya hidup bukan hiasan, tapi isinya — proyek yang punya mockup memajangnya langsung, jadi wujud produknya terlihat sebelum diklik. Proyek tanpa mockup tetap satu kolom penuh, tidak meninggalkan lubang kosong.
+- Chip tech diganti teks mono berpemisah titik (empat chip berjajar membuat kaki kartu berat), plus panah `↗` yang bergeser dan menghijau saat hover.
+
+**3. Tiga bug interaksi:**
+- **Modal foto terkurung di dalam kartu.** Pemicunya duduk di dalam kartu ber-`transform` (sertifikat miring, kipas proyek), dan `position: fixed` berpatokan pada leluhur ber-transform terdekat — bukan pada layar. Diperbaiki dengan **memportal modal ke `document.body`**. Ini juga menjelaskan kenapa modal di kartu sertifikat terasa "menempel di kartu".
+- **Hover sertifikat meluruskan satu seksi.** `group-hover/deck` membuat seluruh baris bereaksi; sekarang hanya kartu yang benar-benar disentuh.
+- **Hover kartu beranda kaku.** Dua sebab: seluruh kipas ikut bergeser, dan hover-nya memakai `!important` untuk melawan kelas dasarnya sehingga dua aturan saling rebut dan transisinya patah. Sekarang reaksinya lokal, tanpa `!important`, durasi 650ms dengan easing yang mengendur di ujung + `will-change-transform`.
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-28 04:45] — Perbaikan — Mockup produk berhenti dipotong
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Pemicu:** Lintang mengirim screenshot: `mock2` Bisasinema masih terpotong.
