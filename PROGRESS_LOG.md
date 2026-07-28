@@ -27,6 +27,14 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-07-28 04:45] — Perbaikan — Mockup produk berhenti dipotong
+**Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
+**Pemicu:** Lintang mengirim screenshot: `mock2` Bisasinema masih terpotong.
+**Akar masalahnya (dan koreksi atas keputusan saya sendiri):** saya memakai `object-cover` untuk merapikan pita kosong di atas–bawah PNG mockup, lalu ketika terpotong saya cuma melonggarkan rasionya (2/1 → `aspect-video`). Itu menambal gejalanya, bukan sebabnya. Rasio tetap APA PUN akan salah, karena tiap mockup punya tinggi komposisi berbeda — jadi selalu ada satu yang kena potong.
+**Perbaikannya:** pemotongan dibuang sepenuhnya. Gambar memakai rasio aslinya (`h-auto w-full`, tanpa `aspect-*`, tanpa `object-*`). Memotong gambar yang justru mau dipamerkan itu cacat; ruang kosongnya cuma soal rasa — dan karena PNG-nya transparan, ruang itu tidak terlihat sebagai kotak kosong. Jarak antar gambar dirapatkan (`-space-y-6`) supaya pita kosong bawaan tiap berkas tidak menumpuk.
+**Efek sampingnya bagus:** komponennya sekarang menerima mockup dengan rasio apa pun tanpa perlu disetel ulang — persis yang Lintang minta ("buat lebih flexible").
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-07-28 04:20] — Di luar sprint — Mockup produk terpasang + GitHub AKHIRNYA tersambung
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 **Selesai:**

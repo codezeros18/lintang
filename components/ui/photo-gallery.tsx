@@ -181,11 +181,18 @@ export function PhotoGallery({
  * mockup-nya sudah membawa bayangannya sendiri dan akan bertabrakan kalau
  * ditumpuk lagi.
  *
- * `aspect-video` (16/9) + `object-cover` memangkas pita kosong di atas–bawah PNG
- * 4:3-nya (menyisakan 75% tinggi asli); isinya di tengah, jadi yang terpangkas
- * memang cuma ruang kosong. Sempat dicoba `2/1`, tapi mockup yang komposisinya
- * paling tinggi mulai terpotong — 16/9 memberi margin aman.
- * Diklik → membuka gambar utuh (tanpa pangkas) di modal yang sama.
+ * **TIDAK dipotong sama sekali** — rasio aslinya dibiarkan apa adanya.
+ *
+ * Sebelumnya sempat dipangkas `object-cover` (dicoba `2/1` lalu `aspect-video`)
+ * untuk membuang pita kosong di atas–bawah PNG-nya. Dua-duanya salah: tiap
+ * mockup punya tinggi komposisi yang berbeda, jadi rasio tetap APA PUN akan
+ * memotong salah satunya — `mock2` Bisasinema terbukti terpotong di 16/9.
+ * Memotong gambar yang isinya justru mau dipamerkan adalah cacat, sementara
+ * ruang kosongnya cuma soal rasa. Karena PNG-nya transparan, ruang itu pun
+ * tidak terlihat sebagai kotak kosong.
+ *
+ * Konsekuensinya komponen ini menerima mockup dengan rasio apa pun tanpa perlu
+ * disetel ulang.
  */
 export function ScreenshotStrip({
   screenshots,
@@ -203,22 +210,27 @@ export function ScreenshotStrip({
 
   return (
     <>
-      <ul className={cn("space-y-4", className)}>
+      {/* Pita kosong bawaan tiap PNG saling menempel kalau jaraknya normal,
+          jadi jaraknya dirapatkan — ruang napasnya sudah ada di dalam gambar. */}
+      <ul className={cn("-space-y-6 md:-space-y-10", className)}>
         {screenshots.map((shot, index) => (
           <li key={shot.src}>
             <button
               type="button"
               onClick={() => setOpenIndex(index)}
               aria-label={`Open screenshot: ${shot.alt}`}
-              className="focus-visible:ring-ring block w-full cursor-zoom-in rounded-(--radius) outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+              className="focus-visible:ring-ring block w-full cursor-zoom-in rounded-(--radius) outline-none focus-visible:ring-2"
             >
+              {/* `width`/`height` = ukuran INTRINSIK berkasnya, dipakai
+                  next/image untuk memesan ruang; `h-auto` membuat tingginya
+                  mengikuti rasio asli berapa pun itu. */}
               <Image
                 src={`/images/${shot.src}`}
                 alt={shot.alt}
                 width={1920}
                 height={1440}
                 sizes="(max-width: 900px) 100vw, 880px"
-                className="aspect-video w-full object-cover"
+                className="h-auto w-full"
               />
             </button>
           </li>
