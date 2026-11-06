@@ -15,7 +15,11 @@ import matter from "gray-matter";
 export const LOG_DIR = join(process.cwd(), "content", "log");
 
 export type LogType = "competition" | "event" | "project";
-export type LogResult = "won" | "lost" | "participated";
+/**
+ * `finalist` ditambahkan 2026-11-07 untuk IFEST 2026 (finalis peringkat 4):
+ * bukan juara, tapi juga bukan sekadar ikut — menuliskannya "won" = overclaim.
+ */
+export type LogResult = "won" | "finalist" | "lost" | "participated";
 
 export type LogFrontmatter = {
   title: string;

@@ -28,7 +28,7 @@ export default function ExperiencePage() {
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
           title="experience"
-          description="Three years from a vocational internship to shipping production systems — frontend at PT Anugrah Energi in 2023, data work at Bank Sampah Digital, and now building full-stack at Bisasinema and Ankop."
+          description="From a vocational internship at PT Anugrah Energi Indonesia in 2023 to building its system on contract in 2026 — with production work at Ankop, Bisasinema and Macacih, and data work at Bank Sampah Digital along the way."
         />
 
         <ol className="mt-14">

@@ -10,6 +10,7 @@ import {
   MAX_GALLERY_ITEMS,
   type Project,
 } from "@/content/projects";
+import { onDisk } from "@/lib/photos";
 
 /**
  * CaseStudyArticle — layout artikel untuk `/projects/[slug]` (R3).
@@ -89,6 +90,15 @@ export function CaseStudyArticle({
   const minutes = readingMinutes(project);
   // Peran yang melahirkan produk ini, kalau memang lahir dari sebuah pekerjaan.
   const role = workItems.find((item) => item.projectSlug === project.slug);
+  // Slot foto yang filenya belum ada tidak dirender (lib/photos.ts).
+  const screenshots = onDisk(project.gallery.screenshots).slice(
+    0,
+    MAX_GALLERY_ITEMS,
+  );
+  const documentation = onDisk(project.gallery.documentation).slice(
+    0,
+    MAX_GALLERY_ITEMS,
+  );
 
   return (
     <Section className="pt-12 pb-24 md:pt-16 md:pb-32">
@@ -190,24 +200,18 @@ export function CaseStudyArticle({
         {/* Screenshot produk & foto proses. Masing-masing dibatasi 3
             (`MAX_GALLERY_ITEMS`) dan laci yang kosong tidak dirender —
             tidak ada bingkai kosong menunggu diisi. */}
-        {project.gallery.screenshots.length > 0 ? (
+        {screenshots.length > 0 ? (
           <section>
             <Heading>Screens</Heading>
-            <ScreenshotStrip
-              screenshots={project.gallery.screenshots.slice(
-                0,
-                MAX_GALLERY_ITEMS,
-              )}
-              className="mt-4"
-            />
+            <ScreenshotStrip screenshots={screenshots} className="mt-4" />
           </section>
         ) : null}
 
-        {project.gallery.documentation.length > 0 ? (
+        {documentation.length > 0 ? (
           <section>
             <Heading>On site</Heading>
             <PhotoGallery
-              photos={project.gallery.documentation.slice(0, MAX_GALLERY_ITEMS)}
+              photos={documentation}
               className="mt-4 sm:grid-cols-3 lg:grid-cols-3"
             />
           </section>

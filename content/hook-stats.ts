@@ -6,11 +6,11 @@ import { CONFIG, isSet } from "@/content/config";
  * Satu sumber untuk Hero DAN OG image, supaya angka di situs dan angka di preview
  * share tidak mungkin berbeda.
  *
- * Format angka mengikuti CV versi Inggris: `Rp20M+`, `5,000+ kg`.
+ * Format angka mengikuti CV versi Inggris: `Rp30M+`, `5,000+ kg`.
  *
  * "5,000+ kg" WAJIB tampil bersama konteks waktu `ANKOP_MONTHS` (§0.2). Kalau token
- * itu dikosongkan, angka kg TIDAK ditampilkan dan slotnya diisi "15+ active suppliers"
- * — angka CV lain yang aturan tampilnya "apa adanya".
+ * itu dikosongkan, angka kg TIDAK ditampilkan; slotnya diisi angka CV Ankop lain
+ * yang aturan tampilnya "apa adanya" (15+ supplier, ~80% acceptance rate).
  */
 
 export type HookStat = {
@@ -25,29 +25,47 @@ export type HookStat = {
 export function getHookStats(): HookStat[] {
   const ankopMonths = CONFIG.ANKOP_MONTHS;
 
-  const coffeeStat: HookStat = isSet(ankopMonths)
-    ? {
+  // CV Nov 2026: Rp30M+ (versi lama Rp20M+). Kata "early" WAJIB ikut (§0.2).
+  const salesStat: HookStat = {
+    value: 30,
+    prefix: "Rp",
+    suffix: "M+",
+    label: "in early ticket sales (Learning Lab launch)",
+    display: "Rp30M+",
+  };
+
+  const suppliersStat: HookStat = {
+    value: 15,
+    suffix: "+",
+    label: "active coffee suppliers on one live system",
+    display: "15+",
+  };
+
+  // Diganti 2026-11-07: "6 role-gated dashboards" (Tera) dikeluarkan dari hook
+  // strip — Tera berlabel production-ready dan CV terbaru tidak lagi memuatnya.
+  // Hook strip kini hanya berisi angka dari sistem yang benar-benar dipakai.
+  if (isSet(ankopMonths)) {
+    return [
+      salesStat,
+      {
         value: 5000,
         suffix: "+ kg",
         label: `of coffee tracked in the first ${ankopMonths} months`,
         display: "5,000+ kg",
-      }
-    : {
-        value: 15,
-        suffix: "+",
-        label: "active suppliers",
-        display: "15+",
-      };
+      },
+      suppliersStat,
+    ];
+  }
 
   return [
+    salesStat,
+    suppliersStat,
     {
-      value: 20,
-      prefix: "Rp",
-      suffix: "M+",
-      label: "in transactions (early launch)",
-      display: "Rp20M+",
+      value: 80,
+      prefix: "~",
+      suffix: "%",
+      label: "live acceptance rate at intake",
+      display: "~80%",
     },
-    coffeeStat,
-    { value: 6, label: "role-gated dashboards", display: "6" },
   ];
 }

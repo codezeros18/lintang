@@ -5,12 +5,13 @@ import {
   caseStudyProjects,
   displayName,
   getProjectBySlug,
+  hasCaseStudy,
 } from "@/content/projects";
 import { buildMetadata } from "@/lib/seo";
 
 type PageParams = { params: Promise<{ slug: string }> };
 
-/** SSG: hanya 4 hero yang punya halaman case study (§5.3 — sekunder tidak). */
+/** SSG: hero + sekunder bertanda `caseStudy` (lihat `caseStudyProjects`). */
 export async function generateStaticParams() {
   return caseStudyProjects.map((project) => ({ slug: project.slug }));
 }
@@ -35,7 +36,7 @@ export default async function ProjectPage({ params }: PageParams) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
-  if (!project || !project.featured) notFound();
+  if (!project || !hasCaseStudy(project)) notFound();
 
   // "Next project" berputar mengikuti urutan hero (§5.2), jadi pembaca selalu
   // punya satu langkah berikutnya alih-alih berhenti di ujung halaman.

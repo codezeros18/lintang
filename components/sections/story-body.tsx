@@ -1,5 +1,6 @@
 import { PhotoGallery } from "@/components/ui/photo-gallery";
 import type { Story } from "@/content/story";
+import { onDisk } from "@/lib/photos";
 
 /**
  * Badan halaman detail bercerita — dipakai bersama oleh organisasi,
@@ -10,7 +11,9 @@ import type { Story } from "@/content/story";
  * halaman menampilkan satu baris jujur "coming soon" — pola yang sama dengan
  * "Evidence coming soon" di case study proyek.
  */
-export function StoryBody({ story }: { story: Story }) {
+export function StoryBody({ story: raw }: { story: Story }) {
+  // Slot foto yang berkasnya belum ada di disk dibuang di sini (lib/photos.ts).
+  const story = { ...raw, photos: onDisk(raw.photos) };
   const isEmpty =
     story.intro === null &&
     story.sections.length === 0 &&

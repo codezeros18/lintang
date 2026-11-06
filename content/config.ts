@@ -75,7 +75,9 @@ export const CONFIG: Config = {
   CV_FILE: "Lintang-Balakosa-Ardhana-CV.pdf", // ✅ ada di public/cv/
   PHOTO_FILE: "lintang.png", // ✅ ada di public/images/ (896×896)
   DOMAIN: "lintangbalakosa.dev", // 🟡 default saran BLUEPRINT §0.1 — TODO(lintang): konfirmasi/registrasi
-  IO_FESTIVAL_DATE: null, // TODO(lintang): tanggal I/O Festival
+  // Dari sertifikat: "I/O FESTIVAL 2026 … 4-5 Juni 2026" (hari pertama acara).
+  // TODO(lintang): ganti bila tanggal pengumuman juaranya berbeda.
+  IO_FESTIVAL_DATE: "2026-06-04",
   IO_FESTIVAL_STACK: null, // TODO(lintang): stack proyek I/O Festival
   // ✅ Keputusan Lintang 2026-07-26: nomor WhatsApp TIDAK dipublikasikan dulu.
   // Isi dengan format `62812…` (tanpa `+`) bila suatu saat berubah pikiran.

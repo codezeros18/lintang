@@ -151,6 +151,16 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 
 ---
 
+## Update konten 2026-11-07 (di luar sprint — sesi pertama di MacBook)
+- [x] Experience: AEI (kontrak, Nov 2026–sekarang) + Macacih (Sep 2026–sekarang) ditambah; Bisasinema berakhir Okt 2026; Ankop = "CV"; GPA 3.51
+- [x] Projects: Macacih, AEI, Weigh to Go, Muara jadi hero; Tera ditulis ulang dari vault; Hotel → Other (case study tetap)
+- [x] Lomba: I/O Festival (PulangKeMerek, disiapkan paten) diperbarui; IFEST 2026 🏅 finalis #4 (Lembar Janji) + post Log
+- [x] CV PDF diganti versi Nov 2026 (`public/cv/` + salinan di root)
+- [x] Slot foto disiapkan (`docs/PHOTO_SLOTS.md`, `lib/photos.ts`) — muncul otomatis saat file ada
+- [ ] ⛔ Foto AEI/Macacih/Muara/WtG/Tera/IFEST — menunggu Lintang
+- [ ] ⛔ `GITHUB_TOKEN` belum ada di env Vercel → grafik GitHub di produksi "not connected" — Lintang yang menambahkan
+- [ ] Klarifikasi klaim CV vs vault (Macacih "launched"/gerobak listrik, jumlah test WtG, Supabase vs Postgres) — lihat PROGRESS_LOG
+
 ## Catatan lintas-sprint (WAJIB tiap sprint)
 1. **Centang task** `[x]` yang selesai + set **status ✅** di tabel ringkasan.
 2. **Tulis entri `PROGRESS_LOG.md`** (terbaru di atas): apa selesai, apa gagal/skip/blocker, jujur.
@@ -160,12 +170,12 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 
 ### Backlog / temuan (diisi selama eksekusi)
 - [ ] `// TODO(lintang)` — daftar token CONFIG yang masih menunggu (lihat PROGRESS_LOG Sprint 0)
-- [ ] **Repo GitHub belum ada** → Vercel belum tersambung ke Git, jadi belum ada auto-deploy tiap `git push`. Deploy sekarang manual via `npx vercel --prod`. (Blokir alur "push = redeploy" yang diandalkan S7.)
+- [x] ✅ 2026-11-07: repo `codezeros18/lintang` ada & Vercel **sudah tersambung Git** (dicek lewat `vercel git connect`). ~~**Repo GitHub belum ada** → Vercel belum tersambung ke Git, jadi belum ada auto-deploy tiap `git push`. Deploy sekarang manual via `npx vercel --prod`. (Blokir alur "push = redeploy" yang diandalkan S7.)~~
 - [ ] **`public/fonts/Satoshi-Variable.woff2` belum ada** → body font sementara memakai fallback DM Sans. Blok `localFont` di `lib/fonts.ts` sengaja dinonaktifkan agar build tidak gagal.
 - [ ] Deviasi stack vs BLUEPRINT §8 (Next.js 16 + Tailwind v4): tidak ada `tailwind.config.ts` (Tailwind v4 CSS-first — token ada di `app/globals.css`), dan config bernama `next.config.ts` bukan `.mjs`.
 - [ ] Dark mode belum ada (blok `.dark` bawaan shadcn dihapus) — sesuai §3.2 "dark = fast-follow".
 - [ ] **JANGAN bungkus konten hero dengan `Reveal`/`Stagger` di S3.** Framer Motion merender `opacity:0` di HTML server, jadi elemen di atas lipatan baru terlihat setelah hidrasi → merusak target **LCP <2s**. Reveal hanya untuk section di bawah lipatan. (Pengunjung tanpa JS sudah diamankan lewat `<noscript>` di `app/layout.tsx`.)
-- [ ] `NEXT_PUBLIC_SITE_URL` belum diset di Vercel → `robots.txt`/canonical masih menunjuk `lintangbalakosa.dev` yang **belum resolve**. Set env ke URL `*.vercel.app` sampai domain aktif (S6).
+- [x] ✅ `NEXT_PUBLIC_SITE_URL` sudah ada di env Production Vercel (dicek 2026-11-07). ~~`NEXT_PUBLIC_SITE_URL` belum diset di Vercel → `robots.txt`/canonical masih menunjuk `lintangbalakosa.dev` yang **belum resolve**. Set env ke URL `*.vercel.app` sampai domain aktif (S6).~~
 - [ ] `app/ui-demo` = halaman kerja internal (404 di produksi). Hapus atau biarkan dev-only sebelum launch.
 - [ ] Uji `prefers-reduced-motion` di browser sungguhan (devtools → Rendering → Emulate CSS media) saat S6.
 - [ ] **Anchor `#projects` di hero belum punya tujuan** — section Featured Projects baru dibuat di S4. Sampai itu, tombol "Lihat proyek" tidak memindahkan halaman.
@@ -176,5 +186,5 @@ Legenda status: 🔲 belum · 🟡 jalan · ✅ selesai.
 - [ ] **`CLIENT_NAME_PERMISSION` masih `null`** → nama "Ankop Trace" & "Bisasinema" **ditampilkan**. Set ke `false` bila belum boleh disebut; nama anonim (`anonymousName`) sudah disiapkan dan otomatis dipakai.
 - [x] Untuk S5: medali SurabayaDev sudah tampil di kartu/halaman Analisis Hotel. Di section Achievements, tulis sebagai rujukan ke case study itu — jangan diceritakan ulang seolah pekerjaan terpisah. → **selesai**, kartunya hanya memuat judul + link "Lihat case study-nya".
 - [x] ~~Data S5 yang hilang~~ → ✅ **terisi 2026-07-26 dari CV asli**: role & periode PT Anugrah Energi (Frontend Developer, Jun–Okt 2023) · Bank Sampah Digital (Data Scientist Intern, Jan–Mar 2026) · 4 sertifikat Coursera · org roles · blok Pendidikan. **Sisa yang tetap tidak ada di CV:** tahun I/O Festival & CIMB Niaga.
-- [ ] 🔴 **CV publik memuat nomor HP Lintang** — keputusan: terbitkan apa adanya atau siapkan versi web tanpa nomor.
+- [ ] 🔴 **CV publik memuat nomor HP Lintang** — CV versi Nov 2026 (diganti 2026-11-07) **masih memuat nomor HP**; — keputusan: terbitkan apa adanya atau siapkan versi web tanpa nomor.
 - [ ] 🔧 Koreksi tercatat: database Ankop = **MySQL** (bukan PostgreSQL seperti tulisan S4). Sudah diperbaiki.

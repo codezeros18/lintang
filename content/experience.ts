@@ -2,7 +2,8 @@
  * Experience · Education · Achievements · Certifications · Organisasi.
  *
  * SUMBER: CV `Lintang Balakosa Ardhana` (public/cv/Lintang-Balakosa-Ardhana-CV.pdf),
- * dibaca langsung pada 2026-07-26. Semua judul role, periode, penerbit, dan tanggal
+ * dibaca langsung pada 2026-07-26, lalu diperbarui dari CV versi Nov 2026 dan
+ * vault Obsidian (Macacih, AEI, Lembar Janji) pada 2026-11-07. Semua judul role, periode, penerbit, dan tanggal
  * di bawah ini disalin dari CV — tidak ada yang ditebak.
  *
  * Yang masih `null` = memang tidak ada di CV (mis. tahun I/O Festival & CIMB Niaga).
@@ -31,7 +32,7 @@ export type WorkItem = {
   /**
    * Singkatan 2–3 huruf untuk kotak penanda di timeline `/experience`.
    * Ditulis eksplisit, bukan diturunkan otomatis, supaya hasilnya masuk akal
-   * ("PT Anugrah Kopi Nusantara (Ankop)" → `ANK`, bukan `PA`).
+   * ("CV Anugrah Kopi Nusantara (Ankop)" → `ANK`, bukan `CA`).
    */
   short: string;
   /** Dipakai untuk URL `/experience/<slug>`. */
@@ -148,7 +149,7 @@ export const education: EducationItem[] = [
     school: "Universitas Multimedia Nusantara",
     program: "B.Sc. Informatics",
     period: "Aug 2024–present",
-    note: "GPA 3.48",
+    note: "GPA 3.51", // CV Nov 2026
     slug: "universitas-multimedia-nusantara",
     // TODO(lintang): tulis ceritanya + taruh foto di public/images/umn/
     story: emptyStory,
@@ -198,7 +199,86 @@ export const education: EducationItem[] = [
 
 export const workItems: WorkItem[] = [
   {
-    org: "PT Anugrah Kopi Nusantara (Ankop)",
+    // Peran baru (CV Nov 2026). Sengaja satu perusahaan dengan magang SMK 2023
+    // di bawah — dua entri terpisah, saling menautkan lewat ceritanya.
+    org: "PT Anugrah Energi Indonesia",
+    slug: "anugrah-energi-indonesia",
+    short: "AEI",
+    employmentType: "Contract",
+    skills: ["Next.js", "PostgreSQL", "Prisma", "PWA", "Offline-first", "Railway"],
+    story: {
+      intro:
+        "I first came to AEI in 2023 as a vocational-school frontend intern. In November 2026 I came back on contract — this time to build the company's system myself.",
+      sections: [
+        {
+          heading: "What the business needed",
+          body: "AEI is a boiler and power-plant contractor: fluidized bed boilers, fuel conveying, air pollution control, overhauls, spare parts, operation and maintenance. Its old company website had been compromised, and the work behind each project — field progress, milestone billing, costs against budget, tax recaps — lived in separate places.",
+        },
+        {
+          heading: "What I'm doing here",
+          body: "Leading the build of one system that covers the company website, field reports, billing, cost control and tax recaps, with access set for 8 roles. The first piece is the public website, rebuilt with a quote-request form and SEO so new clients can find the company on Google.\n\nNext come an offline field app — technicians send daily reports even from plant areas where phones are not allowed — and a billing system that tracks down payments, retention and taxes for every project milestone. How it is built is written up on the product page.",
+        },
+        {
+          heading: "Coming back",
+          body: "The 2023 internship was where I first wrote frontend code in a production environment, for this same company. This time the brief is the whole system, end to end.",
+        },
+      ],
+      // TODO(lintang): taruh foto kerja di public/images/aei/ dengan nama dom1–dom3.
+      photos: [
+        { src: "aei/dom1", alt: "Working on the AEI system" },
+        { src: "aei/dom2", alt: "Working on the AEI system" },
+        { src: "aei/dom3", alt: "Working on the AEI system" },
+      ],
+    },
+    logo: { src: "aei/logo.png", alt: "Anugrah Energi Indonesia logo" },
+    role: "Full-Stack Software Engineer",
+    period: "Nov 2026–present",
+    location: "Tangerang",
+    summary:
+      "Leading the build of one system for a boiler contractor — company website, offline field reports, milestone billing, cost control and tax recaps, with access set for 8 roles.",
+    projectSlug: "aei-project-control",
+    order: 1,
+  },
+  {
+    // Sumber: CV Nov 2026 + vault Obsidian `Projects/Macacih`.
+    org: "Macacih",
+    slug: "macacih",
+    short: "MAC",
+    // CV menulis "Macacih, Skystar Ventures" tanpa jenis kerja.
+    // TODO(lintang): ganti bila ada label yang lebih tepat (part-time/contract).
+    employmentType: "Startup · Skystar Ventures",
+    skills: ["Next.js", "Prisma", "PostgreSQL", "Midtrans", "PWA", "Offline-first"],
+    story: {
+      intro:
+        "Macacih is an early-stage matcha brand in the Skystar Ventures ecosystem. It does not sell from a fixed café but through booths that move between campuses, paid matcha workshops, campus sponsorships and brand collaborations. I joined in September 2026 as its full-stack engineer.",
+      sections: [
+        {
+          heading: "What the business needed",
+          body: "Before the system, the whole operation ran on Excel, Google Forms, Instagram DMs and WhatsApp, and not one sales record could be trusted. Booth crews rotate, workshops happen at someone else's venue, and sponsorships are agreed over chat — there is no permanent, supervised point of sale anywhere.\n\nThe hardest part is not technical: recording a sale is extra work for the person who gains nothing from its accuracy. So the system had to make recording faster than not recording, and protect the honest crew member when the cash does not match.",
+        },
+        {
+          heading: "What I built",
+          body: "One ledger that every channel writes into: a booth POS that keeps working offline, an order queue, digital receipts, workshop ticketing with seat selection and QR check-in, a prepaid membership with loyalty points, and an owner dashboard of revenue, stock and margin per channel and per event. The engineering decisions are written up on the product page.",
+        },
+      ],
+      // TODO(lintang): taruh foto booth/workshop di public/images/macacih/ dengan nama dom1–dom3.
+      photos: [
+        { src: "macacih/dom1", alt: "Macacih at work" },
+        { src: "macacih/dom2", alt: "Macacih at work" },
+        { src: "macacih/dom3", alt: "Macacih at work" },
+      ],
+    },
+    logo: { src: "macacih/logo", alt: "Macacih logo" },
+    role: "Full-Stack Software Engineer",
+    period: "Sep 2026–present",
+    location: "Tangerang",
+    summary:
+      "Building Macacih Digital OS — one ledger for a matcha brand's booths, workshops, memberships and sponsorships, with offline booth capture, ticketing and an owner dashboard.",
+    projectSlug: "macacih",
+    order: 2,
+  },
+  {
+    org: "CV Anugrah Kopi Nusantara (Ankop)",
     slug: "ankop",
     short: "ANK",
     employmentType: "Full-time",
@@ -241,9 +321,7 @@ export const workItems: WorkItem[] = [
     },
     logo: {
       src: "ankop/logo.png",
-      // Logo menuliskan "CV. Anugrah Kopi Nusantara — Pangalengan", sedangkan CV
-      // Lintang menulis "PT". Nama di teks tetap mengikuti CV; lihat catatan di
-      // PROGRESS_LOG. TODO(lintang): pastikan CV atau PT yang benar.
+      // ✅ Terjawab CV Nov 2026: "CV Anugrah Kopi Nusantara" — sama dengan logonya.
       alt: "Anugrah Kopi Nusantara logo",
     },
     role: "Full-Stack Software Engineer",
@@ -252,7 +330,7 @@ export const workItems: WorkItem[] = [
     summary:
       "Built Ankop Trace, an offline-first coffee operations system that took a specialty coffee producer fully off paper — from cherry intake through supplier payments and owner reporting.",
     projectSlug: "ankop-trace",
-    order: 1,
+    order: 3,
   },
   {
     org: "Bisasinema",
@@ -262,21 +340,23 @@ export const workItems: WorkItem[] = [
     skills: [
       "React",
       "Tailwind CSS",
-      "Express.js",
+      "NestJS",
+      "MySQL",
       "Midtrans",
+      "Cloudflare R2",
       "Technical SEO",
     ],
     story: {
       intro:
-        "Bisasinema is a film brand. I joined in March 2026 as tech lead and assistant product manager, which in practice meant being the person responsible for their first product platform existing at all.",
+        "Bisasinema is a film education brand. I was its tech lead from December 2025 to October 2026, which in practice meant being the person responsible for its product platform existing at all.",
       sections: [
         {
           heading: "What the business needed",
           body: "A film brand with an audience but no product surface: no way to sell a class, no way to sell a ticket, no way to see what was selling. Everything a viewer could do with the brand happened somewhere else, on somebody else's platform.",
         },
         {
-          heading: "What the role involved beyond code",
-          body: "Tech lead and assistant product manager are two jobs, and the second one is the one that does not show up in a commit history: deciding what shipped first, and saying no to the rest until it did.\n\nThe build itself — Coursera-style classes, digital ticketing with live payments, the internal monitoring dashboard, and the technical SEO — is written up on the product page.",
+          heading: "What the role covered",
+          body: "One platform for four product lines: the company profile, an online course LMS, offline Masterclass ticketing, and digital templates — from registration to checkout, with two payment gateways, promo codes, early-bird and group pricing. The Learning Lab launch alone brought in Rp30M+ in early ticket sales.\n\nThe build itself — the platform, the revenue dashboard and the technical SEO — is written up on the product page.",
         },
       ],
       photos: [
@@ -291,13 +371,13 @@ export const workItems: WorkItem[] = [
       ],
     },
     logo: { src: "bisasinema/logo.png", alt: "Bisasinema logo" },
-    role: "Tech Lead & Assistant Product Manager",
-    period: "Mar 2026–present",
+    role: "Tech Lead",
+    period: "Dec 2025–Oct 2026", // CV Nov 2026: peran sudah berakhir Oktober 2026
     location: "Tangerang",
     summary:
-      "Led the build of Bisasinema's first product platform: Coursera-style classes, digital ticketing with live payments, an internal monitoring dashboard, and technical SEO.",
+      "Built one platform running four product lines for a film education brand — online courses, Masterclass ticketing and digital templates — with two payment gateways, a revenue dashboard and technical SEO.",
     projectSlug: "bisasinema",
-    order: 2,
+    order: 4,
   },
   {
     org: "Bank Sampah Digital",
@@ -338,11 +418,13 @@ export const workItems: WorkItem[] = [
     location: "Serang",
     summary:
       "Built CEO-facing monitoring dashboards and prepared the data behind them — exploration, cleaning, anomaly handling, and feature engineering.",
-    order: 3,
+    order: 5,
   },
   {
     org: "PT Anugrah Energi Indonesia",
-    slug: "anugrah-energi-indonesia",
+    // Slug diganti 2026-11-07: `anugrah-energi-indonesia` kini milik peran
+    // kontrak 2026 (entri teratas). Ini magang SMK 2023 di perusahaan yang sama.
+    slug: "anugrah-energi-indonesia-internship",
     short: "AEI",
     employmentType: "Vocational internship",
     skills: ["React", "Tailwind CSS", "Responsive design"],
@@ -354,6 +436,10 @@ export const workItems: WorkItem[] = [
           heading: "What I did",
           body: "Built responsive, scalable web interfaces with React and Tailwind CSS in a production environment.",
         },
+        {
+          heading: "What came after",
+          body: "Three years later, in November 2026, I came back to AEI on contract — no longer as an intern, but as the engineer building the company's system: its website, field reports, billing and cost control.",
+        },
       ],
       photos: [],
     },
@@ -364,7 +450,7 @@ export const workItems: WorkItem[] = [
     location: "Tangerang",
     summary:
       "Vocational-school internship: built responsive, scalable web interfaces with React and Tailwind CSS in a production environment.",
-    order: 4,
+    order: 6,
   },
 ];
 
@@ -372,18 +458,30 @@ export const achievements: Achievement[] = [
   {
     medal: "🥇",
     slug: "io-festival",
-    title: "1st Place, National — I/O Festival",
-    scope: "National competition",
+    title: "1st Place, National — I/O Festival 2026 (Web Development)",
+    scope: "National web development competition",
     // CV tidak menyebut tahun, tapi sertifikat pesertanya
     // (`iofest/certificate.png`) menulis "I/O FESTIVAL 2026 … 4-5 Juni 2026",
     // dan layar panggung di `iofest/dom3.jpeg` juga menulis 2026. Diisi dari
     // dokumen itu, bukan tebakan. TODO(lintang): koreksi kalau keliru.
     year: "2026",
-    detail: "Built a B2B platform for the circular economy.",
+    // CV Nov 2026. Ide intinya sedang disiapkan untuk paten → mekanismenya
+    // SENGAJA tidak dibuka di sini (teaser + CTA kolaborasi).
+    detail:
+      "Led the team that built PulangKeMerek, a B2B platform that helps FMCG brands meet their Extended Producer Responsibility (EPR) duties. It is now being prepared for a patent.",
     story: {
-      // TODO(lintang): tulis `intro` + `sections`-nya. Fotonya sudah terpasang.
-      intro: null,
-      sections: [],
+      intro:
+        "I/O Festival 2026, held by BEM FTI Universitas Tarumanagara on 4–5 June 2026, is a national competition. I led the team in the web development category, and we took 1st place with PulangKeMerek.",
+      sections: [
+        {
+          heading: "What we built",
+          body: "PulangKeMerek is a B2B platform that helps FMCG brands meet their Extended Producer Responsibility (EPR) duties — the obligation for producers to take responsibility for the packaging they put into the world. The pitch line on stage: turning waste into data, and handing responsibility back to the brand that made it.",
+        },
+        {
+          heading: "Why the details stop here",
+          body: "The idea is now being prepared for a patent, so the core mechanism is deliberately not described on this page. If you'd like to talk about it or collaborate, get in touch.",
+        },
+      ],
       photos: [
         {
           src: "iofest/dom4.jpeg",
@@ -410,13 +508,50 @@ export const achievements: Achievement[] = [
     order: 1,
   },
   {
+    // Sumber: CV Nov 2026 + vault Obsidian `Projects/Lembar Janji`.
+    medal: "🏅",
+    slug: "ifest-2026",
+    title: "4th Place Finalist, National — IFEST 2026 Hackathon",
+    scope: "National hackathon · 24 hours",
+    year: "2026",
+    detail:
+      "Built Lembar Janji in 24 hours, a web tool that shows migrant workers what a job offer promises and what it leaves out, before they pay anything.",
+    story: {
+      intro:
+        "IFEST 2026 ran a 24-hour hackathon on the theme “Tech for Human Connections”. Our entry, Lembar Janji, finished as the 4th-place finalist nationally.",
+      sections: [
+        {
+          heading: "The problem",
+          body: "People considering work abroad receive job offers as posters, brochures and WhatsApp screenshots. The person carrying all the financial risk has no way to check what was actually promised before handing over money. What they need is not a scam detector — it is a polite, social reason to wait: “It's not that I don't trust you, but six things here are still unclear. Please fill them in first.”",
+        },
+        {
+          heading: "What we built in 24 hours",
+          body: "A site with no account and no install: upload a picture of the offer or type it in, and it produces one shareable image listing what the offer already states, what is still unanswered under Indonesia's Migrant Worker Protection Law (UU 18/2017) with the article numbers, and ready-to-ask questions for whoever made the offer.\n\nUnder the hood: ten completeness checks, nine of them grounded in explicit articles of the law; name matching against a copy of the list of 526 licensed placement companies; a cost-to-wage ratio; a server-rendered PNG sheet, PDF export and direct sharing; Indonesian and Javanese; anonymous metrics only; defences against prompt injection; and 417 tests, including tests that enforce the product's ethics rules — it never calls anyone a fraud.",
+        },
+        {
+          heading: "One lesson",
+          body: "A rule we invented for ourselves nearly killed a good idea. We had been filtering ideas with a “could ChatGPT do this?” test — but the competition asks for originality, which means not copied, not “impossible for AI”. Now I check every self-made gate against the real rubric first: is it a kill switch, or just one weight among many?",
+        },
+      ],
+      // TODO(lintang): taruh foto & sertifikat IFEST di public/images/ifest/
+      // (dom1–dom3, certificate) — muncul otomatis begitu filenya ada.
+      photos: [
+        { src: "ifest/dom1", alt: "Team Lembar Janji at the IFEST 2026 hackathon" },
+        { src: "ifest/dom2", alt: "Team Lembar Janji at the IFEST 2026 hackathon" },
+        { src: "ifest/dom3", alt: "Team Lembar Janji at the IFEST 2026 hackathon" },
+        { src: "ifest/certificate", alt: "IFEST 2026 hackathon 4th place finalist certificate" },
+      ],
+    },
+    order: 2,
+  },
+  {
     medal: "🥉",
     slug: "surabayadev-developer-battle-2025",
     title: "3rd Place, National — SurabayaDev Developer Battle 2025",
     scope: "National data analysis competition",
     year: "2025",
     detail:
-      "A national data analysis competition focused on hotel booking and cancellation patterns.",
+      "Analyzed hotel booking and cancellation patterns in a national data analysis competition.",
     // Pekerjaannya sudah diceritakan penuh sebagai case study.
     projectSlug: "hotel-cancellation-analysis",
     // Ceritanya sudah penuh di case study — halaman ini cuma foto + konteks.
@@ -439,7 +574,7 @@ export const achievements: Achievement[] = [
         },
       ],
     },
-    order: 2,
+    order: 3,
   },
   {
     medal: "🥈",
@@ -464,7 +599,7 @@ export const achievements: Achievement[] = [
         },
       ],
     },
-    order: 3,
+    order: 4,
   },
 ];
 

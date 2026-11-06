@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { OrgLogo } from "@/content/experience";
+import { resolveImage } from "@/lib/photos";
 import { cn } from "@/lib/utils";
 
 /**
@@ -33,7 +34,11 @@ export function OrgMark({
     className,
   );
 
-  if (!logo) {
+  // Logo yang filenya belum ada jatuh ke singkatan huruf (lib/photos.ts),
+  // jadi slot logo boleh ditulis lebih dulu sebelum filenya dikirim.
+  const src = logo ? resolveImage(logo.src) : null;
+
+  if (!logo || !src) {
     return (
       <span aria-hidden="true" className={cn(box, "mono text-ink text-[11px]")}>
         {short}
@@ -44,7 +49,7 @@ export function OrgMark({
   return (
     <span className={box}>
       <Image
-        src={`/images/${logo.src}`}
+        src={`/images/${src}`}
         alt={logo.alt}
         width={88}
         height={88}

@@ -8,15 +8,17 @@ import { PageHeader } from "@/components/ui/page-header";
 import {
   displayName,
   featuredProjects,
+  hasCaseStudy,
   otherProjects,
   type Project,
 } from "@/content/projects";
+import { onDisk } from "@/lib/photos";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Projects",
   description:
-    "Production systems and analysis work by Lintang Balakosa Ardhana — offline-first coffee operations, live payments, multi-tenant SaaS, and data analysis.",
+    "Systems and products by Lintang Balakosa Ardhana — offline-first coffee operations, live payments, a cross-channel ledger, a contractor billing system, and SaaS products for online sellers and institutional kitchens.",
   path: "/projects",
 });
 
@@ -33,7 +35,9 @@ export const metadata = buildMetadata({
  * meninggalkan lubang kosong di sebelah kiri.
  */
 function FeaturedCard({ project }: { project: Project }) {
-  const cover = project.gallery.screenshots[0];
+  // Mockup pertama yang filenya sudah ada (lib/photos.ts). Belum ada → kartu
+  // satu kolom penuh, tanpa lubang kosong.
+  const cover = onDisk(project.gallery.screenshots)[0];
 
   return (
     <li
@@ -121,10 +125,20 @@ function FeaturedCard({ project }: { project: Project }) {
   );
 }
 
-/** Kartu sekunder — tanpa halaman case study, jadi tidak bisa diklik. */
+/**
+ * Kartu sekunder. Umumnya tanpa halaman case study (tidak bisa diklik);
+ * yang bertanda `caseStudy` (Hotel Cancellation Analysis) tetap menautkan.
+ */
 function SecondaryCard({ project }: { project: Project }) {
+  const linked = hasCaseStudy(project);
+
   return (
-    <li className="border-border bg-card flex h-full flex-col rounded-(--radius) border p-5">
+    <li
+      className={[
+        "border-border bg-card relative flex h-full flex-col rounded-(--radius) border p-5",
+        linked ? "hover:border-accent/40 transition-colors duration-300" : "",
+      ].join(" ")}
+    >
       <div className="flex items-start gap-3">
         <OrgMark logo={project.logo} short={project.short} />
         <span className="mono border-border text-n-500 rounded-full border px-2 py-0.5 text-[10px] tracking-[0.1em] uppercase">
@@ -133,7 +147,16 @@ function SecondaryCard({ project }: { project: Project }) {
       </div>
 
       <h3 className="mono text-ink mt-4 text-[15px] leading-snug">
-        {displayName(project)}
+        {linked ? (
+          <Link
+            href={`/projects/${project.slug}`}
+            className="focus-visible:ring-ring rounded-sm outline-none after:absolute after:inset-0 after:content-[''] focus-visible:ring-2 focus-visible:ring-offset-2"
+          >
+            {displayName(project)}
+          </Link>
+        ) : (
+          displayName(project)
+        )}
       </h3>
 
       <p className="text-ink-muted mt-2 text-[14px] leading-relaxed">
@@ -160,14 +183,14 @@ function SecondaryCard({ project }: { project: Project }) {
   );
 }
 
-/** Indeks proyek. Hanya 4 hero yang punya case study; sekunder tanpa halaman. */
+/** Indeks proyek. Hero punya case study; sekunder hanya bila `caseStudy`. */
 export default function ProjectsPage() {
   return (
     <main id="main">
       <Section className="pt-12 pb-24 md:pt-16 md:pb-28">
         <PageHeader
           title="projects"
-          description="Production systems and analysis work — offline-first coffee operations, live payments, multi-tenant SaaS, and a national data competition. Four case studies with the decisions behind them, plus smaller work."
+          description="Systems built for real businesses, and products I founded — offline-first coffee operations, live payments, a matcha brand's cross-channel ledger, a boiler contractor's project and billing system, and two SaaS products. Each case study covers the decisions behind it and an honest status label."
         />
 
         <ul className="mt-14 grid gap-5">

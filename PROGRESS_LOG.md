@@ -27,6 +27,57 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-11-07] — Di luar sprint — Update konten besar dari CV Nov 2026 + vault Obsidian (sesi pertama di MacBook)
+**Status:** ✅ selesai (tsc + eslint + build bersih, 56 halaman; dicek di browser lokal termasuk 360px). **Belum di-deploy secara manual.** Push ke `main` akan memicu deploy otomatis.
+
+**Konteks sesi.** Ini sesi pertama di MacBook dan semua riwayat chat lama hilang. Pemahaman dibangun ulang dari file di repo, CV terbaru (`~/Downloads/Lintang_Balakosa_Ardhana_CV.pdf`), dan vault Obsidian `~/Vesper/Vesper` (Projects/AEI, Macacih, Muara, Weigh to Go, Tera, Lembar Janji).
+
+**Infra:**
+- `node_modules` bawaan Windows tidak jalan di Mac (binary `next` tidak executable) → `rm -rf node_modules && npm ci`.
+- Ke-21 file "modified" di `git status` ternyata hanya beda line ending CRLF. Dinormalisasi kembali ke LF (isinya identik dengan HEAD), dan `core.autocrlf=input` diset untuk repo ini.
+- Identitas git repo: `codeee18 <lint4ngboy@gmail.com>` (keputusan Lintang).
+- Vercel CLI login (device flow, disetujui Lintang). `vercel git connect` → repo **sudah tersambung** ke `codezeros18/lintang`, jadi push ke `main` = deploy otomatis.
+- ⚠️ Env Vercel hanya berisi `NEXT_PUBLIC_SITE_URL`. **`GITHUB_TOKEN` belum ada**, jadi di produksi grafik GitHub akan tampil "not connected". Token tidak saya salin sendiri; Lintang yang menambahkan.
+
+**Experience (`content/experience.ts`):**
+- **Baru: PT Anugrah Energi Indonesia — Full-Stack Software Engineer (Contract), Nov 2026–sekarang.** Slug `anugrah-energi-indonesia` sekarang milik peran ini. Magang SMK 2023 pindah ke `anugrah-energi-indonesia-internship`, dan kedua cerita saling menyebut ("dulu magang di sini, sekarang membangun sistemnya").
+- **Baru: Macacih (Skystar Ventures) — Full-Stack Software Engineer, Sep 2026–sekarang.** `employmentType` = "Startup · Skystar Ventures" karena CV tidak menyebut jenis kerjanya (TODO).
+- **Bisasinema:** role jadi "Tech Lead" (sesuai CV baru), periode **Dec 2025–Oct 2026** (sudah berakhir), stack NestJS/MySQL/R2 (bukan Express), empat lini produk, **Rp30M+** (sebelumnya Rp20M+; kata "early" tetap ada).
+- **Ankop:** "CV Anugrah Kopi Nusantara" (pertanyaan lama CV vs PT terjawab oleh CV baru). Alur ditulis 9 tahap, sesuai CV dan vault.
+- GPA 3.51. Urutan timeline: AEI → Macacih → Ankop → Bisasinema → BSD → AEI 2023.
+
+**Projects (`content/projects.ts`):**
+- **Hero baru:** Macacih Digital OS (`production-ready`), AEI Project & Finance Control (`in-development`), Weigh to Go (`production-ready`), Muara (`in-development`). Urutan hero: Ankop → Bisasinema → Macacih → AEI → WtG → Muara → Tera. Beranda memajang 3 pertama.
+- **Label baru `in-development`**: untuk AEI dan Muara, yang modul intinya belum jadi. Menyebut keduanya "production-ready" = overclaim.
+- **Tera ditulis ulang dari vault:** origin-ops untuk eksportir kecil, loop settlement intake, two-speed, aturan uang, dan RLS dengan role non-superuser. Angka dari ringkasan vault per 14 Agu 2026.
+- **Hotel Cancellation Analysis → Other projects** (`featured:false`, `caseStudy:true`). Halaman case study-nya **dipertahankan** karena ditautkan dari `/collabs/surabayadev-…`. `caseStudyProjects`/`hasCaseStudy()` baru, dan kartu sekunder bisa diklik bila punya case study.
+- **Hook strip/OG:** "6 role-gated dashboards" (Tera) dikeluarkan karena CV baru tidak memuatnya dan Tera bukan produksi. Sekarang isinya Rp30M+ · 5,000+ kg · 15+ suppliers, semua dari sistem yang dipakai.
+- About, deskripsi `/projects` & `/experience`, dan skills (`WhatsApp Cloud API`, `provenBy`) ikut diperbarui.
+
+**Lomba:**
+- **I/O Festival 2026:** judul jadi "(Web Development)", detail = PulangKeMerek (B2B untuk kewajiban EPR brand FMCG, **sedang disiapkan paten**). Cerita `/collabs/io-festival` diisi. **Mekanisme inti sengaja tidak dibuka** (vault menyebutnya, tapi ide yang mau dipatenkan = dikaburkan + CTA). Post Log diperbarui; tanggal `2026-06-04` diambil dari sertifikat (hari pertama acara, TODO bila pengumuman juara di hari lain).
+- **Baru: IFEST 2026 🏅 4th Place Finalist (Lembar Janji)** di `/collabs/ifest-2026` + post `content/log/ifest-2026.mdx`. `LogResult` mendapat nilai `finalist` (bukan "won"). Tanggal hackathon kosong (TODO).
+- CIMB & SurabayaDev: kalimat detail disamakan dengan CV.
+
+**Foto (permintaan "siapin dulu designnya"):** `lib/photos.ts` menyaring slot yang berkasnya belum ada saat build. Akibatnya tidak ada bingkai kosong, dan foto muncul sendiri begitu file ditaruh, tanpa ubah kode. Logo juga begitu: belum ada file → kotak singkatan. Panduan nama file ada di **`docs/PHOTO_SLOTS.md`** (folder: `aei/`, `macacih/`, `weigh-to-go/`, `muara/`, `tera/`, `ifest/`).
+
+**CV:** `public/cv/Lintang-Balakosa-Ardhana-CV.pdf` diganti versi Nov 2026 (sha1 identik dengan file di Downloads). Salinan di root `LINTANGBALAKOSAARDHANACV.pdf` juga diganti supaya tidak ada CV usang di repo publik. ⚠️ CV baru **masih memuat nomor HP** dan sekarang tersaji publik di situs + repo GitHub publik.
+
+**Gagal / skip / perlu klarifikasi (jujur):**
+- **Klaim CV yang bertentangan dengan vault, SENGAJA belum dimasukkan:**
+  - Macacih: CV menulis pemesanan minuman online + ambil di *electric cart* dan membership "Launched". Vault (25 Sep 2026) menulis gerobak & order-ahead **ditunda** (AMD-5) dan **pemakaian nyata nol**. Label tetap `production-ready` sampai Lintang mengonfirmasi sudah dipakai jualan.
+  - Weigh to Go: CV menulis "25 test cases written before coding", vault mencatat 71 kasus uji G.11 / 134 test merah dulu → angkanya dihilangkan. CV menulis Supabase, vault menulis PostgreSQL 16 + Prisma di Railway → dipakai versi vault.
+  - Muara: CV mencantumkan WhatsApp API, tapi bot WA (S15) belum dibangun → tidak masuk daftar tech.
+- `ownVsTeam` masih kosong untuk semua project baru (vault tidak menyebut porsi tim). Tera disebut "solo-founder" di riset vault, tapi tidak saya simpulkan.
+- Foto semua project baru belum ada (menunggu Lintang). Teks `alt` slot masih generik.
+- **Artefak browser pane:** `/home` tampak tertahan di "Loading portfolio…" di pane tersembunyi karena `requestAnimationFrame` tidak jalan di sana. Situs live menunjukkan perilaku yang sama di pane itu. Isi halaman (segmen `S:0`) sudah diverifikasi benar. Ini bukan bug situs, tapi **cek sekali di HP asli** setelah deploy.
+- Lighthouse belum dijalankan ulang.
+
+**Perlu Lintang:** `GITHUB_TOKEN` di Vercel · foto (lihat `docs/PHOTO_SLOTS.md`) · konfirmasi klaim Macacih · `ownVsTeam` · tanggal IFEST · keputusan nomor HP di CV publik.
+**Commit:** `content: AEI & Macacih roles, four new hero projects, IFEST, CV Nov 2026`
+**Berikutnya:** menunggu instruksi.
+
+
 ### [2026-07-28 06:00] — Di luar sprint — Evidence dihapus, kartu proyek dirombak, tiga bug hover/modal
 **Status:** ✅ selesai (build + eslint + tsc bersih; **belum di-deploy**)
 

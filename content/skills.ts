@@ -51,7 +51,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "REST" },
       { name: "LLM/AI API integration (OpenAI, Anthropic)" },
     ],
-    provenBy: "NestJS at Ankop · FastAPI at Tera · LLM at Kuali",
+    provenBy: "NestJS at Ankop & Bisasinema · FastAPI at Tera · LLM column mapping at Muara",
   },
   {
     title: "Data & ML",
@@ -80,7 +80,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Supabase" },
       { name: "Multi-tenant (RLS)" },
     ],
-    provenBy: "6-role RLS at Tera · Prisma + MySQL at Ankop",
+    provenBy: "RLS at Tera, Weigh to Go & Muara · Prisma + MySQL at Ankop · PostgreSQL ledger at Macacih",
   },
   {
     title: "DevOps & Integrations",
@@ -90,8 +90,9 @@ export const skillGroups: SkillGroup[] = [
       { name: "Railway" },
       { name: "GitHub" },
       { name: "Midtrans" },
+      { name: "WhatsApp Cloud API" },
       { name: "Technical SEO" },
     ],
-    provenBy: "Docker/Railway at Ankop · Midtrans & SEO at Bisasinema",
+    provenBy: "Docker/Railway at Ankop · Midtrans & SEO at Bisasinema · WhatsApp Cloud API at Weigh to Go",
   },
 ];

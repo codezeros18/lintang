@@ -40,10 +40,17 @@ export default function AboutPage() {
           <p>
             Instead of stopping at classroom projects, I build systems people
             actually use: Ankop Trace — an offline-first coffee operations system
-            that tracks 5,000+ kg and digitizes supplier payments; Bisasinema — a
-            learning-and-ticketing platform with live Midtrans payments (Rp20M+
-            in early sales); and Tera — a multi-tenant SaaS with layered data
-            isolation.
+            that tracks 5,000+ kg and digitizes supplier payments; Bisasinema — one
+            platform for four product lines with live payments (Rp30M+ in early
+            ticket sales); Macacih Digital OS — a cross-channel ledger for a
+            matcha brand; and, back at the company where I interned in 2023, a
+            project and billing system for a boiler contractor.
+          </p>
+          <p>
+            I also build my own products: Weigh to Go, a purchasing planner for
+            institutional kitchens, and Muara, a revenue tracker for sellers on
+            several marketplaces — each labelled honestly with how far it has
+            actually got.
           </p>
           <p>
             Then I prove the impact with data — decision dashboards for

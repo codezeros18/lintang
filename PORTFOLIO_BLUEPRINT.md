@@ -32,7 +32,7 @@ Diisi di `content/config.ts`. Sampai terisi, UI menampilkan nilai token apa adan
 ### 0.2 Angka yang SUDAH FAKTA dari CV — WAJIB diberi konteks waktu, dilarang dilebih-lebihkan
 | Angka [FAKTA] | Sumber CV | Aturan tampil |
 |---|---|---|
-| **Rp20jt+** penjualan tiket awal | Bisasinema | Selalu sertakan kata **"awal / peluncuran awal"**. |
+| **Rp30jt+** penjualan tiket awal *(CV Nov 2026; sebelumnya Rp20jt+)* | Bisasinema | Selalu sertakan kata **"awal / peluncuran awal"**. |
 | **5.000+ kg** kopi dilacak | Ankop Trace | Tampilkan dengan `ANKOP_MONTHS`: "dalam X bulan pertama sejak live". |
 | **15+** supplier aktif | Ankop Trace | Apa adanya. |
 | **~80%** acceptance rate | Ankop Trace | Tandai "live". |
@@ -42,6 +42,12 @@ Diisi di `content/config.ts`. Sampai terisi, UI menampilkan nilai token apa adan
 | **Associate Data Scientist (Competent) — BNSP** · Data Science Bootcamp (Excellent Graduate) | Certifications | Di About/kredensial, bukan hero. |
 
 ---
+
+> ⚠️ **UPDATE 2026-11-07 (CV Nov 2026 + vault Obsidian):** hero project kini 7, urut
+> Ankop → Bisasinema → Macacih → AEI → Weigh to Go → Muara → Tera. Analisis Hotel pindah ke
+> "Other projects" tapi halaman case study-nya tetap ada (dirujuk dari SurabayaDev). Hook strip
+> tidak lagi memuat "6 dashboard" Tera → Rp30M+ · 5.000+ kg · 15+ supplier (semua dari sistem
+> produksi). Label kejujuran baru: `in-development` (AEI, Muara). Rincian di PROGRESS_LOG.
 
 ## §1 — POSITIONING & NARASI PROBLEM→SOLUSI
 
