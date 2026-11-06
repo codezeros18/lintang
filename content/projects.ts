@@ -97,13 +97,16 @@ export type Project = {
    * - `production`       : dipakai bisnis nyata, uang/barang nyata bergerak.
    * - `production-ready` : selesai dibangun & teruji, belum ada pemakaian nyata.
    * - `in-development`   : sedang dibangun; sebagian modul belum jadi.
-   *   (Ditambahkan 2026-11-07 untuk AEI & Muara — menyebutnya "production-ready"
-   *   saat modul intinya belum selesai = overclaim.)
+   *   (Ditambahkan 2026-11-07. Lintang: Macacih, AEI, Weigh to Go & Muara
+   *   semuanya masih ia kerjakan → keempatnya `in-development`.)
+   * - `on-hiatus`        : dihentikan sementara (Tera, keputusan Lintang
+   *   2026-11-07: tertahan masalah riset & pengembangan).
    */
   honesty:
     | "production"
     | "production-ready"
     | "in-development"
+    | "on-hiatus"
     | "hackathon"
     | "bootcamp"
     | "competition";
@@ -113,6 +116,11 @@ export type Project = {
    * dirujuk dari lomba SurabayaDev, jadi tidak boleh hilang).
    */
   caseStudy?: boolean;
+  /**
+   * Peran yang ingin ditonjolkan sebagai chip di kartu & case study
+   * (mis. "Founder · SaaS" untuk Muara & Weigh to Go — permintaan Lintang 2026-11-07).
+   */
+  highlight?: string;
   lane: "fullstack" | "data" | "both";
   featured: boolean;
   order: number;
@@ -291,7 +299,7 @@ export const projects: Project[] = [
     slug: "macacih",
     name: "Macacih Digital OS",
     short: "MAC",
-    logo: { src: "macacih/logo", alt: "Macacih logo" },
+    logo: { src: "macacih/logo", alt: "Macacih logo" }, // ✅ file ada (2026-11-07)
     // Slot foto disiapkan; muncul otomatis begitu berkasnya ada (lib/photos.ts).
     // TODO(lintang): taruh mock1–3 (layar produk) di public/images/macacih/.
     gallery: {
@@ -335,9 +343,8 @@ export const projects: Project[] = [
       "IndexedDB (offline)",
       "Auth.js",
     ],
-    // Selesai dibangun & teruji, belum ada pemakaian nyata per vault (25 Sep 2026).
-    // Naikkan ke "production" begitu Lintang mengonfirmasi sudah dipakai jualan.
-    honesty: "production-ready",
+    // Lintang 2026-11-07: masih dikerjakan → in-development.
+    honesty: "in-development",
     lane: "fullstack",
     featured: true,
     order: 3,
@@ -380,7 +387,7 @@ export const projects: Project[] = [
     ],
     learned: null, // TODO(lintang): 1 pelajaran spesifik
     tech: ["Next.js", "PostgreSQL", "Prisma", "PWA", "Offline-first", "Railway"],
-    // Modul intinya (lapangan, termin, biaya) belum dibangun → jangan "production-ready".
+    // Modul intinya (lapangan, termin, biaya) masih dibangun.
     honesty: "in-development",
     lane: "fullstack",
     featured: true,
@@ -391,7 +398,7 @@ export const projects: Project[] = [
     slug: "weigh-to-go",
     name: "Weigh to Go",
     short: "WTG",
-    logo: { src: "weigh-to-go/logo", alt: "Weigh to Go logo" },
+    logo: { src: "weigh-to-go/logo", alt: "Weigh to Go logo" }, // ✅ file ada (2026-11-07)
     // TODO(lintang): taruh mock1–3 di public/images/weigh-to-go/ (dom1–3 untuk foto proses).
     gallery: {
       screenshots: [
@@ -406,8 +413,9 @@ export const projects: Project[] = [
       ],
     },
     tagline:
-      "A purchasing planner for kitchens that cook for hundreds — next week's shopping list in rupiah and tomorrow's portion count, from headcounts, portion standards and the menu cycle.",
+      "A SaaS I founded: a purchasing planner for kitchens that cook for hundreds — next week's shopping list in rupiah and tomorrow's portion count, from headcounts, portion standards and the menu cycle.",
     role: "Founder",
+    highlight: "Founder · SaaS",
     durationNote: "Oct 2026–present · started in UMN's Technopreneurship course",
     problem:
       "Institutional kitchens — boarding schools, pesantren, and caterers who buy their own ingredients — ask the same two questions every week: what do we buy, how much, and for how many rupiah; and every afternoon, how many portions do we cook tomorrow. The answers are worked out by hand, from memory.",
@@ -436,8 +444,8 @@ export const projects: Project[] = [
       "WhatsApp Cloud API",
       "Railway",
     ],
-    // Sudah ter-deploy, belum ada dapur nyata → "production-ready", bukan "production".
-    honesty: "production-ready",
+    // Lintang 2026-11-07: masih dikerjakan → in-development (meski sudah ter-deploy).
+    honesty: "in-development",
     lane: "fullstack",
     featured: true,
     order: 5,
@@ -462,8 +470,9 @@ export const projects: Project[] = [
       ],
     },
     tagline:
-      "Sales reports from Shopee, Tokopedia, TikTok Shop and Lazada combined into one traceable revenue number — so sellers know where they stand against the Rp500M tax threshold.",
+      "A SaaS I founded: sales reports from Shopee, Tokopedia, TikTok Shop and Lazada combined into one traceable revenue number — so sellers know where they stand against the Rp500M tax threshold.",
     role: "Founder",
+    highlight: "Founder · SaaS",
     durationNote: "Aug 2026–present · current direction since Oct 2026",
     problem:
       "Since 1 October 2026, marketplaces collect a 0.5% income tax from sellers, and the Rp500M exemption for individual sellers counts revenue across all their shops, not one at a time. Every marketplace only sees its own shop, reports come in different formats, and the usual answer is a hand-made Excel recap that cannot be traced back to anything.",
@@ -514,7 +523,7 @@ export const projects: Project[] = [
     tagline:
       "Origin operations for small specialty-coffee exporters — accept or reject with a reason, weigh, price deterministically, and pay the farmer with proof on WhatsApp.",
     role: "Founder & full-stack engineer",
-    durationNote: "2026 · core flow checkpoint passed Aug 2026",
+    durationNote: "2026 · on hiatus since Nov 2026",
     problem:
       "Small and mid-sized specialty-coffee exporters and processors (50–200 tonnes a year) set purchase prices ad hoc in Excel and WhatsApp groups, argue over weighings, and rarely know their true cherry-to-green-bean yield. The farmer at the other end often does not know why a delivery was rejected and has no proof of what they were paid.",
     approach: [
@@ -529,14 +538,17 @@ export const projects: Project[] = [
       "End-to-end checkpoint of the core intake-to-payment flow passed on 2 Aug 2026",
       "As of 14 Aug 2026: 34 tables, 165 API endpoints, 795 backend and 187 web tests, the pricing engine at 100% coverage, and 97.3% of the code tenant-agnostic",
       "Premium modules (ledger, advances, cash flow) stay locked until exporters outside the founder's own circle show they will pay",
+      "On hiatus since Nov 2026 while the open research and development questions are worked out",
     ],
     learned:
       "A design partner who uses the system for free and has no pricing problem is not a future customer — it is a reference deployment. I wrote the disappointing interview down as it was and let it change the plan.",
     tech: ["Next.js 14", "FastAPI", "PostgreSQL 16", "Supabase", "RLS", "Alembic"],
-    // Belum ada tenant berbayar → "production-ready", bukan klaim produksi penuh.
-    honesty: "production-ready",
+    // Lintang 2026-11-07: Tera di-HIATUS dulu (masalah riset, pengembangan, dll).
+    // Dipindah ke "Other projects"; case study tetap bisa dibuka.
+    honesty: "on-hiatus",
     lane: "fullstack",
-    featured: true,
+    featured: false,
+    caseStudy: true,
     order: 7,
   },
   {
@@ -547,7 +559,7 @@ export const projects: Project[] = [
     gallery: emptyGallery, // TODO(lintang): maks 3 screenshot + 3 foto dokumentasi
     tagline:
       "Finding why a hotel loses revenue to cancellations — and turning that into recommendations.",
-    role: "Data analyst",
+    role: "Team leader · data analysis",
     durationNote: "National competition, 2025",
     problem:
       "A hotel was losing revenue to booking cancellations, but the drivers had not been identified, so nothing could be acted on.",
@@ -556,7 +568,8 @@ export const projects: Project[] = [
       "Identified the drivers of revenue loss, so the recommendations attack causes rather than symptoms.",
       "Interactive dashboards + recommendations, so the findings could drive decisions instead of ending as a notebook.",
     ],
-    ownVsTeam: null, // TODO(lintang): kompetisi ini diikuti sendiri atau tim?
+    // Lintang 2026-11-07: ia team leader di setiap lomba (tim CALON MANTU).
+    ownVsTeam: "Team leader of team CALON MANTU.",
     results: [
       "3rd Place, National — SurabayaDev Developer Battle 2025",
       "Recognized by the judges for strong storytelling and analytical depth",
@@ -633,7 +646,7 @@ export const projects: Project[] = [
 
 /**
  * Hero, urut: produksi dulu (Ankop → Bisasinema), lalu Macacih → AEI →
- * Weigh to Go → Muara → Tera (diperbarui 2026-11-07). Beranda memajang 3 pertama.
+ * Weigh to Go → Muara (diperbarui 2026-11-07; Tera hiatus → Other). Beranda memajang 3 pertama.
  */
 export const featuredProjects = projects
   .filter((project) => project.featured)

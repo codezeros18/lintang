@@ -7,6 +7,7 @@ import { NumberedSection } from "@/components/home/numbered-section";
 import { ProjectDeck } from "@/components/home/project-deck";
 import { HomeIntro } from "@/components/sections/home-intro";
 import { Section } from "@/components/ui/container";
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { CONTACT } from "@/content/config";
 import {
   achievements,
@@ -206,12 +207,15 @@ export default async function HomePage() {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                        <Link
-                          href={`/collabs/${item.slug}`}
-                          className="text-ink hover:text-accent focus-visible:ring-ring rounded-sm text-[15px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
-                        >
-                          {item.title}
-                        </Link>
+                        <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                          <Link
+                            href={`/collabs/${item.slug}`}
+                            className="text-ink hover:text-accent focus-visible:ring-ring rounded-sm text-[15px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
+                          >
+                            {item.title}
+                          </Link>
+                          <HighlightChip>{item.role}</HighlightChip>
+                        </span>
                         {item.year ? (
                           <span className="mono text-n-500 text-[12px]">
                             {item.year}

@@ -7,6 +7,7 @@ import { Help } from "@/components/sections/help";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { Section } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { CONFIG, CONTACT, isSet } from "@/content/config";
@@ -58,7 +59,7 @@ export default function CollabsPage() {
             di atas lipatan → tanpa `Reveal` (aturan R2). */}
         <PageHeader
           title="collabs"
-          description="Competitions and teams I've built with — a national win, a national podium, and an internal pitching day — plus the kind of work I'd like to do more of."
+          description="Competitions where I led the team — a national win, a national finalist spot, a national podium, and an internal pitching day — plus the kind of work I'd like to do more of."
         />
 
         <div className="mt-10 max-w-3xl">
@@ -76,9 +77,12 @@ export default function CollabsPage() {
                     className="text-n-500 mt-0.5 size-5 shrink-0"
                   />
                   <div>
-                    <p className="text-ink text-[15px] font-medium">
-                      {item.title}
-                    </p>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                      <p className="text-ink text-[15px] font-medium">
+                        {item.title}
+                      </p>
+                      <HighlightChip>{item.role}</HighlightChip>
+                    </div>
                     <p className="mono text-n-500 mt-1 text-[12px]">
                       {item.scope}
                       {item.year ? ` · ${item.year}` : null}

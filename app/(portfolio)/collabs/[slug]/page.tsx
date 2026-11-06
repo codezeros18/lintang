@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { StoryBody } from "@/components/sections/story-body";
 import { Section } from "@/components/ui/container";
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { PageHeader } from "@/components/ui/page-header";
 import { achievements } from "@/content/experience";
 import { getProjectBySlug } from "@/content/projects";
@@ -67,10 +68,13 @@ export default async function CollabPage({ params }: PageParams) {
           <PageHeader title={item.title} description={item.detail} />
         </div>
 
-        <p className="mono text-n-500 mt-6 text-[12px]">
-          {item.scope}
-          {item.year ? ` · ${item.year}` : null}
-        </p>
+        <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <HighlightChip>{item.role}</HighlightChip>
+          <p className="mono text-n-500 text-[12px]">
+            {item.scope}
+            {item.year ? ` · ${item.year}` : null}
+          </p>
+        </div>
 
         <StoryBody story={item.story} />
 

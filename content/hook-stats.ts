@@ -41,6 +41,17 @@ export function getHookStats(): HookStat[] {
     display: "15+",
   };
 
+  // Permintaan Lintang 2026-11-07: ganti "15+ supplier" dengan sesuatu yang lebih
+  // "branding". Dipilih juara 1 nasional I/O Festival 2026 — fakta CV + sertifikat,
+  // dan satu-satunya angka yang menunjuk ke Lintang sendiri (team leader), bukan ke
+  // bisnis klien. "15+" tetap dipakai sebagai cadangan bila ANKOP_MONTHS kosong.
+  const brandStat: HookStat = {
+    value: 1,
+    suffix: "st",
+    label: "place nationally, as team leader — I/O Festival 2026",
+    display: "1st",
+  };
+
   // Diganti 2026-11-07: "6 role-gated dashboards" (Tera) dikeluarkan dari hook
   // strip — Tera berlabel production-ready dan CV terbaru tidak lagi memuatnya.
   // Hook strip kini hanya berisi angka dari sistem yang benar-benar dipakai.
@@ -53,19 +64,9 @@ export function getHookStats(): HookStat[] {
         label: `of coffee tracked in the first ${ankopMonths} months`,
         display: "5,000+ kg",
       },
-      suppliersStat,
+      brandStat,
     ];
   }
 
-  return [
-    salesStat,
-    suppliersStat,
-    {
-      value: 80,
-      prefix: "~",
-      suffix: "%",
-      label: "live acceptance rate at intake",
-      display: "~80%",
-    },
-  ];
+  return [salesStat, suppliersStat, brandStat];
 }

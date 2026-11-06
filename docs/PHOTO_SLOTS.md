@@ -15,10 +15,10 @@ Ekstensi bebas: `.png`, `.jpg`, `.jpeg`, atau `.webp`.
 |---|---|---|
 | `aei/` | `mock1`–`mock3` | `/projects/aei-project-control` + kartu `/projects` |
 | `aei/` | `dom1`–`dom3` | `/experience/anugrah-energi-indonesia` |
-| `macacih/` | `logo` | kartu & timeline |
+| `macacih/` | `logo` ✅ terpasang | kartu & timeline |
 | `macacih/` | `mock1`–`mock3` | `/projects/macacih` + kartu `/projects` |
 | `macacih/` | `dom1`–`dom3` | `/experience/macacih` |
-| `weigh-to-go/` | `logo`, `mock1`–`mock3`, `dom1`–`dom3` | `/projects/weigh-to-go` |
+| `weigh-to-go/` | `logo` ✅, `mock1`–`mock3`, `dom1`–`dom3` | `/projects/weigh-to-go` |
 | `muara/` | `logo`, `mock1`–`mock3`, `dom1`–`dom3` | `/projects/muara` |
 | `tera/` | `logo`, `mock1`–`mock3` | `/projects/tera` |
 | `ifest/` | `dom1`–`dom3`, `certificate` | `/collabs/ifest-2026` |

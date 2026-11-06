@@ -84,6 +84,11 @@ export type Achievement = {
   year: string | null;
   /** Satu baris konteks dari CV. */
   detail: string;
+  /**
+   * Peran Lintang di tim — ditonjolkan sebagai chip (permintaan Lintang
+   * 2026-11-07: "highlight kalo saya sebagai team leader di tiap lomba").
+   */
+  role: string;
   /** Bila prestasinya sudah jadi case study, tunjuk ke sana alih-alih
    *  menceritakan ulang (anti double-count, §5.2). */
   projectSlug?: string;
@@ -458,6 +463,7 @@ export const achievements: Achievement[] = [
   {
     medal: "🥇",
     slug: "io-festival",
+    role: "Team leader",
     title: "1st Place, National — I/O Festival 2026 (Web Development)",
     scope: "National web development competition",
     // CV tidak menyebut tahun, tapi sertifikat pesertanya
@@ -511,6 +517,7 @@ export const achievements: Achievement[] = [
     // Sumber: CV Nov 2026 + vault Obsidian `Projects/Lembar Janji`.
     medal: "🏅",
     slug: "ifest-2026",
+    role: "Team leader",
     title: "4th Place Finalist, National — IFEST 2026 Hackathon",
     scope: "National hackathon · 24 hours",
     year: "2026",
@@ -518,7 +525,7 @@ export const achievements: Achievement[] = [
       "Built Lembar Janji in 24 hours, a web tool that shows migrant workers what a job offer promises and what it leaves out, before they pay anything.",
     story: {
       intro:
-        "IFEST 2026 ran a 24-hour hackathon on the theme “Tech for Human Connections”. Our entry, Lembar Janji, finished as the 4th-place finalist nationally.",
+        "IFEST 2026 ran a 24-hour hackathon on the theme “Tech for Human Connections”. I led the team, and our entry, Lembar Janji, finished as the 4th-place finalist nationally.",
       sections: [
         {
           heading: "The problem",
@@ -547,6 +554,7 @@ export const achievements: Achievement[] = [
   {
     medal: "🥉",
     slug: "surabayadev-developer-battle-2025",
+    role: "Team leader",
     title: "3rd Place, National — SurabayaDev Developer Battle 2025",
     scope: "National data analysis competition",
     year: "2025",
@@ -579,6 +587,7 @@ export const achievements: Achievement[] = [
   {
     medal: "🥈",
     slug: "cimb-niaga-pitching-day",
+    role: "Team leader",
     title: "2nd Place, Internal — CIMB Niaga Pitching Day (UMN)",
     scope: "Internal competition",
     year: null, // Tahun tidak tercantum di CV. TODO(lintang): isi bila ingin ditampilkan.

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { OrgMark } from "@/components/ui/org-mark";
 import { displayName, type Project } from "@/content/projects";
 import { cn } from "@/lib/utils";
@@ -74,6 +75,9 @@ function DeckCard({ project, slot }: { project: Project; slot: Slot }) {
         >
           {project.honesty}
         </span>
+        {project.highlight ? (
+          <HighlightChip>{project.highlight}</HighlightChip>
+        ) : null}
       </div>
 
       <h3 className="mono text-ink mt-4 text-[15px]">

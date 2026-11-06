@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Section } from "@/components/ui/container";
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { OrgMark } from "@/components/ui/org-mark";
 import { PageHeader } from "@/components/ui/page-header";
 import {
@@ -69,6 +70,9 @@ function FeaturedCard({ project }: { project: Project }) {
             <span className="mono border-border text-n-500 rounded-full border px-2 py-0.5 text-[10px] tracking-[0.1em] uppercase">
               {project.honesty}
             </span>
+            {project.highlight ? (
+              <HighlightChip>{project.highlight}</HighlightChip>
+            ) : null}
             {project.award ? (
               <span className="mono bg-accent-wash text-accent rounded-full px-2 py-0.5 text-[10px] tracking-[0.1em] uppercase">
                 {project.award}

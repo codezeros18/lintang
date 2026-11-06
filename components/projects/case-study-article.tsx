@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Section } from "@/components/ui/container";
+import { HighlightChip } from "@/components/ui/highlight-chip";
 import { PhotoGallery, ScreenshotStrip } from "@/components/ui/photo-gallery";
 import { workItems } from "@/content/experience";
 import {
@@ -113,6 +114,9 @@ export function CaseStudyArticle({
         <header>
           <div className="flex flex-wrap items-center gap-2">
             <Badge tone={honestyTone(project.honesty)}>{project.honesty}</Badge>
+            {project.highlight ? (
+              <HighlightChip>{project.highlight}</HighlightChip>
+            ) : null}
             {/* Medali tampil di sini sebagai badge, bukan sebagai entri proyek
                 terpisah — aturan anti double-count §5.2 tetap berlaku. */}
             {project.award ? <Badge tone="coral">{project.award}</Badge> : null}

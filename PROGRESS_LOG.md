@@ -27,6 +27,22 @@
 
 <!-- ENTRI BARU DI ATAS GARIS INI -->
 
+### [2026-11-07] — Di luar sprint — Status proyek, founder SaaS, team leader, logo, hook strip
+**Status:** ✅ selesai (tsc + eslint + build bersih, dicek di browser lokal). Commit sebelumnya (`6255b58`) **sudah ter-deploy** otomatis lewat push ke `main` (Vercel Ready, halaman baru 200, CV baru tersaji). Catatan "belum di-deploy" di entri bawah sudah usang.
+
+**Keputusan Lintang → perubahan:**
+- **Macacih, AEI, Weigh to Go, Muara = `in-development`**: keempatnya masih ia kerjakan.
+- **Tera = hiatus** (masalah riset, pengembangan, dll). Ada label baru `on-hiatus`. Tera pindah ke "Other projects", case study tetap bisa dibuka, dan durasinya kini "on hiatus since Nov 2026".
+- **Muara & Weigh to Go ditonjolkan sebagai SaaS milik founder**: field baru `Project.highlight` dirender sebagai chip "Founder · SaaS" di kartu `/projects`, deck beranda, dan header case study. Tagline keduanya kini diawali "A SaaS I founded".
+- **Team leader di setiap lomba**: field baru `Achievement.role = "Team leader"` untuk I/O Festival, IFEST, SurabayaDev, dan CIMB, sebagai chip di beranda, `/collabs`, dan halaman detail. Role post Log dan `ownVsTeam` Hotel (tim CALON MANTU) ikut diperbarui. Komponen bersama: `components/ui/highlight-chip.tsx`.
+- **Logo terpasang**: `weigh-to-go/logo.jpg` (128×128) dan `macacih/logo.jpg` (352×219, wordmark lebar, tetap utuh berkat `object-contain`).
+- **Hook strip**: Rp30M+ dan 5,000+ kg dipertahankan (data Ankop & Bisasinema, sesuai preferensi Lintang). "15+ supplier" diganti **"1st — place nationally, as team leader — I/O Festival 2026"**, lebih "branding" dan satu-satunya angka yang menunjuk ke Lintang sendiri. 15+ tetap jadi cadangan bila `ANKOP_MONTHS` kosong.
+- GPA 3.51 sudah terpasang sejak commit sebelumnya dan sudah live.
+
+**Gagal / skip (jujur):** status `in-development` Weigh to Go menurunkan label yang tadinya `production-ready`, karena memang begitu permintaannya. Lighthouse belum dijalankan ulang. `GITHUB_TOKEN` di Vercel masih menunggu Lintang.
+**Commit:** `content: project statuses, founder SaaS chips, team leader on competitions, logos`
+**Berikutnya:** menunggu instruksi.
+
 ### [2026-11-07] — Di luar sprint — Update konten besar dari CV Nov 2026 + vault Obsidian (sesi pertama di MacBook)
 **Status:** ✅ selesai (tsc + eslint + build bersih, 56 halaman; dicek di browser lokal termasuk 360px). **Belum di-deploy secara manual.** Push ke `main` akan memicu deploy otomatis.
 
